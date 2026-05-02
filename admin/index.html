@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | Prebook Holidays</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../theme.css">
+  <script>tailwind.config={theme:{extend:{colors:{primary:'hsl(168 60% 22%)','primary-foreground':'hsl(0 0% 98%)',secondary:'hsl(38 96% 54%)','secondary-foreground':'hsl(0 0% 9%)',background:'hsl(0 0% 100%)',foreground:'hsl(222 47% 11%)',card:'hsl(0 0% 100%)',muted:'hsl(210 40% 96%)','muted-foreground':'hsl(215 16% 47%)',border:'hsl(214 32% 91%)'},fontFamily:{serif:['Playfair Display','serif'],sans:['Inter','sans-serif']}}}}</script>
+  <style>
+    .admin-sidebar { background: hsl(168,60%,22%); min-height:100vh; width:240px; flex-shrink:0; }
+    .admin-nav-item { display:flex; align-items:center; gap:0.625rem; padding:0.625rem 1rem; border-radius:0.5rem; font-size:0.875rem; font-weight:500; color:rgba(255,255,255,0.75); cursor:pointer; transition:all 0.2s; text-decoration:none; }
+    .admin-nav-item:hover, .admin-nav-item.active { background:rgba(255,255,255,0.1); color:white; }
+    .admin-nav-item.active { color: hsl(38,96%,54%); }
+    .tab-panel { display:none; } .tab-panel.active { display:block; }
+    .status-badge { display:inline-block; padding:0.2rem 0.6rem; border-radius:9999px; font-size:0.7rem; font-weight:600; }
+    .status-new     { background:#fef3c7; color:#92400e; }
+    .status-called  { background:#d1fae5; color:#065f46; }
+    .status-booked  { background:#dbeafe; color:#1e40af; }
+    .status-closed  { background:#f3f4f6; color:#6b7280; }
+    table { width:100%; border-collapse:collapse; font-size:0.875rem; }
+    th { background:hsl(210,40%,96%); color:hsl(215,16%,47%); font-weight:600; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.05em; padding:0.75rem 1rem; text-align:left; }
+    td { padding:0.875rem 1rem; border-bottom:1px solid hsl(214,32%,91%); color:hsl(222,47%,11%); vertical-align:top; }
+    tr:hover td { background:hsl(210,40%,98%); }
+    .pkg-form input, .pkg-form select, .pkg-form textarea { width:100%; }
+  </style>
+</head>
+<body style="display:flex;min-height:100vh;font-family:'Inter',sans-serif;">
+
+<!-- LOGIN OVERLAY -->
+<div id="login-overlay" style="position:fixed;inset:0;background:hsl(168,60%,22%);z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity 0.3s;opacity:1;">
+  <div class="bg-white p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center">
+    <div class="flex justify-center mb-4">
+      <svg class="h-10 w-10 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    </div>
+    <h2 class="font-serif text-2xl font-bold text-foreground mb-2">Admin Login</h2>
+    <p class="text-sm text-muted-foreground mb-6">Please enter your email and password to continue.</p>
+    <form id="login-form" onsubmit="handleLogin(event)">
+      <input type="email" id="admin-email" class="pk-input w-full mb-4" placeholder="Email Address" required>
+      <input type="password" id="admin-pwd" class="pk-input w-full mb-4" placeholder="Password" required>
+      <p id="login-error" class="text-sm text-red-500 mb-4 hidden">Incorrect email or password.</p>
+      <button type="submit" class="btn-primary w-full justify-center" style="border-radius:0.5rem;padding:0.75rem">Login</button>
+    </form>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<aside class="admin-sidebar p-4 flex flex-col">
+  <div class="flex items-center gap-2 px-2 py-4 mb-6">
+    <svg class="h-6 w-6 text-secondary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+    <span class="font-serif text-lg font-bold text-white">PK Admin</span>
+  </div>
+  <nav class="flex flex-col gap-1 flex-1">
+    <a class="admin-nav-item active" onclick="showTab('dashboard')" href="#">📊 Dashboard</a>
+    <a class="admin-nav-item" onclick="showTab('enquiries')" href="#">📋 Enquiries</a>
+    <a class="admin-nav-item" onclick="showTab('packages')" href="#">🧳 Packages</a>
+    <a class="admin-nav-item" onclick="showTab('pricing')" href="#">💰 Pricing</a>
+    <a class="admin-nav-item" onclick="showTab('settings')" href="#">⚙️ Site Settings</a>
+    <hr style="border-color:rgba(255,255,255,0.1);margin:0.5rem 0">
+    <div class="text-xs text-white/40 px-2 py-1 uppercase tracking-wider">Page Editors</div>
+    <a class="admin-nav-item" onclick="showTab('editor-home')" href="#">🏠 Home Editor</a>
+    <a class="admin-nav-item" onclick="showTab('editor-packages')" href="#">🧳 Packages Editor</a>
+    <a class="admin-nav-item" onclick="showTab('editor-destinations')" href="#">🗺️ Destinations Editor</a>
+    <a class="admin-nav-item" onclick="showTab('editor-about')" href="#">ℹ️ About Editor</a>
+    <a class="admin-nav-item" onclick="showTab('editor-contact')" href="#">📞 Contact Editor</a>
+    <hr style="border-color:rgba(255,255,255,0.1);margin:0.5rem 0">
+    <a class="admin-nav-item" href="../index.html">🌐 View Website</a>
+  </nav>
+  <div class="text-xs text-white/40 px-2 pb-2">Prebook Holidays Admin v1.0</div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="flex-1 bg-muted min-h-screen overflow-auto">
+  <div class="bg-card border-b border-border px-8 py-4 flex items-center justify-between">
+    <h1 class="font-serif text-xl font-bold text-foreground" id="page-title">Dashboard</h1>
+    <div class="flex items-center gap-3 text-sm text-muted-foreground">
+      <span id="current-time"></span>
+      <span class="inline-flex items-center gap-1.5 rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">● Live</span>
+    </div>
+  </div>
+
+  <div class="p-8">
+
+    <!-- DASHBOARD TAB -->
+    <div id="tab-dashboard" class="tab-panel active">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <div class="text-3xl mb-2">📋</div>
+          <div id="stat-total" class="font-serif text-3xl font-bold text-primary">0</div>
+          <div class="text-sm text-muted-foreground mt-1">Total Enquiries</div>
+        </div>
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <div class="text-3xl mb-2">🆕</div>
+          <div id="stat-new" class="font-serif text-3xl font-bold text-secondary">0</div>
+          <div class="text-sm text-muted-foreground mt-1">New (Unread)</div>
+        </div>
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <div class="text-3xl mb-2">🧳</div>
+          <div id="stat-pkgs" class="font-serif text-3xl font-bold text-primary">0</div>
+          <div class="text-sm text-muted-foreground mt-1">Active Packages</div>
+        </div>
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <div class="text-3xl mb-2">📅</div>
+          <div id="stat-today" class="font-serif text-3xl font-bold text-primary">0</div>
+          <div class="text-sm text-muted-foreground mt-1">Enquiries Today</div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+        <h2 class="font-serif text-lg font-bold text-foreground mb-4">Recent Enquiries</h2>
+        <div id="recent-list">
+          <p class="text-muted-foreground text-sm">No enquiries yet. Test by submitting a form on the website!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENQUIRIES TAB -->
+    <div id="tab-enquiries" class="tab-panel">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="font-serif text-xl font-bold text-foreground">All Enquiries</h2>
+        <button onclick="clearEnquiries()" class="text-sm text-red-500 border border-red-200 rounded-lg px-3 py-1.5 hover:bg-red-50 transition-smooth">🗑️ Clear All</button>
+      </div>
+      <div class="rounded-2xl bg-card shadow-card-soft overflow-hidden">
+        <div class="overflow-x-auto">
+          <table id="enquiry-table">
+            <thead><tr><th>Date</th><th>Name</th><th>Phone</th><th>Email</th><th>Package</th><th>Travellers</th><th>Type</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="enquiry-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PACKAGES TAB -->
+    <div id="tab-packages" class="tab-panel">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="font-serif text-xl font-bold text-foreground">Manage Packages</h2>
+        <button onclick="openPkgForm(null)" class="btn-primary text-sm" style="border-radius:0.5rem;padding:0.5rem 1.25rem">+ Add Package</button>
+      </div>
+
+      <!-- Package form -->
+      <div id="pkg-form-wrap" class="hidden mb-6 rounded-2xl bg-card p-6 shadow-card-soft">
+        <h3 class="font-serif text-lg font-bold text-foreground mb-4" id="pkg-form-title">Add New Package</h3>
+        <form class="pkg-form grid gap-4 sm:grid-cols-2" id="pkg-form">
+          <input type="hidden" id="pkg-id">
+          <input type="hidden" id="pkg-reviews" value="0">
+          <div><label class="pk-label">Package Name</label><input id="pkg-name" class="pk-input" placeholder="e.g. Grand Kashmir Tour" required></div>
+          <div><label class="pk-label">Badge Label</label><input id="pkg-badge" class="pk-input" placeholder="e.g. Bestseller"></div>
+          <div><label class="pk-label">Nights</label><input id="pkg-nights" type="number" min="1" class="pk-input" placeholder="5"></div>
+          <div><label class="pk-label">Days</label><input id="pkg-days" type="number" min="1" class="pk-input" placeholder="6"></div>
+          <div><label class="pk-label">Starting Price (₹)</label><input id="pkg-price" type="number" class="pk-input" placeholder="21499"></div>
+          <div><label class="pk-label">Discount Price (₹)</label><input id="pkg-discount-price" type="number" class="pk-input" placeholder="Optional"></div>
+          <div><label class="pk-label">Discount Label</label><input id="pkg-discount-label" class="pk-input" placeholder="e.g. Summer Offer"></div>
+          <div><label class="pk-label">Rating</label><input id="pkg-rating" type="number" step="0.1" min="1" max="5" class="pk-input" placeholder="4.9"></div>
+          <div class="sm:col-span-2"><label class="pk-label">Places Covered</label><input id="pkg-places" class="pk-input" placeholder="Srinagar · Gulmarg · Pahalgam"></div>
+          <div class="sm:col-span-2">
+            <label class="pk-label">Image (Upload OR URL)</label>
+            <div class="flex gap-2">
+              <input type="file" id="pkg-img-file" class="pk-input flex-1" accept="image/*" onchange="handleImageUpload(event)">
+              <input id="pkg-img" class="pk-input flex-1" placeholder="Or enter image URL">
+            </div>
+            <div id="pkg-img-preview" class="mt-2 hidden"><img src="" class="h-20 w-32 object-cover rounded-md border border-border"></div>
+          </div>
+          <div class="sm:col-span-2 flex gap-3">
+            <button type="button" onclick="savePkg()" class="btn-primary" style="border-radius:0.5rem;padding:0.5rem 1.5rem">💾 Save Package</button>
+            <button type="button" onclick="document.getElementById('pkg-form-wrap').classList.add('hidden')" class="px-4 py-2 rounded-lg border border-border text-muted-foreground hover:bg-muted text-sm transition-smooth">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="rounded-2xl bg-card shadow-card-soft overflow-hidden">
+        <div class="overflow-x-auto">
+          <table id="pkg-table">
+            <thead><tr><th>Name</th><th>Duration</th><th>Price</th><th>Rating</th><th>Places</th><th>Actions</th></tr></thead>
+            <tbody id="pkg-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRICING TAB -->
+    <div id="tab-pricing" class="tab-panel">
+      <h2 class="font-serif text-xl font-bold text-foreground mb-6">Update Pricing</h2>
+      <div class="rounded-2xl bg-card p-6 shadow-card-soft max-w-2xl">
+        <p class="text-sm text-muted-foreground mb-5">Select a package and update its starting price. Changes are saved immediately.</p>
+        <div class="space-y-4" id="pricing-list"></div>
+      </div>
+    </div>
+
+    <!-- SITE SETTINGS TAB -->
+    <div id="tab-settings" class="tab-panel">
+      <h2 class="font-serif text-xl font-bold text-foreground mb-6">Website Content</h2>
+      <div class="rounded-2xl bg-card p-6 shadow-card-soft max-w-2xl">
+        <p class="text-sm text-muted-foreground mb-5">Update details that appear across the website. Refresh the main website to see changes.</p>
+        <form id="settings-form" class="space-y-4" onsubmit="saveSettings(event)">
+          <div><label class="pk-label">Hero Title</label><input id="set-hero-title" class="pk-input" placeholder="e.g. Discover Paradise" required></div>
+          <div><label class="pk-label">Hero Subtitle</label><input id="set-hero-sub" class="pk-input" placeholder="e.g. Unforgettable Kashmir Tours" required></div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div><label class="pk-label">Phone Number 1</label><input id="set-phone1" class="pk-input" placeholder="+91 99999 99999" required></div>
+            <div><label class="pk-label">Phone Number 2</label><input id="set-phone2" class="pk-input" placeholder="+91 88888 88888"></div>
+          </div>
+          <div><label class="pk-label">Email Address</label><input id="set-email" type="email" class="pk-input" placeholder="info@prebookholidays.com" required></div>
+          <div><label class="pk-label">Footer About Text</label><textarea id="set-footer-about" class="pk-input" rows="3" placeholder="Short description for footer..."></textarea></div>
+          
+          <button type="submit" class="btn-primary mt-4" style="border-radius:0.5rem;padding:0.6rem 1.5rem">Save Settings</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ===== HOME EDITOR ===== -->
+    <div id="tab-editor-home" class="tab-panel">
+      <h2 class="font-serif text-xl font-bold text-foreground mb-2">🏠 Home Page Editor</h2>
+      <p class="text-sm text-muted-foreground mb-6">Edit every section of the home page — from hero to footer.</p>
+      <div class="space-y-6 max-w-3xl">
+
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4 flex items-center gap-2">🖼️ Hero Section</h3>
+          <img src="../admin/images/hero_ui.png" alt="Hero Section Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
+          
+          <div class="space-y-3">
+            <div><label class="pk-label">Hero Main Title</label><input id="home-hero-title" class="pk-input" placeholder="Discover Heaven on Earth"></div>
+            <div><label class="pk-label">Hero Italic Accent (coloured part)</label><input id="home-hero-accent" class="pk-input" placeholder="on Earth"></div>
+            <div><label class="pk-label">Hero Subtitle Paragraph</label><textarea id="home-hero-sub" class="pk-input" rows="2" placeholder="Curated Kashmir tour packages..."></textarea></div>
+            <div class="grid grid-cols-3 gap-3">
+              <div><label class="pk-label">Stat 1 Number</label><input id="home-stat1-num" class="pk-input" placeholder="15+"></div>
+              <div><label class="pk-label">Stat 1 Label</label><input id="home-stat1-lbl" class="pk-input" placeholder="Years of Expertise"></div>
+              <div></div>
+              <div><label class="pk-label">Stat 2 Number</label><input id="home-stat2-num" class="pk-input" placeholder="10K+"></div>
+              <div><label class="pk-label">Stat 2 Label</label><input id="home-stat2-lbl" class="pk-input" placeholder="Happy Travellers"></div>
+              <div></div>
+              <div><label class="pk-label">Stat 3 Number</label><input id="home-stat3-num" class="pk-input" placeholder="50+"></div>
+              <div><label class="pk-label">Stat 3 Label</label><input id="home-stat3-lbl" class="pk-input" placeholder="Curated Itineraries"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4">📦 Packages Section Heading</h3>
+          <img src="../admin/images/packages_ui.png" alt="Packages Section Heading Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
+          
+          <div class="space-y-3">
+            <div><label class="pk-label">Section Label (small text)</label><input id="home-pkg-label" class="pk-input" placeholder="Signature Journeys"></div>
+            <div><label class="pk-label">Section Title</label><input id="home-pkg-title" class="pk-input" placeholder="Handpicked Tour Packages"></div>
+            <div><label class="pk-label">Section Description</label><textarea id="home-pkg-desc" class="pk-input" rows="2"></textarea></div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4">✨ Experiences Section</h3>
+          <img src="../admin/images/packages_ui.png" alt="Experiences Section Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
+          <div class="space-y-3">
+            <div><label class="pk-label">Section Label</label><input id="home-exp-label" class="pk-input" placeholder="Unique Experiences"></div>
+            <div><label class="pk-label">Section Title</label><input id="home-exp-title" class="pk-input" placeholder="Beyond Sightseeing"></div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4">💬 Reviews Section</h3>
+          <img src="../admin/images/about_ui.png" alt="Reviews Section Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
+          <div class="space-y-3">
+            <div><label class="pk-label">Section Label</label><input id="home-rev-label" class="pk-input" placeholder="Traveller Stories"></div>
+            <div><label class="pk-label">Section Title</label><input id="home-rev-title" class="pk-input" placeholder="Loved by Wanderers"></div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4">📞 Contact / CTA Section</h3>
+          <img src="../admin/images/contact_ui.png" alt="Contact / CTA Section Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
+          <div class="space-y-3">
+            <div><label class="pk-label">CTA Heading</label><input id="home-cta-title" class="pk-input" placeholder="Your Kashmir story begins here."></div>
+            <div><label class="pk-label">CTA Subtitle</label><textarea id="home-cta-sub" class="pk-input" rows="2"></textarea></div>
+            <div><label class="pk-label">WhatsApp Number (with country code, no +)</label><input id="home-wa-number" class="pk-input" placeholder="919999999999"></div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4">🔗 Footer</h3>
+          <img src="../admin/images/footer_ui.png" alt="Footer Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
+          
+          <div class="space-y-3">
+            <div><label class="pk-label">Footer About Text</label><textarea id="home-footer-about" class="pk-input" rows="2"></textarea></div>
+            <div><label class="pk-label">Footer Copyright Line</label><input id="home-footer-copy" class="pk-input" placeholder="© 2026 Prebook Holidays Tours. Crafted with ♥ in Srinagar."></div>
+            <div><label class="pk-label">Office Location 1</label><input id="home-office1" class="pk-input" placeholder="New Delhi — Dwarka Mor, 110059"></div>
+            <div><label class="pk-label">Office Location 2</label><input id="home-office2" class="pk-input" placeholder="Pune, Maharashtra"></div>
+            <div><label class="pk-label">Office Location 3</label><input id="home-office3" class="pk-input" placeholder="Gwalior, Madhya Pradesh"></div>
+          </div>
+        </div>
+
+        <button onclick="savePageEditor('home')" class="btn-primary" style="border-radius:0.5rem;padding:0.6rem 1.5rem">💾 Save Home Page</button>
+      </div>
+    </div>
+
+    <!-- ===== PACKAGES EDITOR ===== -->
+    <div id="tab-editor-packages" class="tab-panel">
+      <h2 class="font-serif text-xl font-bold text-foreground mb-2">🧳 Packages Page Editor</h2>
+      <p class="text-sm text-muted-foreground mb-6">Edit the packages listing page sections and hero text.</p>
+      <div class="space-y-6 max-w-3xl">
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4">🎯 Page Hero / Banner</h3>
+          <img src="../admin/images/hero_ui.png" alt="Page Hero / Banner Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
+          <div class="space-y-3">
+            <div><label class="pk-label">Page Header Title</label><input id="pkgpage-title" class="pk-input" placeholder="All Kashmir Packages"></div>
+            <div><label class="pk-label">Page Header Subtitle</label><textarea id="pkgpage-sub" class="pk-input" rows="2" placeholder="Browse all our Kashmir tour packages..."></textarea></div>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4">📝 Section Labels</h3>
+          <img src="../admin/images/packages_ui.png" alt="Section Labels Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
+          <div class="space-y-3">
+            <div><label class="pk-label">Filter Section Title</label><input id="pkgpage-filter-title" class="pk-input" placeholder="Find Your Perfect Trip"></div>
+            <div><label class="pk-label">No Results Message</label><input id="pkgpage-no-results" class="pk-input" placeholder="No packages match your filter."></div>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4">📞 Contact Info (shown on page)</h3>
+          <img src="../admin/images/contact_ui.png" alt="Contact Info (shown on page) Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
+          <div class="space-y-3">
+            <div><label class="pk-label">Phone 1</label><input id="pkgpage-phone1" class="pk-input" placeholder="+91 83779 24630"></div>
+            <div><label class="pk-label">Phone 2</label><input id="pkgpage-phone2" class="pk-input" placeholder="+91 98991 05056"></div>
+            <div><label class="pk-label">Email</label><input id="pkgpage-email" class="pk-input" placeholder="info@prebookholidays.com"></div>
+          </div>
+        </div>
+        <button onclick="savePageEditor('packages-page')" class="btn-primary" style="border-radius:0.5rem;padding:0.6rem 1.5rem">💾 Save Packages Page</button>
+      </div>
+    </div>
+
+    <!-- ===== DESTINATIONS EDITOR ===== -->
+    <div id="tab-editor-destinations" class="tab-panel">
+      <h2 class="font-serif text-xl font-bold text-foreground mb-2">🗺️ Destinations Page Editor</h2>
+      <p class="text-sm text-muted-foreground mb-6">Edit destination cards and page sections.</p>
+      <div class="space-y-6 max-w-3xl">
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4">🏔️ Page Header</h3>
+          <img src="../admin/images/hero_ui.png" alt="Page Header Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
+          <div class="space-y-3">
+            <div><label class="pk-label">Page Title</label><input id="dest-title" class="pk-input" placeholder="Explore Kashmir"></div>
+            <div><label class="pk-label">Page Subtitle</label><textarea id="dest-sub" class="pk-input" rows="2"></textarea></div>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4">📍 Destination Cards (6 destinations)</h3>
+          <img src="../admin/images/packages_ui.png" alt="Destination Cards (6 destinations) Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
+          <div id="dest-cards-editor" class="space-y-4">
+            <!-- Dynamically filled -->
+          </div>
+          <button onclick="addDestCard()" class="mt-3 text-sm text-primary border border-primary/40 rounded-lg px-4 py-2 hover:bg-primary/5 transition-all">+ Add Destination</button>
+        </div>
+        <button onclick="savePageEditor('destinations-page')" class="btn-primary" style="border-radius:0.5rem;padding:0.6rem 1.5rem">💾 Save Destinations Page</button>
+      </div>
+    </div>
+
+    <!-- ===== ABOUT EDITOR ===== -->
+    <div id="tab-editor-about" class="tab-panel">
+      <h2 class="font-serif text-xl font-bold text-foreground mb-2">ℹ️ About Page Editor</h2>
+      <p class="text-sm text-muted-foreground mb-6">Edit the About Us page content.</p>
+      <div class="space-y-6 max-w-3xl">
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4">🎯 Hero Section</h3>
+          <img src="../admin/images/hero_ui.png" alt="Hero Section Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
+          
+          <div class="space-y-3">
+            <div><label class="pk-label">Hero Title</label><input id="about-title" class="pk-input" placeholder="About Prebook Holidays"></div>
+            <div><label class="pk-label">Hero Subtitle</label><textarea id="about-sub" class="pk-input" rows="2"></textarea></div>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4">📖 Our Story Section</h3>
+          <img src="../admin/images/about_ui.png" alt="Our Story Section Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
+          <div class="space-y-3">
+            <div><label class="pk-label">Story Heading</label><input id="about-story-title" class="pk-input" placeholder="Our Story"></div>
+            <div><label class="pk-label">Story Paragraph 1</label><textarea id="about-story-p1" class="pk-input" rows="3"></textarea></div>
+            <div><label class="pk-label">Story Paragraph 2</label><textarea id="about-story-p2" class="pk-input" rows="3"></textarea></div>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4">👥 Team / Values Section</h3>
+          <img src="../admin/images/about_ui.png" alt="Team / Values Section Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
+          <div class="space-y-3">
+            <div><label class="pk-label">Section Title</label><input id="about-team-title" class="pk-input" placeholder="Why Choose Us"></div>
+            <div><label class="pk-label">Value 1 Title</label><input id="about-val1-t" class="pk-input" placeholder="Local Expertise"></div>
+            <div><label class="pk-label">Value 1 Description</label><input id="about-val1-d" class="pk-input" placeholder="15+ years in Kashmir tourism"></div>
+            <div><label class="pk-label">Value 2 Title</label><input id="about-val2-t" class="pk-input" placeholder="Personalised Service"></div>
+            <div><label class="pk-label">Value 2 Description</label><input id="about-val2-d" class="pk-input" placeholder="Every trip tailored to you"></div>
+            <div><label class="pk-label">Value 3 Title</label><input id="about-val3-t" class="pk-input" placeholder="Safe & Trusted"></div>
+            <div><label class="pk-label">Value 3 Description</label><input id="about-val3-d" class="pk-input" placeholder="10,000+ happy travellers"></div>
+          </div>
+        </div>
+        <button onclick="savePageEditor('about-page')" class="btn-primary" style="border-radius:0.5rem;padding:0.6rem 1.5rem">💾 Save About Page</button>
+      </div>
+    </div>
+
+    <!-- ===== CONTACT EDITOR ===== -->
+    <div id="tab-editor-contact" class="tab-panel">
+      <h2 class="font-serif text-xl font-bold text-foreground mb-2">📞 Contact Page Editor</h2>
+      <p class="text-sm text-muted-foreground mb-6">Edit the contact page content and office details.</p>
+      <div class="space-y-6 max-w-3xl">
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4">📋 Page Header</h3>
+          <img src="../admin/images/contact_ui.png" alt="Page Header Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
+          
+          <div class="space-y-3">
+            <div><label class="pk-label">Page Title</label><input id="contact-title" class="pk-input" placeholder="Get In Touch"></div>
+            <div><label class="pk-label">Page Subtitle</label><textarea id="contact-sub" class="pk-input" rows="2"></textarea></div>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4">📞 Contact Details</h3>
+          <img src="../admin/images/contact_ui.png" alt="Contact Details Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
+          <div class="space-y-3">
+            <div><label class="pk-label">Phone 1</label><input id="contact-phone1" class="pk-input" placeholder="+91 83779 24630"></div>
+            <div><label class="pk-label">Phone 2</label><input id="contact-phone2" class="pk-input" placeholder="+91 98991 05056"></div>
+            <div><label class="pk-label">Email</label><input id="contact-email" class="pk-input" placeholder="info@prebookholidays.com"></div>
+            <div><label class="pk-label">WhatsApp Number (digits only, e.g. 919999999999)</label><input id="contact-wa" class="pk-input" placeholder="919999999999"></div>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4">📍 Office Addresses</h3>
+          <img src="../admin/images/footer_ui.png" alt="Office Addresses Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
+          <div class="space-y-3">
+            <div><label class="pk-label">Office 1 City</label><input id="contact-office1-city" class="pk-input" placeholder="New Delhi"></div>
+            <div><label class="pk-label">Office 1 Address</label><input id="contact-office1-addr" class="pk-input" placeholder="Dwarka Mor, 110059"></div>
+            <div><label class="pk-label">Office 2 City</label><input id="contact-office2-city" class="pk-input" placeholder="Pune"></div>
+            <div><label class="pk-label">Office 2 Address</label><input id="contact-office2-addr" class="pk-input" placeholder="Maharashtra"></div>
+            <div><label class="pk-label">Office 3 City</label><input id="contact-office3-city" class="pk-input" placeholder="Gwalior"></div>
+            <div><label class="pk-label">Office 3 Address</label><input id="contact-office3-addr" class="pk-input" placeholder="Madhya Pradesh"></div>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4">🗺️ Embedded Map</h3>
+          <img src="../admin/images/contact_ui.png" alt="Embedded Map Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
+          <div><label class="pk-label">Google Maps Embed URL (iframe src)</label><input id="contact-map-url" class="pk-input" placeholder="https://maps.google.com/maps?..."></div>
+        </div>
+        <button onclick="savePageEditor('contact-page')" class="btn-primary" style="border-radius:0.5rem;padding:0.6rem 1.5rem">💾 Save Contact Page</button>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+	<script src="../shared.js"></script>
+<script>
+  // Clock
+  function updateClock() {
+    document.getElementById('current-time').textContent = new Date().toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'});
+  }
+  setInterval(updateClock, 1000); updateClock();
+
+  // Tab navigation
+  function showTab(name) {
+    document.querySelectorAll('.tab-panel').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.admin-nav-item').forEach(a => a.classList.remove('active'));
+    document.getElementById('tab-'+name).classList.add('active');
+    event.currentTarget.classList.add('active');
+    document.getElementById('page-title').textContent = event.currentTarget.textContent.trim();
+    if(name==='enquiries')           renderEnquiries();
+    if(name==='packages')            renderPackages();
+    if(name==='pricing')             renderPricing();
+    if(name==='settings')            renderSettings();
+    if(name==='dashboard')           renderDashboard();
+    if(name==='editor-home')         loadPageEditor('home');
+    if(name==='editor-packages')     loadPageEditor('packages-page');
+    if(name==='editor-destinations') loadPageEditor('destinations-page');
+    if(name==='editor-about')        loadPageEditor('about-page');
+    if(name==='editor-contact')      loadPageEditor('contact-page');
+  }
+
+  // Dashboard
+  async function renderDashboard() {
+    const enq = await PK.getEnquiries();
+    const pkgs = await PK.getPackages();
+    document.getElementById('stat-total').textContent = enq.length;
+    document.getElementById('stat-new').textContent = enq.filter(e=>e.status==='New').length;
+    document.getElementById('stat-pkgs').textContent = pkgs.length;
+    const today = new Date().toDateString();
+    document.getElementById('stat-today').textContent = enq.filter(e=>new Date(e.date).toDateString()===today).length;
+    const recent = enq.slice(0,5);
+    document.getElementById('recent-list').innerHTML = recent.length ? recent.map(e => `
+      <div class="flex items-center justify-between py-3 border-b border-border last:border-0">
+        <div><div class="font-medium text-foreground text-sm">${e.name||'Unknown'}</div><div class="text-xs text-muted-foreground">${e.phone||''} · ${e.type}</div></div>
+        <div class="flex items-center gap-3">
+          <span class="status-badge status-${(e.status||'new').toLowerCase()}">${e.status||'New'}</span>
+          <span class="text-xs text-muted-foreground">${new Date(e.date).toLocaleDateString('en-IN')}</span>
+        </div>
+      </div>`).join('') : '<p class="text-sm text-muted-foreground">No enquiries yet.</p>';
+  }
+
+  // Enquiries
+  async function renderEnquiries() {
+    const list = await PK.getEnquiries();
+    const tbody = document.getElementById('enquiry-body');
+    tbody.innerHTML = list.length ? list.map((e,i) => `
+      <tr>
+        <td>${new Date(e.date).toLocaleDateString('en-IN')}<br><span class="text-xs text-muted-foreground">${new Date(e.date).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}</span></td>
+        <td><strong>${e.name||'-'}</strong></td>
+        <td><a href="tel:${e.phone}" class="text-primary hover:underline">${e.phone||'-'}</a></td>
+        <td>${e.email||'-'}</td>
+        <td>${e.package||'-'}</td>
+        <td>${e.travellers||'-'}</td>
+        <td><span class="status-badge status-new">${e.type||'Enquiry'}</span></td>
+        <td>
+          <select onchange="updateStatus(${i}, this.value)" class="pk-input text-xs" style="height:2rem;padding:0 0.5rem;width:auto">
+            <option ${e.status==='New'?'selected':''}>New</option>
+            <option ${e.status==='Called'?'selected':''}>Called</option>
+            <option ${e.status==='Booked'?'selected':''}>Booked</option>
+            <option ${e.status==='Closed'?'selected':''}>Closed</option>
+          </select>
+        </td>
+        <td>
+          <a href="https://wa.me/${(e.phone||'').replace(/\D/g,'')}?text=Hi ${encodeURIComponent(e.name||'')}! Thanks for your interest in Prebook Holidays." target="_blank" class="text-xs text-green-600 hover:underline">WhatsApp</a>
+          <button onclick="deleteEnquiry(${i})" class="ml-2 text-xs text-red-400 hover:text-red-600">Delete</button>
+        </td>
+      </tr>`).join('') : '<tr><td colspan="9" class="text-center text-muted-foreground py-8">No enquiries yet.</td></tr>';
+  }
+
+  async function updateStatus(i, val) {
+    const list = await PK.getEnquiries();
+    await PK.updateEnquiryStatus(list[i].id, val);
+    showToast('✅ Status updated');
+  }
+  async function deleteEnquiry(i) {
+    if(!confirm('Delete this enquiry?')) return;
+    const list = await PK.getEnquiries();
+    await PK.deleteEnquiry(list[i].id);
+    renderEnquiries();
+  }
+  async function clearEnquiries() {
+    if(!confirm('Clear ALL enquiries? This cannot be undone.')) return;
+    await PK.clearAllEnquiries(); renderEnquiries();
+  }
+
+  // Settings
+  async function renderSettings() {
+    const s = await PK.getSettings();
+    document.getElementById('set-hero-title').value = s.heroTitle || 'Discover the Paradise on Earth';
+    document.getElementById('set-hero-sub').value = s.heroSub || 'Experience the magic of Kashmir with Prebook Holidays.';
+    document.getElementById('set-phone1').value = s.phone1 || '+91 83779 24630';
+    document.getElementById('set-phone2').value = s.phone2 || '+91 98991 05056';
+    document.getElementById('set-email').value = s.email || 'info@prebookholidays.com';
+    document.getElementById('set-footer-about').value = s.footerAbout || 'Your trusted travel partner for unforgettable Kashmir experiences. Let us plan your perfect getaway.';
+  }
+
+  async function saveSettings(e) {
+    e.preventDefault();
+    const payload = {
+      heroTitle: document.getElementById('set-hero-title').value,
+      heroSub: document.getElementById('set-hero-sub').value,
+      phone1: document.getElementById('set-phone1').value,
+      phone2: document.getElementById('set-phone2').value,
+      email: document.getElementById('set-email').value,
+      footerAbout: document.getElementById('set-footer-about').value,
+    };
+    await PK.saveSettings(payload);
+    showToast('✅ Website content updated!');
+  }
+
+  // Packages
+  async function renderPackages() {
+    const pkgs = await PK.getPackages();
+    document.getElementById('pkg-body').innerHTML = pkgs.map(p => `
+      <tr>
+        <td><strong>${p.name}</strong><br><span class="text-xs text-muted-foreground">${p.badge}</span></td>
+        <td>${p.nights}N / ${p.days}D</td>
+        <td class="font-semibold text-primary">
+          ${p.discount_price ? `<span class="line-through text-muted-foreground text-xs mr-1">₹${p.price.toLocaleString('en-IN')}</span>` : ''}
+          ₹${(p.discount_price || p.price).toLocaleString('en-IN')}
+          ${p.discount_label ? `<br><span class="text-[10px] bg-red-100 text-red-600 px-1 py-0.5 rounded">${p.discount_label}</span>` : ''}
+        </td>
+        <td>⭐ ${p.rating} (${p.reviews})</td>
+        <td class="text-xs text-muted-foreground" style="max-width:180px">${p.places}</td>
+        <td>
+          <button onclick="openPkgForm(${p.id})" class="text-xs text-primary hover:underline mr-2">Edit</button>
+          <button onclick="deletePkg(${p.id})" class="text-xs text-red-400 hover:text-red-600">Delete</button>
+        </td>
+      </tr>`).join('');
+  }
+
+  async function openPkgForm(id) {
+    const wrap = document.getElementById('pkg-form-wrap');
+    const preview = document.getElementById('pkg-img-preview');
+    wrap.classList.remove('hidden');
+    if (!id) {
+      document.getElementById('pkg-form-title').textContent = 'Add New Package';
+      document.getElementById('pkg-id').value = '';
+      document.getElementById('pkg-form').reset();
+      preview.classList.add('hidden');
+    } else {
+      const p = (await PK.getPackages()).find(x=>x.id===id);
+      document.getElementById('pkg-form-title').textContent = 'Edit Package';
+      document.getElementById('pkg-id').value = p.id;
+      document.getElementById('pkg-reviews').value = p.reviews || 0;
+      document.getElementById('pkg-name').value = p.name;
+      document.getElementById('pkg-badge').value = p.badge;
+      document.getElementById('pkg-nights').value = p.nights;
+      document.getElementById('pkg-days').value = p.days;
+      document.getElementById('pkg-price').value = p.price;
+      document.getElementById('pkg-discount-price').value = p.discount_price || '';
+      document.getElementById('pkg-discount-label').value = p.discount_label || '';
+      document.getElementById('pkg-rating').value = p.rating;
+      document.getElementById('pkg-places').value = p.places;
+      document.getElementById('pkg-img').value = p.img || '';
+      document.getElementById('pkg-img-file').value = '';
+      if(p.img) { preview.classList.remove('hidden'); preview.querySelector('img').src = p.img; }
+      else { preview.classList.add('hidden'); }
+    }
+    wrap.scrollIntoView({behavior:'smooth'});
+  }
+
+  function handleImageUpload(e) {
+    const file = e.target.files[0];
+    if(!file) return;
+    if(file.size > 2 * 1024 * 1024) { showToast('Image must be under 2MB'); e.target.value = ''; return; }
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      const b64 = evt.target.result;
+      document.getElementById('pkg-img').value = b64;
+      const preview = document.getElementById('pkg-img-preview');
+      preview.classList.remove('hidden');
+      preview.querySelector('img').src = b64;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function savePkg() {
+    const id = document.getElementById('pkg-id').value;
+    const discountPriceVal = document.getElementById('pkg-discount-price').value;
+    const pkg = {
+      id: id ? parseInt(id) : Date.now(),
+      name: document.getElementById('pkg-name').value,
+      badge: document.getElementById('pkg-badge').value,
+      nights: parseInt(document.getElementById('pkg-nights').value)||1,
+      days: parseInt(document.getElementById('pkg-days').value)||1,
+      price: parseInt(document.getElementById('pkg-price').value)||0,
+      discount_price: discountPriceVal ? (parseInt(discountPriceVal)||null) : null,
+      discount_label: document.getElementById('pkg-discount-label').value.trim() || null,
+      rating: parseFloat(document.getElementById('pkg-rating').value)||4.5,
+      reviews: parseInt(document.getElementById('pkg-reviews').value)||0,
+      places: document.getElementById('pkg-places').value,
+      img: document.getElementById('pkg-img').value,
+    };
+    await PK.saveSinglePackage(pkg);
+    document.getElementById('pkg-form-wrap').classList.add('hidden');
+    renderPackages();
+    showToast('✅ Package saved!');
+  }
+
+  async function deletePkg(id) {
+    if(!confirm('Delete this package?')) return;
+    await PK.deletePackage(id);
+    renderPackages();
+    showToast('Package deleted.');
+  }
+
+  // Pricing
+  async function renderPricing() {
+    const pkgs = await PK.getPackages();
+    document.getElementById('pricing-list').innerHTML = pkgs.map(p => `
+      <div class="border-b border-border pb-5 mb-1">
+        <div class="flex items-start gap-4">
+          <div class="flex-1">
+            <div class="font-medium text-foreground">${p.name}</div>
+            <div class="text-xs text-muted-foreground">${p.nights}N/${p.days}D · ${p.places.split('·')[0].trim()}</div>
+            ${p.discount_label ? `<span class="inline-block mt-1 text-[10px] font-bold bg-red-100 text-red-600 px-2 py-0.5 rounded-full">${p.discount_label}</span>` : ''}
+          </div>
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center gap-2 justify-end">
+              <span class="text-xs text-muted-foreground w-20 text-right">Original ₹</span>
+              <input type="number" id="price-${p.id}" value="${p.price}" class="pk-input text-sm font-semibold" style="width:110px;height:2.25rem">
+            </div>
+            <div class="flex items-center gap-2 justify-end">
+              <span class="text-xs text-muted-foreground w-20 text-right">Discount ₹</span>
+              <input type="number" id="disc-${p.id}" value="${p.discount_price || ''}" placeholder="None" class="pk-input text-sm text-red-600 font-semibold" style="width:110px;height:2.25rem;border-color:hsl(0,84%,85%)">
+            </div>
+            <div class="flex items-center gap-2 justify-end">
+              <span class="text-xs text-muted-foreground w-20 text-right">Offer Label</span>
+              <input type="text" id="label-${p.id}" value="${p.discount_label || ''}" placeholder="e.g. Summer Offer" class="pk-input text-sm" style="width:110px;height:2.25rem">
+            </div>
+          </div>
+          <div class="flex flex-col gap-2 pt-1">
+            <button onclick="savePrice(${p.id})" class="btn-primary text-xs" style="border-radius:0.375rem;padding:0.5rem 0.875rem">💾 Save</button>
+            <button onclick="clearDiscount(${p.id})" class="text-xs px-2 py-1 border border-red-200 text-red-500 rounded-md hover:bg-red-50 transition-smooth">✕ Clear</button>
+          </div>
+        </div>
+      </div>`).join('');
+  }
+
+  async function savePrice(id) {
+    const val = parseInt(document.getElementById('price-'+id).value) || 0;
+    const discVal = document.getElementById('disc-'+id).value;
+    const disc = discVal ? (parseInt(discVal) || null) : null;
+    const labelEl = document.getElementById('label-'+id);
+    const label = labelEl ? (labelEl.value.trim() || null) : null;
+    const ok = await PK.patchPackage(id, { price: val, discount_price: disc, discount_label: label });
+    if (ok) { renderPricing(); showToast('✅ Pricing updated!'); }
+    else showToast('❌ Save failed — check console');
+  }
+
+  async function clearDiscount(id) {
+    const ok = await PK.patchPackage(id, { discount_price: null, discount_label: null });
+    if (ok) { renderPricing(); showToast('✅ Discount cleared.'); }
+    else showToast('❌ Clear failed — check console');
+  }
+
+  // Toast (same as shared but admin is standalone)
+  function showToast(msg) {
+    let t = document.getElementById('pk-toast');
+    if(!t){t=document.createElement('div');t.id='pk-toast';t.style.cssText='position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:hsl(168,60%,22%);color:white;padding:0.75rem 1.5rem;border-radius:9999px;font-size:0.875rem;font-weight:500;z-index:99999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap';document.body.appendChild(t);}
+    t.textContent=msg;t.style.opacity='1';setTimeout(()=>{t.style.opacity='0';},3000);
+  }
+
+  // ===== PAGE EDITORS =====
+  // Map of pageKey -> array of {field: supabaseKey, el: elementId}
+  const PAGE_FIELD_MAP = {
+    'home': [
+      {f:'home_hero_title',    el:'home-hero-title'},
+      {f:'home_hero_accent',   el:'home-hero-accent'},
+      {f:'home_hero_sub',      el:'home-hero-sub'},
+      {f:'home_stat1_num',     el:'home-stat1-num'},
+      {f:'home_stat1_lbl',     el:'home-stat1-lbl'},
+      {f:'home_stat2_num',     el:'home-stat2-num'},
+      {f:'home_stat2_lbl',     el:'home-stat2-lbl'},
+      {f:'home_stat3_num',     el:'home-stat3-num'},
+      {f:'home_stat3_lbl',     el:'home-stat3-lbl'},
+      {f:'home_pkg_label',     el:'home-pkg-label'},
+      {f:'home_pkg_title',     el:'home-pkg-title'},
+      {f:'home_pkg_desc',      el:'home-pkg-desc'},
+      {f:'home_exp_label',     el:'home-exp-label'},
+      {f:'home_exp_title',     el:'home-exp-title'},
+      {f:'home_rev_label',     el:'home-rev-label'},
+      {f:'home_rev_title',     el:'home-rev-title'},
+      {f:'home_cta_title',     el:'home-cta-title'},
+      {f:'home_cta_sub',       el:'home-cta-sub'},
+      {f:'home_wa_number',     el:'home-wa-number'},
+      {f:'home_footer_about',  el:'home-footer-about'},
+      {f:'home_footer_copy',   el:'home-footer-copy'},
+      {f:'home_office1',       el:'home-office1'},
+      {f:'home_office2',       el:'home-office2'},
+      {f:'home_office3',       el:'home-office3'},
+    ],
+    'packages-page': [
+      {f:'pkgpage_title',        el:'pkgpage-title'},
+      {f:'pkgpage_sub',          el:'pkgpage-sub'},
+      {f:'pkgpage_filter_title', el:'pkgpage-filter-title'},
+      {f:'pkgpage_no_results',   el:'pkgpage-no-results'},
+      {f:'pkgpage_phone1',       el:'pkgpage-phone1'},
+      {f:'pkgpage_phone2',       el:'pkgpage-phone2'},
+      {f:'pkgpage_email',        el:'pkgpage-email'},
+    ],
+    'about-page': [
+      {f:'about_title',       el:'about-title'},
+      {f:'about_sub',         el:'about-sub'},
+      {f:'about_story_title', el:'about-story-title'},
+      {f:'about_story_p1',    el:'about-story-p1'},
+      {f:'about_story_p2',    el:'about-story-p2'},
+      {f:'about_team_title',  el:'about-team-title'},
+      {f:'about_val1_t',      el:'about-val1-t'},
+      {f:'about_val1_d',      el:'about-val1-d'},
+      {f:'about_val2_t',      el:'about-val2-t'},
+      {f:'about_val2_d',      el:'about-val2-d'},
+      {f:'about_val3_t',      el:'about-val3-t'},
+      {f:'about_val3_d',      el:'about-val3-d'},
+    ],
+    'contact-page': [
+      {f:'contact_title',         el:'contact-title'},
+      {f:'contact_sub',           el:'contact-sub'},
+      {f:'contact_phone1',        el:'contact-phone1'},
+      {f:'contact_phone2',        el:'contact-phone2'},
+      {f:'contact_email',         el:'contact-email'},
+      {f:'contact_wa',            el:'contact-wa'},
+      {f:'contact_office1_city',  el:'contact-office1-city'},
+      {f:'contact_office1_addr',  el:'contact-office1-addr'},
+      {f:'contact_office2_city',  el:'contact-office2-city'},
+      {f:'contact_office2_addr',  el:'contact-office2-addr'},
+      {f:'contact_office3_city',  el:'contact-office3-city'},
+      {f:'contact_office3_addr',  el:'contact-office3-addr'},
+      {f:'contact_map_url',       el:'contact-map-url'},
+    ],
+  };
+
+  async function loadPageEditor(pageKey) {
+    const s = await PK.getSettings();
+    if (!s) return;
+    if (pageKey === 'destinations-page') {
+      document.getElementById('dest-title').value = s['dest_title'] || '';
+      document.getElementById('dest-sub').value   = s['dest_sub']   || '';
+      renderDestCards(s['dest_cards'] || []);
+      return;
+    }
+    const fields = PAGE_FIELD_MAP[pageKey] || [];
+    fields.forEach(({f, el}) => {
+      const elem = document.getElementById(el);
+      if (elem) elem.value = s[f] || '';
+    });
+  }
+
+  async function savePageEditor(pageKey) {
+    const s = await PK.getSettings() || {};
+    if (pageKey === 'destinations-page') {
+      s['dest_title'] = document.getElementById('dest-title').value;
+      s['dest_sub']   = document.getElementById('dest-sub').value;
+      // collect cards
+      const cards = [];
+      document.querySelectorAll('.dest-card-row').forEach(row => {
+        cards.push({
+          emoji: row.querySelector('.dest-emoji').value,
+          name:  row.querySelector('.dest-name').value,
+          desc:  row.querySelector('.dest-desc').value,
+          img:   row.querySelector('.dest-img').value,
+        });
+      });
+      s['dest_cards'] = cards;
+    } else {
+      const fields = PAGE_FIELD_MAP[pageKey] || [];
+      fields.forEach(({f, el}) => {
+        const elem = document.getElementById(el);
+        if (elem) s[f] = elem.value;
+      });
+    }
+    const ok = await PK.saveSettings(s);
+    showToast(ok ? '✅ Page saved!' : '❌ Save failed');
+  }
+
+  // Destinations card editor
+  function renderDestCards(cards) {
+    const wrap = document.getElementById('dest-cards-editor');
+    wrap.innerHTML = cards.map((c, i) => destCardHTML(c, i)).join('');
+  }
+  function destCardHTML(c = {}, i = 0) {
+    return `<div class="dest-card-row border border-border rounded-xl p-4 space-y-2">
+      <div class="flex gap-2 items-center">
+        <input class="dest-emoji pk-input" style="width:70px" placeholder="🏔️" value="${c.emoji||''}">
+        <input class="dest-name pk-input flex-1" placeholder="Destination name" value="${c.name||''}">
+        <button onclick="this.closest('.dest-card-row').remove()" class="text-red-400 hover:text-red-600 text-lg px-2">✕</button>
+      </div>
+      <input class="dest-desc pk-input" placeholder="Short description" value="${c.desc||''}">
+      <input class="dest-img pk-input" placeholder="Image URL (optional)" value="${c.img||''}">
+    </div>`;
+  }
+  function addDestCard() {
+    const wrap = document.getElementById('dest-cards-editor');
+    const div = document.createElement('div');
+    div.innerHTML = destCardHTML();
+    wrap.appendChild(div.firstElementChild);
+  }
+
+  // Admin Login Logic
+  const ADMIN_EMAIL = 'admin@prebookholidays.com'; // Default email
+  const ADMIN_PASSWORD = 'password123'; // Default password
+
+  function checkAuth() {
+    if (sessionStorage.getItem('pk_admin_auth') === 'true') {
+      document.getElementById('login-overlay').style.display = 'none';
+      renderDashboard();
+    }
+  }
+
+  function handleLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById('admin-email').value;
+    const pwd = document.getElementById('admin-pwd').value;
+    if (email === ADMIN_EMAIL && pwd === ADMIN_PASSWORD) {
+      sessionStorage.setItem('pk_admin_auth', 'true');
+      const overlay = document.getElementById('login-overlay');
+      overlay.style.opacity = '0';
+      setTimeout(() => overlay.style.display = 'none', 300);
+      renderDashboard();
+    } else {
+      document.getElementById('login-error').classList.remove('hidden');
+    }
+  }
+
+  // Init
+  checkAuth();
+</script>
+</body>
+</html>

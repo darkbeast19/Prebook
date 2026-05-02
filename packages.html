@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tour Packages | Prebook Holidays Tours & Holidays</title>
+  <meta name="description" content="Browse all Kashmir tour packages — from 3-day quick getaways to 11-day grand explorations. Curated by local experts.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { primary:'hsl(168 60% 22%)', 'primary-foreground':'hsl(0 0% 98%)', secondary:'hsl(38 96% 54%)', 'secondary-foreground':'hsl(0 0% 9%)', background:'hsl(0 0% 100%)', foreground:'hsl(222 47% 11%)', card:'hsl(0 0% 100%)', muted:'hsl(210 40% 96%)', 'muted-foreground':'hsl(215 16% 47%)', border:'hsl(214 32% 91%)' }, fontFamily:{ serif:['Playfair Display','serif'], sans:['Inter','sans-serif'] } } }
+    }
+  </script>
+</head>
+<body class="bg-background">
+
+<!-- ===== NAV ===== -->
+<header class="sticky top-0 left-0 right-0 z-50 bg-primary shadow-elegant">
+  <nav class="pk-container flex items-center justify-between py-4">
+    <a href="index.html" class="flex items-center gap-2 text-primary-foreground">
+      <svg class="h-7 w-7 text-secondary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+      <span class="font-serif text-xl font-bold tracking-wide">Prebook Holidays</span>
+    </a>
+    <ul class="hidden md:flex items-center gap-7">
+      <li><a href="index.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">Home</a></li>
+      <li><a href="packages.html" class="text-sm font-medium text-secondary border-b border-secondary pb-0.5">Packages</a></li>
+      <li><a href="destinations.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">Destinations</a></li>
+      <li><a href="about.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">About Us</a></li>
+      <li><a href="blog.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">Blog</a></li>
+      <li><a href="contact.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">Contact</a></li>
+    </ul>
+    <div class="flex items-center gap-3">
+      <button data-popup-open="callback-popup" class="hidden md:inline-flex items-center gap-1.5 rounded-full border border-primary-foreground/40 px-4 py-1.5 text-xs font-semibold text-primary-foreground transition-smooth hover:bg-primary-foreground/10">📞 Quick Callback</button>
+      <a href="contact.html" class="btn-primary text-sm px-5 py-2 rounded-md" style="border-radius:0.375rem">Book Now</a>
+      <button id="nav-toggle" class="md:hidden text-primary-foreground p-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div id="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="packages.html">Packages</a>
+    <a href="destinations.html">Destinations</a>
+    <a href="about.html">About Us</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact</a>
+    <button data-popup-open="callback-popup" class="text-left text-primary-foreground/80">📞 Quick Callback</button>
+  </div>
+</header>
+
+<!-- ===== PAGE HERO ===== -->
+<section class="bg-primary py-16 text-primary-foreground">
+  <div class="pk-container">
+    <span class="section-badge text-secondary">All Packages</span>
+    <h1 class="mt-3 font-serif text-4xl font-bold md:text-5xl">Kashmir Tour Packages</h1>
+    <p class="mt-4 max-w-xl text-primary-foreground/80">From quick 3-day escapes to grand 11-day explorations — every package crafted by local Kashmiri experts.</p>
+  </div>
+</section>
+
+<!-- ===== FILTER BAR ===== -->
+<section class="border-b border-border bg-card py-5 sticky top-16 z-40 shadow-sm">
+  <div class="pk-container flex flex-wrap items-center gap-3">
+    <span class="text-sm font-semibold text-muted-foreground mr-2">Filter:</span>
+    <button onclick="filterPackages('all')" class="filter-btn active px-4 py-1.5 rounded-full text-sm font-medium border border-primary bg-primary text-primary-foreground transition-smooth" data-filter="all">All</button>
+    <button onclick="filterPackages('short')" class="filter-btn px-4 py-1.5 rounded-full text-sm font-medium border border-border text-muted-foreground transition-smooth hover:border-primary hover:text-primary" data-filter="short">Short (≤4 days)</button>
+    <button onclick="filterPackages('medium')" class="filter-btn px-4 py-1.5 rounded-full text-sm font-medium border border-border text-muted-foreground transition-smooth hover:border-primary hover:text-primary" data-filter="medium">Medium (5–7 days)</button>
+    <button onclick="filterPackages('long')" class="filter-btn px-4 py-1.5 rounded-full text-sm font-medium border border-border text-muted-foreground transition-smooth hover:border-primary hover:text-primary" data-filter="long">Long (8+ days)</button>
+    <button onclick="filterPackages('sale')" class="filter-btn px-4 py-1.5 rounded-full text-sm font-medium border border-red-300 text-red-500 transition-smooth hover:bg-red-50" data-filter="sale">🏷️ On Sale</button>
+    <div class="ml-auto flex items-center gap-2">
+      <span class="text-sm text-muted-foreground">Sort:</span>
+      <select id="sort-select" onchange="sortPackages()" class="pk-input w-auto text-sm" style="height:2.25rem;padding:0 0.75rem">
+        <option value="default">Default</option>
+        <option value="price-asc">Price: Low → High</option>
+        <option value="price-desc">Price: High → Low</option>
+        <option value="rating">Top Rated</option>
+      </select>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PACKAGES GRID ===== -->
+<section class="bg-gradient-soft py-20">
+  <div class="pk-container">
+    <div id="packages-grid" class="grid gap-8 md:grid-cols-2 lg:grid-cols-3"></div>
+    <p id="no-results" class="hidden text-center py-20 text-muted-foreground text-lg">No packages match this filter.</p>
+  </div>
+</section>
+
+<!-- ===== ENQUIRY CTA ===== -->
+<section class="bg-primary py-16 text-primary-foreground">
+  <div class="pk-container text-center">
+    <h2 class="font-serif text-3xl font-bold md:text-4xl">Can't find what you're looking for?</h2>
+    <p class="mt-4 text-primary-foreground/80 max-w-lg mx-auto">We create fully custom Kashmir itineraries tailored to your budget, dates, and interests.</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-4">
+      <button data-popup-open="enquiry-popup" class="btn-primary">Request Custom Package</button>
+      <a href="https://wa.me/919999999999?text=Hi! I need a custom Kashmir tour package." target="_blank" class="btn-outline">💬 WhatsApp Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PACKAGE DETAIL MODAL ===== -->
+<div id="pkg-modal" class="popup-overlay">
+  <div class="popup-box" style="max-width:560px;padding:0;overflow:hidden">
+    <button class="popup-close" style="top:0.75rem;right:0.75rem;background:rgba(0,0,0,0.4);color:white;border-radius:50%;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;z-index:10" data-popup-close="pkg-modal">✕</button>
+    <img id="modal-img" src="" alt="" class="w-full h-52 object-cover">
+    <div class="p-6">
+      <span id="modal-badge" class="rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-secondary-foreground"></span>
+      <h3 id="modal-name" class="mt-3 font-serif text-2xl font-bold text-foreground"></h3>
+      <div id="modal-meta" class="mt-2 text-sm text-muted-foreground"></div>
+      <div id="modal-places" class="mt-3 text-sm text-muted-foreground flex items-start gap-1.5"></div>
+      <div class="mt-4 border-t border-border pt-4 flex items-end justify-between">
+        <div>
+          <div class="text-xs text-muted-foreground">Starting from</div>
+          <div id="modal-price" class="font-serif text-3xl font-bold text-primary"></div>
+          <div class="text-xs text-muted-foreground">per person</div>
+        </div>
+        <div class="flex gap-2">
+          <button id="modal-pdf-btn" class="btn-green text-sm" style="border-radius:0.5rem;padding:0.5rem 1rem">📄 Download PDF</button>
+          <button id="modal-enquire-btn" class="btn-primary text-sm" style="border-radius:0.5rem;padding:0.5rem 1rem">Enquire Now</button>
+        </div>
+      </div>
+      <!-- Dynamic Pricing -->
+      <div id="price-calc" class="mt-4 bg-muted rounded-xl p-4" data-base="">
+        <p class="text-sm font-semibold text-foreground mb-3">💰 Calculate Total Price</p>
+        <input type="hidden" name="base-price">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="pk-label text-xs">Travellers</label>
+            <input name="people" type="number" min="1" max="30" value="2" class="pk-input text-sm">
+          </div>
+          <div>
+            <label class="pk-label text-xs">Season</label>
+            <select name="season" class="pk-input text-sm" style="height:2.75rem">
+              <option value="normal">Normal</option>
+              <option value="peak">Peak (+25%)</option>
+              <option value="off">Off-Season (-15%)</option>
+            </select>
+          </div>
+        </div>
+        <div class="mt-3 flex items-center justify-between">
+          <span class="text-sm text-muted-foreground">Estimated Total:</span>
+          <span id="calc-output" class="font-serif text-2xl font-bold text-primary">₹0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SHARED POPUPS ===== -->
+<div id="enquiry-popup" class="popup-overlay">
+  <div class="popup-box">
+    <button class="popup-close" data-popup-close="enquiry-popup">✕</button>
+    <h3 class="font-serif text-xl font-bold text-foreground">Send Enquiry</h3>
+    <p class="mt-1 text-sm text-muted-foreground">We'll respond within 24 hours.</p>
+    <form class="pk-enquiry-form mt-4 space-y-3">
+      <div><label class="pk-label">Name *</label><input name="name" class="pk-input" placeholder="Your name" required></div>
+      <div><label class="pk-label">Phone *</label><input name="phone" type="tel" class="pk-input" placeholder="+91 99999 99999" required></div>
+      <div><label class="pk-label">Email</label><input name="email" type="email" class="pk-input" placeholder="you@example.com"></div>
+      <div><label class="pk-label">Package</label><input name="package" id="enquiry-package" class="pk-input" placeholder="Package name"></div>
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="pk-label">Travellers</label><input name="travellers" type="number" min="1" value="2" class="pk-input"></div>
+        <div><label class="pk-label">Travel Date</label><input name="date" type="date" class="pk-input"></div>
+      </div>
+      <div><label class="pk-label">Message</label><textarea name="message" class="pk-input" rows="3" placeholder="Any special requirements…"></textarea></div>
+      <button type="submit" class="btn-primary w-full justify-center" style="border-radius:0.5rem;height:2.75rem">Send via WhatsApp →</button>
+    </form>
+  </div>
+</div>
+
+<div id="callback-popup" class="popup-overlay">
+  <div class="popup-box" style="max-width:360px">
+    <button class="popup-close" data-popup-close="callback-popup">✕</button>
+    <h3 class="font-serif text-xl font-bold text-foreground">📞 Request Callback</h3>
+    <p class="mt-1 text-sm text-muted-foreground">Share your number — we'll call within 30 minutes.</p>
+    <form id="callback-form" class="mt-4 space-y-3">
+      <div><label class="pk-label">Your Name *</label><input name="cb-name" class="pk-input" placeholder="Full name" required></div>
+      <div><label class="pk-label">Mobile Number *</label><input name="cb-phone" type="tel" class="pk-input" placeholder="+91 99999 99999" required></div>
+      <button type="submit" class="btn-primary w-full justify-center" style="border-radius:0.5rem;height:2.75rem">Request Callback</button>
+    </form>
+  </div>
+</div>
+
+<div id="exit-popup" class="popup-overlay">
+  <div class="popup-box" style="max-width:400px;text-align:center">
+    <button class="popup-close" data-popup-close="exit-popup">✕</button>
+    <div style="font-size:3rem">🎁</div>
+    <h3 class="mt-3 font-serif text-2xl font-bold" style="color:white">Get ₹1,000 Discount!</h3>
+    <p class="mt-2 text-sm" style="color:rgba(255,255,255,0.8)">Don't leave yet! Enquire now and save ₹1,000 on your Kashmir trip.</p>
+    <button data-popup-open="enquiry-popup" data-popup-close="exit-popup" class="mt-5 btn-primary w-full justify-center" style="border-radius:0.5rem;height:2.75rem;font-size:1rem">Claim Discount — Enquire Now →</button>
+    <button data-popup-close="exit-popup" class="mt-3 text-xs" style="color:rgba(255,255,255,0.5);background:none;border:none;cursor:pointer">No thanks, I'll pay full price</button>
+  </div>
+</div>
+
+<!-- ===== WHATSAPP FLOAT ===== -->
+<a href="https://wa.me/919999999999?text=Hi%20Paradise%20Kashmir!%20I'd%20like%20to%20know%20more%20about%20your%20tour%20packages." target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" class="fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold text-white shadow-elegant transition-smooth hover:scale-105" style="background:hsl(142,70%,40%)">
+  <span class="relative flex h-3 w-3"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-60"></span><span class="relative inline-flex h-3 w-3 rounded-full bg-white"></span></span>
+  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+  <span class="hidden sm:inline">Chat on WhatsApp</span>
+</a>
+
+<!-- ===== FOOTER ===== -->
+<footer class="border-t border-border bg-background py-12">
+  <div class="pk-container">
+    <div class="grid gap-10 md:grid-cols-3">
+      <div>
+        <div class="flex items-center gap-2 text-foreground">
+          <svg class="h-6 w-6 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+          <span class="font-serif text-lg font-bold">Prebook Holidays</span>
+        </div>
+        <p class="mt-4 text-sm text-muted-foreground">Handcrafted Kashmir journeys by local experts — from quick escapes to grand tours.</p>
+      </div>
+      <div>
+        <h4 class="font-serif text-base font-bold text-foreground">Quick Links</h4>
+        <ul class="mt-4 space-y-2 text-sm text-muted-foreground">
+          <li><a href="index.html" class="transition-smooth hover:text-primary">Home</a></li>
+          <li><a href="packages.html" class="transition-smooth hover:text-primary">Packages</a></li>
+          <li><a href="destinations.html" class="transition-smooth hover:text-primary">Destinations</a></li>
+          <li><a href="about.html" class="transition-smooth hover:text-primary">About Us</a></li>
+          <li><a href="blog.html" class="transition-smooth hover:text-primary">Blog</a></li>
+          <li><a href="contact.html" class="transition-smooth hover:text-primary">Contact</a></li>
+          <li><a href="admin/index.html" class="transition-smooth hover:text-primary">Admin Panel</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-serif text-base font-bold text-foreground">Get in touch</h4>
+        <ul class="mt-4 space-y-3 text-sm text-muted-foreground">
+          <li>📞 <a href="tel:+918377924630" class="hover:text-primary">+91 83779 24630</a> | <a href="tel:+919899105056" class="hover:text-primary">+91 98991 05056</a></li>
+          <li>✉️ <a href="mailto:info@prebookholidays.com" class="hover:text-primary">info@prebookholidays.com</a></li>
+          <li>📍 New Delhi · Pune · Gwalior</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-10 border-t border-border pt-6 text-center text-sm text-muted-foreground">© 2026 Prebook Holidays Tours. Crafted with ♥ in Srinagar.</div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared.js"></script>
+<script>
+  let allPackages = [];
+  let displayedPackages = [];
+  let currentFilter = 'all';
+
+  function stars(n) {
+    return Array.from({length:5}, (_,i) => `<svg class="star${i>=Math.round(n)?' opacity-30':''}" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;color:hsl(38,96%,54%)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>`).join('');
+  }
+
+  async function renderPackages(list) {
+    const grid = document.getElementById('packages-grid');
+    const none = document.getElementById('no-results');
+    if (!list.length) { grid.innerHTML=''; none.classList.remove('hidden'); return; }
+    none.classList.add('hidden');
+    grid.innerHTML = list.map(p => {
+      const effectivePrice = p.discount_price || p.price;
+      const hasDiscount = p.discount_price && p.discount_price < p.price;
+      return `
+      <article class="group flex flex-col overflow-hidden rounded-2xl bg-card shadow-card-soft card-hover">
+        <div class="relative h-64 overflow-hidden cursor-pointer" onclick="openPkgModal(${p.id})">
+          <img src="${p.img}" alt="${p.name}" loading="lazy" class="h-full w-full object-cover transition-smooth group-hover:scale-110">
+          <span class="absolute left-4 top-4 rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-secondary-foreground">${p.badge}</span>
+          <span class="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-foreground shadow-sm backdrop-blur-sm">⭐ ${p.rating}</span>
+          ${hasDiscount ? `<span class="absolute bottom-4 left-4 rounded-full bg-red-500 px-3 py-1 text-xs font-bold text-white shadow-sm animate-pulse">${p.discount_label || 'Special Offer'}</span>` : ''}
+        </div>
+        <div class="flex flex-1 flex-col p-6">
+          <div class="text-xs font-semibold uppercase tracking-wider text-primary">${p.nights} Nights / ${p.days} Days</div>
+          <h3 class="mt-1 font-serif text-xl font-bold text-foreground">${p.name}</h3>
+          <div class="mt-2 flex items-center gap-1.5">
+            <div class="stars">${stars(p.rating)}</div>
+            <span class="text-xs text-muted-foreground">${p.rating} (${p.reviews} reviews)</span>
+          </div>
+          <div class="mt-3 text-sm text-muted-foreground">📍 ${p.places}</div>
+          <div class="mt-auto border-t border-border pt-4 mt-5 flex items-end justify-between">
+            <div>
+              <div class="text-xs text-muted-foreground">Starting from</div>
+              ${hasDiscount ? `<div class="text-sm text-muted-foreground line-through decoration-red-400/60">₹${p.price.toLocaleString('en-IN')}</div>` : ''}
+              <div class="flex items-center gap-2">
+                <div class="font-serif text-2xl font-bold text-primary">₹${effectivePrice.toLocaleString('en-IN')}</div>
+                ${hasDiscount && p.discount_label ? `<span class="text-[10px] font-bold bg-red-100 text-red-600 px-2 py-0.5 rounded-full uppercase tracking-wider">${p.discount_label}</span>` : ''}
+              </div>
+            </div>
+          </div>
+          <div class="mt-3 flex gap-2">
+            <button onclick="openPkgModal(${p.id})" class="flex-1 btn-primary text-sm justify-center" style="border-radius:0.375rem;padding:0.5rem">View Details</button>
+            <button onclick="downloadPackagePDF(allPackages.find(x=>x.id===${p.id}))" title="Download PDF" class="px-3 py-2 rounded-md border border-border text-muted-foreground transition-smooth hover:border-primary hover:text-primary text-sm">📄</button>
+          </div>
+        </div>
+      </article>`;
+    }).join('');
+  }
+
+  async function filterPackages(f) {
+    currentFilter = f;
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      const active = b.dataset.filter === f;
+      b.classList.toggle('bg-primary', active);
+      b.classList.toggle('text-primary-foreground', active);
+      b.classList.toggle('border-primary', active);
+      b.classList.toggle('text-muted-foreground', !active);
+      b.classList.toggle('border-border', !active);
+    });
+    let filtered = [...allPackages];
+    if (f==='short')  filtered = filtered.filter(p => p.days <= 4);
+    if (f==='medium') filtered = filtered.filter(p => p.days >= 5 && p.days <= 7);
+    if (f==='long')   filtered = filtered.filter(p => p.days >= 8);
+    if (f==='sale')   filtered = filtered.filter(p => p.discount_price && p.discount_price < p.price);
+    displayedPackages = filtered;
+    sortPackages();
+  }
+
+  function sortPackages() {
+    const s = document.getElementById('sort-select').value;
+    let sorted = [...displayedPackages];
+    if (s==='price-asc')  sorted.sort((a,b)=>a.price-b.price);
+    if (s==='price-desc') sorted.sort((a,b)=>b.price-a.price);
+    if (s==='rating')     sorted.sort((a,b)=>b.rating-a.rating);
+    renderPackages(sorted);
+  }
+
+  async function openPkgModal(id) {
+    const p = (await PK.getPackages()).find(x=>x.id===id);
+    if (!p) return;
+    const effectivePrice = p.discount_price || p.price;
+    const hasDiscount = p.discount_price && p.discount_price < p.price;
+    document.getElementById('modal-img').src = p.img;
+    document.getElementById('modal-badge').textContent = p.badge;
+    document.getElementById('modal-name').textContent = p.name;
+    document.getElementById('modal-meta').innerHTML = `🌙 ${p.nights} Nights / ${p.days} Days &nbsp;|&nbsp; ⭐ ${p.rating} (${p.reviews} reviews)`;
+    document.getElementById('modal-places').innerHTML = `📍 ${p.places}`;
+    document.getElementById('modal-price').innerHTML = hasDiscount
+      ? `<span style="font-size:1rem;text-decoration:line-through;color:#9ca3af;font-weight:normal">₹${p.price.toLocaleString('en-IN')}</span><br>₹${effectivePrice.toLocaleString('en-IN')} ${p.discount_label ? `<span style="font-size:0.65rem;font-family:Inter,sans-serif;font-weight:700;background:#fee2e2;color:#dc2626;padding:0.15rem 0.5rem;border-radius:9999px;vertical-align:middle">${p.discount_label}</span>` : ''}`
+      : `₹${effectivePrice.toLocaleString('en-IN')}`;
+    document.querySelector('#price-calc [name=base-price]').value = effectivePrice;
+    document.getElementById('modal-pdf-btn').onclick = () => downloadPackagePDF(p);
+    document.getElementById('modal-enquire-btn').onclick = () => {
+      closePopup('pkg-modal');
+      document.getElementById('enquiry-package').value = p.name;
+      openPopup('enquiry-popup');
+    };
+    initPriceCalculator();
+    openPopup('pkg-modal');
+  }
+
+  async function init() {
+    allPackages = await PK.getPackages();
+    displayedPackages = [...allPackages];
+    renderPackages(allPackages);
+  }
+  init();
+</script>
+</body>
+</html>

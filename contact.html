@@ -1,0 +1,304 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | Prebook Holidays Tours & Holidays</title>
+  <meta name="description" content="Contact Prebook Holidays — call, WhatsApp or email us. Request a free custom Kashmir itinerary within 24 hours.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
+  <script>tailwind.config={theme:{extend:{colors:{primary:'hsl(168 60% 22%)','primary-foreground':'hsl(0 0% 98%)',secondary:'hsl(38 96% 54%)','secondary-foreground':'hsl(0 0% 9%)',background:'hsl(0 0% 100%)',foreground:'hsl(222 47% 11%)',card:'hsl(0 0% 100%)',muted:'hsl(210 40% 96%)','muted-foreground':'hsl(215 16% 47%)',border:'hsl(214 32% 91%)'},fontFamily:{serif:['Playfair Display','serif'],sans:['Inter','sans-serif']}}}}</script>
+</head>
+<body class="bg-background">
+
+<!-- NAV -->
+<header class="sticky top-0 z-50 bg-primary shadow-elegant">
+  <nav class="pk-container flex items-center justify-between py-4">
+    <a href="index.html" class="flex items-center gap-2 text-primary-foreground">
+      <svg class="h-7 w-7 text-secondary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+      <span class="font-serif text-xl font-bold tracking-wide">Prebook Holidays</span>
+    </a>
+    <ul class="hidden md:flex items-center gap-7">
+      <li><a href="index.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">Home</a></li>
+      <li><a href="packages.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">Packages</a></li>
+      <li><a href="destinations.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">Destinations</a></li>
+      <li><a href="about.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">About Us</a></li>
+      <li><a href="blog.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">Blog</a></li>
+      <li><a href="contact.html" class="text-sm font-medium text-secondary border-b border-secondary pb-0.5">Contact</a></li>
+    </ul>
+    <div class="flex items-center gap-3">
+      <button data-popup-open="callback-popup" class="hidden md:inline-flex items-center gap-1.5 rounded-full border border-primary-foreground/40 px-4 py-1.5 text-xs font-semibold text-primary-foreground transition-smooth hover:bg-primary-foreground/10">📞 Quick Callback</button>
+      <a href="#enquiry-form" class="btn-primary text-sm px-5 py-2" style="border-radius:0.375rem">Book Now</a>
+      <button id="nav-toggle" class="md:hidden text-primary-foreground p-1"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+  </nav>
+  <div id="mobile-nav"><a href="index.html">Home</a><a href="packages.html">Packages</a><a href="destinations.html">Destinations</a><a href="about.html">About Us</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a></div>
+</header>
+
+<!-- HERO -->
+<section class="bg-primary py-16 text-primary-foreground relative overflow-hidden">
+  <div class="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-secondary/10 blur-3xl"></div>
+  <div class="pk-container relative">
+    <span class="section-badge text-secondary">Let's Talk</span>
+    <h1 class="mt-3 font-serif text-4xl font-bold md:text-5xl">Your Kashmir Story<br><span class="italic text-secondary">Begins Here.</span></h1>
+    <p class="mt-4 max-w-xl text-primary-foreground/80">Talk to our travel experts and get a personalised itinerary within 24 hours — completely free, no obligations.</p>
+    <div class="mt-8 flex flex-wrap gap-4">
+      <a href="https://wa.me/919999999999?text=Hi! I'd like to plan a Kashmir trip." target="_blank" class="btn-primary">💬 WhatsApp Us</a>
+      <a href="tel:+918377924630" class="btn-outline">📞 Call +91 83779 24630</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT GRID -->
+<section class="py-20 bg-gradient-soft">
+  <div class="pk-container grid gap-12 lg:grid-cols-5 lg:items-start">
+
+    <!-- Contact Info -->
+    <div class="lg:col-span-2 space-y-6">
+      <div>
+        <h2 class="font-serif text-2xl font-bold text-foreground">Get in Touch</h2>
+        <p class="mt-2 text-muted-foreground">Our team is available Mon–Sat, 9am–7pm IST.</p>
+      </div>
+
+      <div class="rounded-2xl bg-card p-6 shadow-card-soft space-y-5">
+        <div class="flex items-start gap-4">
+          <div class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-saffron text-lg flex-shrink-0">📞</div>
+          <div>
+            <div class="font-semibold text-foreground text-sm">Phone / WhatsApp</div>
+            <a href="tel:+918377924630" class="block text-sm text-muted-foreground hover:text-primary transition-smooth">+91 83779 24630</a>
+            <a href="tel:+919899105056" class="block text-sm text-muted-foreground hover:text-primary transition-smooth">+91 98991 05056</a>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-saffron text-lg flex-shrink-0">✉️</div>
+          <div>
+            <div class="font-semibold text-foreground text-sm">Email</div>
+            <a href="mailto:info@prebookholidays.com" class="text-sm text-muted-foreground hover:text-primary transition-smooth">info@prebookholidays.com</a>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-saffron text-lg flex-shrink-0">🌐</div>
+          <div>
+            <div class="font-semibold text-foreground text-sm">Website</div>
+            <a href="https://www.prebookholidays.com" target="_blank" class="text-sm text-muted-foreground hover:text-primary transition-smooth">www.prebookholidays.com</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+        <h3 class="font-serif text-lg font-bold text-foreground mb-4">Our Offices</h3>
+        <ul class="space-y-3 text-sm text-muted-foreground">
+          <li class="flex items-start gap-2.5"><span class="text-primary flex-shrink-0 mt-0.5">📍</span><span><strong class="text-foreground">New Delhi</strong> — Dwarka Mor, 110059</span></li>
+          <li class="flex items-start gap-2.5"><span class="text-primary flex-shrink-0 mt-0.5">📍</span><span><strong class="text-foreground">Pune</strong> — Maharashtra</span></li>
+          <li class="flex items-start gap-2.5"><span class="text-primary flex-shrink-0 mt-0.5">📍</span><span><strong class="text-foreground">Gwalior</strong> — Madhya Pradesh</span></li>
+        </ul>
+      </div>
+
+      <!-- Quick Callback -->
+      <div class="rounded-2xl border-2 border-secondary bg-card p-6 shadow-card-soft">
+        <h3 class="font-serif text-lg font-bold text-foreground">📞 Request Instant Callback</h3>
+        <p class="mt-1 text-sm text-muted-foreground">Drop your number — we call within 30 minutes.</p>
+        <form id="callback-form" class="mt-4 space-y-3">
+          <div><label class="pk-label">Your Name</label><input name="cb-name" class="pk-input" placeholder="Full name" required></div>
+          <div><label class="pk-label">Mobile Number</label><input name="cb-phone" type="tel" class="pk-input" placeholder="+91 99999 99999" required></div>
+          <button type="submit" class="btn-primary w-full justify-center" style="border-radius:0.5rem;height:2.75rem">📞 Request Callback Now</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Enquiry Form -->
+    <div class="lg:col-span-3" id="enquiry-form">
+      <div class="rounded-3xl bg-card p-8 shadow-elegant">
+        <h2 class="font-serif text-2xl font-bold text-foreground">Request a Free Itinerary</h2>
+        <p class="mt-2 text-sm text-muted-foreground">Share your travel details — our Kashmir experts will craft a custom plan within 24 hours.</p>
+        <form class="pk-enquiry-form mt-6 space-y-4">
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div><label class="pk-label">Full Name *</label><input name="name" class="pk-input" placeholder="Aarav Sharma" required></div>
+            <div><label class="pk-label">Phone *</label><input name="phone" type="tel" class="pk-input" placeholder="+91 99999 99999" required></div>
+            <div><label class="pk-label">Email</label><input name="email" type="email" class="pk-input" placeholder="you@example.com"></div>
+            <div>
+              <label class="pk-label">Preferred Package</label>
+              <select name="package" class="pk-input" style="height:2.75rem">
+                <option value="">Choose a package</option>
+                <option>Quick Escape (3 Days)</option>
+                <option>Most Selling Short Trip (4 Days)</option>
+                <option>Balanced Tour (5 Days)</option>
+                <option>Best Selling Package (6 Days)</option>
+                <option>Extended Relaxed Tour (7 Days)</option>
+                <option>Grand Kashmir Tour (8 Days)</option>
+                <option>Custom Itinerary</option>
+              </select>
+            </div>
+            <div><label class="pk-label">Number of Travellers</label><input name="travellers" type="number" min="1" max="30" value="2" class="pk-input"></div>
+            <div><label class="pk-label">Travel Date</label><input name="date" type="date" class="pk-input"></div>
+          </div>
+          <div><label class="pk-label">Budget Range</label>
+            <select name="budget" class="pk-input" style="height:2.75rem">
+              <option value="">Select budget</option>
+              <option>Under ₹15,000 per person</option>
+              <option>₹15,000 – ₹25,000 per person</option>
+              <option>₹25,000 – ₹40,000 per person</option>
+              <option>₹40,000+ per person (Premium)</option>
+            </select>
+          </div>
+          <div><label class="pk-label">Tell Us More</label><textarea name="message" class="pk-input" rows="4" placeholder="Honeymoon, family trip, special interests, dietary needs, accessibility requirements…"></textarea></div>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <button type="submit" class="btn-primary flex-1 justify-center" style="border-radius:0.5rem;height:3rem;font-size:1rem">📤 Send Enquiry via WhatsApp</button>
+            <a href="https://wa.me/919999999999" target="_blank" class="inline-flex items-center justify-center gap-2 px-6 h-12 rounded-lg border-2 border-primary text-primary font-semibold text-sm transition-smooth hover:bg-primary hover:text-white" style="text-decoration:none">💬 Quick Chat</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CUSTOM TOUR PLANNER -->
+<section class="py-16 bg-primary text-primary-foreground">
+  <div class="pk-container">
+    <div class="text-center mb-10">
+      <span class="section-badge text-secondary">Design Your Trip</span>
+      <h2 class="mt-3 font-serif text-3xl font-bold md:text-4xl">Custom Tour Planner</h2>
+      <p class="mt-3 text-primary-foreground/80 max-w-lg mx-auto">Build your perfect Kashmir trip step by step — and we'll send you a tailored itinerary.</p>
+    </div>
+    <div class="max-w-3xl mx-auto">
+      <form class="pk-enquiry-form bg-primary-foreground/5 rounded-2xl p-8 border border-primary-foreground/15 space-y-5">
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label class="pk-label text-primary-foreground">Your Name *</label>
+            <input name="name" class="pk-input" placeholder="Full name" required>
+          </div>
+          <div>
+            <label class="pk-label text-primary-foreground">Phone *</label>
+            <input name="phone" type="tel" class="pk-input" placeholder="+91 99999 99999" required>
+          </div>
+          <div>
+            <label class="pk-label text-primary-foreground">Where do you want to go?</label>
+            <select name="package" class="pk-input" style="height:2.75rem">
+              <option>Srinagar + Dal Lake</option>
+              <option>Gulmarg (Ski / Snow)</option>
+              <option>Pahalgam + Betaab Valley</option>
+              <option>Sonmarg Glacier</option>
+              <option>Everywhere (Grand Tour)</option>
+              <option>Suggest for me!</option>
+            </select>
+          </div>
+          <div>
+            <label class="pk-label text-primary-foreground">Trip Duration</label>
+            <select name="duration" class="pk-input" style="height:2.75rem">
+              <option>3 Days</option>
+              <option>4 Days</option>
+              <option>5 Days</option>
+              <option>6 Days</option>
+              <option>7 Days</option>
+              <option>8+ Days</option>
+            </select>
+          </div>
+          <div>
+            <label class="pk-label text-primary-foreground">Number of Travellers</label>
+            <input name="travellers" type="number" min="1" max="50" value="2" class="pk-input">
+          </div>
+          <div>
+            <label class="pk-label text-primary-foreground">Travel Date</label>
+            <input name="date" type="date" class="pk-input">
+          </div>
+          <div>
+            <label class="pk-label text-primary-foreground">Budget per Person</label>
+            <select name="budget" class="pk-input" style="height:2.75rem">
+              <option>Under ₹15,000</option>
+              <option>₹15,000 – ₹25,000</option>
+              <option>₹25,000 – ₹40,000</option>
+              <option>₹40,000+ (Premium)</option>
+            </select>
+          </div>
+          <div>
+            <label class="pk-label text-primary-foreground">Trip Style</label>
+            <select name="style" class="pk-input" style="height:2.75rem">
+              <option>Honeymoon / Romantic</option>
+              <option>Family (with kids)</option>
+              <option>Adventure / Trekking</option>
+              <option>Group / Friends</option>
+              <option>Solo</option>
+              <option>Religious / Pilgrimage</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="pk-label text-primary-foreground">Special Interests</label>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2" id="interests">
+            <label class="interest-tag"><input type="checkbox" value="Shikara Ride" class="sr-only"><span class="block rounded-lg border border-primary-foreground/20 bg-primary-foreground/5 px-3 py-2 text-xs text-center cursor-pointer transition-smooth hover:border-secondary hover:bg-secondary/10">🛶 Shikara Ride</span></label>
+            <label class="interest-tag"><input type="checkbox" value="Skiing" class="sr-only"><span class="block rounded-lg border border-primary-foreground/20 bg-primary-foreground/5 px-3 py-2 text-xs text-center cursor-pointer transition-smooth hover:border-secondary hover:bg-secondary/10">⛷️ Skiing</span></label>
+            <label class="interest-tag"><input type="checkbox" value="Trekking" class="sr-only"><span class="block rounded-lg border border-primary-foreground/20 bg-primary-foreground/5 px-3 py-2 text-xs text-center cursor-pointer transition-smooth hover:border-secondary hover:bg-secondary/10">🥾 Trekking</span></label>
+            <label class="interest-tag"><input type="checkbox" value="Houseboat" class="sr-only"><span class="block rounded-lg border border-primary-foreground/20 bg-primary-foreground/5 px-3 py-2 text-xs text-center cursor-pointer transition-smooth hover:border-secondary hover:bg-secondary/10">🏡 Houseboat</span></label>
+            <label class="interest-tag"><input type="checkbox" value="Gardens" class="sr-only"><span class="block rounded-lg border border-primary-foreground/20 bg-primary-foreground/5 px-3 py-2 text-xs text-center cursor-pointer transition-smooth hover:border-secondary hover:bg-secondary/10">🌸 Gardens</span></label>
+            <label class="interest-tag"><input type="checkbox" value="Photography" class="sr-only"><span class="block rounded-lg border border-primary-foreground/20 bg-primary-foreground/5 px-3 py-2 text-xs text-center cursor-pointer transition-smooth hover:border-secondary hover:bg-secondary/10">📷 Photography</span></label>
+            <label class="interest-tag"><input type="checkbox" value="Local Food" class="sr-only"><span class="block rounded-lg border border-primary-foreground/20 bg-primary-foreground/5 px-3 py-2 text-xs text-center cursor-pointer transition-smooth hover:border-secondary hover:bg-secondary/10">🍽️ Local Food</span></label>
+            <label class="interest-tag"><input type="checkbox" value="Wildlife" class="sr-only"><span class="block rounded-lg border border-primary-foreground/20 bg-primary-foreground/5 px-3 py-2 text-xs text-center cursor-pointer transition-smooth hover:border-secondary hover:bg-secondary/10">🦌 Wildlife</span></label>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary w-full justify-center" style="border-radius:0.5rem;height:3rem;font-size:1rem">🗺️ Plan My Custom Trip →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- POPUPS -->
+<div id="callback-popup" class="popup-overlay">
+  <div class="popup-box" style="max-width:360px">
+    <button class="popup-close" data-popup-close="callback-popup">✕</button>
+    <h3 class="font-serif text-xl font-bold text-foreground">📞 Request Callback</h3>
+    <p class="mt-1 text-sm text-muted-foreground">We'll call within 30 minutes.</p>
+    <form id="callback-form-popup" class="mt-4 space-y-3">
+      <div><label class="pk-label">Name *</label><input name="cb-name" class="pk-input" placeholder="Full name" required></div>
+      <div><label class="pk-label">Mobile *</label><input name="cb-phone" type="tel" class="pk-input" placeholder="+91 99999 99999" required></div>
+      <button type="submit" class="btn-primary w-full justify-center" style="border-radius:0.5rem;height:2.75rem">Request Callback</button>
+    </form>
+  </div>
+</div>
+<div id="exit-popup" class="popup-overlay">
+  <div class="popup-box" style="max-width:400px;text-align:center">
+    <button class="popup-close" data-popup-close="exit-popup">✕</button>
+    <div style="font-size:3rem">🎁</div>
+    <h3 class="mt-3 font-serif text-2xl font-bold" style="color:white">Get ₹1,000 Discount!</h3>
+    <p class="mt-2 text-sm" style="color:rgba(255,255,255,0.8)">Enquire now and save ₹1,000 on your Kashmir trip.</p>
+    <a href="#enquiry-form" data-popup-close="exit-popup" class="mt-5 btn-primary w-full justify-center" style="border-radius:0.5rem;height:2.75rem;font-size:1rem">Claim Discount →</a>
+    <button data-popup-close="exit-popup" class="mt-3 text-xs" style="color:rgba(255,255,255,0.5);background:none;border:none;cursor:pointer">No thanks</button>
+  </div>
+</div>
+
+<a href="https://wa.me/919999999999?text=Hi%20Paradise%20Kashmir!" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" class="fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold text-white shadow-elegant transition-smooth hover:scale-105" style="background:hsl(142,70%,40%)">
+  <span class="relative flex h-3 w-3"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-60"></span><span class="relative inline-flex h-3 w-3 rounded-full bg-white"></span></span>
+  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+  <span class="hidden sm:inline">Chat on WhatsApp</span>
+</a>
+<footer class="border-t border-border bg-background py-12">
+  <div class="pk-container"><div class="grid gap-10 md:grid-cols-3"><div><div class="flex items-center gap-2"><svg class="h-6 w-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg><span class="font-serif text-lg font-bold text-foreground">Prebook Holidays</span></div><p class="mt-4 text-sm text-muted-foreground">Handcrafted Kashmir journeys by local experts.</p></div><div><h4 class="font-serif text-base font-bold text-foreground">Quick Links</h4><ul class="mt-4 space-y-2 text-sm text-muted-foreground"><li><a href="index.html" class="hover:text-primary">Home</a></li><li><a href="packages.html" class="hover:text-primary">Packages</a></li><li><a href="about.html" class="hover:text-primary">About Us</a></li><li><a href="admin/index.html" class="hover:text-primary">Admin</a></li></ul></div><div><h4 class="font-serif text-base font-bold text-foreground">Contact</h4><ul class="mt-4 space-y-2 text-sm text-muted-foreground"><li>📞 <a href="tel:+918377924630" class="hover:text-primary">+91 83779 24630</a></li><li>✉️ <a href="mailto:info@prebookholidays.com" class="hover:text-primary">info@prebookholidays.com</a></li></ul></div></div><div class="mt-10 border-t border-border pt-6 text-center text-sm text-muted-foreground">© 2026 Prebook Holidays Tours. Crafted with ♥ in Srinagar.</div></div>
+</footer>
+<script src="shared.js"></script>
+<script>
+  // Interest tag toggle styling
+  document.querySelectorAll('.interest-tag input').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const span = cb.nextElementSibling;
+      if (cb.checked) {
+        span.style.borderColor = 'hsl(38,96%,54%)';
+        span.style.background = 'rgba(251,146,60,0.15)';
+      } else {
+        span.style.borderColor = '';
+        span.style.background = '';
+      }
+    });
+  });
+  // Second callback form in section (not popup)
+  document.getElementById('callback-form')?.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = e.target.querySelector('[name=cb-name]').value.trim();
+    const phone = e.target.querySelector('[name=cb-phone]').value.trim();
+    PK.saveEnquiry({type:'Callback', name, phone, email:'', message:'Instant callback'});
+    window.open(`https://wa.me/919999999999?text=${encodeURIComponent(`Hi! I'm ${name}, please call me on ${phone}.`)}`, '_blank');
+    showToast('✅ Callback requested! We'll call you soon.');
+    e.target.reset();
+  });
+</script>
+</body>
+</html>

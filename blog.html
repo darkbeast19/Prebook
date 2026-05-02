@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | Prebook Holidays Tours & Holidays</title>
+  <meta name="description" content="Kashmir travel tips, itinerary ideas, seasonal guides and insider stories from our local experts.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
+  <script>tailwind.config={theme:{extend:{colors:{primary:'hsl(168 60% 22%)','primary-foreground':'hsl(0 0% 98%)',secondary:'hsl(38 96% 54%)','secondary-foreground':'hsl(0 0% 9%)',background:'hsl(0 0% 100%)',foreground:'hsl(222 47% 11%)',card:'hsl(0 0% 100%)',muted:'hsl(210 40% 96%)','muted-foreground':'hsl(215 16% 47%)',border:'hsl(214 32% 91%)'},fontFamily:{serif:['Playfair Display','serif'],sans:['Inter','sans-serif']}}}}</script>
+</head>
+<body class="bg-background">
+
+<!-- NAV -->
+<header class="sticky top-0 z-50 bg-primary shadow-elegant">
+  <nav class="pk-container flex items-center justify-between py-4">
+    <a href="index.html" class="flex items-center gap-2 text-primary-foreground">
+      <svg class="h-7 w-7 text-secondary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+      <span class="font-serif text-xl font-bold tracking-wide">Prebook Holidays</span>
+    </a>
+    <ul class="hidden md:flex items-center gap-7">
+      <li><a href="index.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">Home</a></li>
+      <li><a href="packages.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">Packages</a></li>
+      <li><a href="destinations.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">Destinations</a></li>
+      <li><a href="about.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">About Us</a></li>
+      <li><a href="blog.html" class="text-sm font-medium text-secondary border-b border-secondary pb-0.5">Blog</a></li>
+      <li><a href="contact.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">Contact</a></li>
+    </ul>
+    <div class="flex items-center gap-3">
+      <button data-popup-open="callback-popup" class="hidden md:inline-flex items-center gap-1.5 rounded-full border border-primary-foreground/40 px-4 py-1.5 text-xs font-semibold text-primary-foreground transition-smooth hover:bg-primary-foreground/10">📞 Quick Callback</button>
+      <a href="contact.html" class="btn-primary text-sm px-5 py-2" style="border-radius:0.375rem">Book Now</a>
+      <button id="nav-toggle" class="md:hidden text-primary-foreground p-1"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+  </nav>
+  <div id="mobile-nav"><a href="index.html">Home</a><a href="packages.html">Packages</a><a href="destinations.html">Destinations</a><a href="about.html">About Us</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a></div>
+</header>
+
+<!-- HERO -->
+<section class="bg-primary py-16 text-primary-foreground">
+  <div class="pk-container">
+    <span class="section-badge text-secondary">Travel Inspiration</span>
+    <h1 class="mt-3 font-serif text-4xl font-bold md:text-5xl">Kashmir Travel Blog</h1>
+    <p class="mt-4 max-w-xl text-primary-foreground/80">Insider tips, travel stories and seasonal guides from our local Kashmir experts.</p>
+  </div>
+</section>
+
+<!-- FEATURED POST -->
+<section class="py-16 bg-background">
+  <div class="pk-container">
+    <span class="section-badge">Featured Article</span>
+    <div class="mt-6 grid gap-8 lg:grid-cols-2 lg:items-center">
+      <div class="overflow-hidden rounded-2xl h-80">
+        <img src="https://preview--vale-voyage-hub.lovable.app/assets/srinagar-CUCqq7tp.jpg" alt="Dal Lake at sunrise" class="h-full w-full object-cover transition-smooth hover:scale-105">
+      </div>
+      <div>
+        <span class="rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-secondary-foreground">Must Read</span>
+        <h2 class="mt-4 font-serif text-3xl font-bold text-foreground">The Ultimate Kashmir Itinerary: 7 Days That Will Change You Forever</h2>
+        <p class="mt-4 text-muted-foreground leading-relaxed">From your first morning shikara ride on Dal Lake to your last cup of kahwa by the Lidder River in Pahalgam — here's how to make every hour count on your Kashmir trip.</p>
+        <div class="mt-4 flex items-center gap-3 text-sm text-muted-foreground">
+          <span>By <strong class="text-foreground">Imtiaz Khan</strong></span>
+          <span>·</span><span>April 2026</span>
+          <span>·</span><span>8 min read</span>
+        </div>
+        <a href="#" class="mt-6 btn-primary inline-flex" style="border-radius:0.5rem">Read Article →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG GRID -->
+<section class="py-16 bg-gradient-soft">
+  <div class="pk-container">
+    <h2 class="font-serif text-3xl font-bold text-foreground mb-10">Latest Articles</h2>
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+      <article class="group rounded-2xl bg-card overflow-hidden shadow-card-soft card-hover">
+        <div class="h-52 overflow-hidden">
+          <img src="https://preview--vale-voyage-hub.lovable.app/assets/gulmarg-Dr3BYDyx.jpg" alt="Gulmarg skiing" class="h-full w-full object-cover transition-smooth group-hover:scale-110">
+        </div>
+        <div class="p-6">
+          <span class="text-xs font-semibold uppercase tracking-wider text-primary">Adventure</span>
+          <h3 class="mt-2 font-serif text-xl font-bold text-foreground">Gulmarg Skiing Guide: Everything You Need to Know</h3>
+          <p class="mt-2 text-sm text-muted-foreground">Asia's highest gondola, Apharwat Peak and the best powder runs — your complete guide to skiing in Gulmarg.</p>
+          <div class="mt-4 flex items-center justify-between text-xs text-muted-foreground">
+            <span>March 2026 · 6 min read</span>
+            <a href="#" class="text-primary font-semibold hover:underline">Read →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="group rounded-2xl bg-card overflow-hidden shadow-card-soft card-hover">
+        <div class="h-52 overflow-hidden">
+          <img src="https://preview--vale-voyage-hub.lovable.app/assets/pahalgam-Cv4DMcdc.jpg" alt="Pahalgam" class="h-full w-full object-cover transition-smooth group-hover:scale-110">
+        </div>
+        <div class="p-6">
+          <span class="text-xs font-semibold uppercase tracking-wider text-primary">Travel Tips</span>
+          <h3 class="mt-2 font-serif text-xl font-bold text-foreground">10 Things Nobody Tells You Before Visiting Kashmir</h3>
+          <p class="mt-2 text-sm text-muted-foreground">From connectivity to clothing and customs — the honest, insider advice every first-time Kashmir visitor needs.</p>
+          <div class="mt-4 flex items-center justify-between text-xs text-muted-foreground">
+            <span>February 2026 · 5 min read</span>
+            <a href="#" class="text-primary font-semibold hover:underline">Read →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="group rounded-2xl bg-card overflow-hidden shadow-card-soft card-hover">
+        <div class="h-52 overflow-hidden">
+          <img src="https://preview--vale-voyage-hub.lovable.app/assets/sonmarg-BZ2NmOJH.jpg" alt="Sonmarg" class="h-full w-full object-cover transition-smooth group-hover:scale-110">
+        </div>
+        <div class="p-6">
+          <span class="text-xs font-semibold uppercase tracking-wider text-primary">Seasonal Guide</span>
+          <h3 class="mt-2 font-serif text-xl font-bold text-foreground">Kashmir in Autumn: The Golden Season No One Talks About</h3>
+          <p class="mt-2 text-sm text-muted-foreground">September to November brings Chinar leaves ablaze, saffron harvest and empty trails. Here's why autumn is Kashmir's best-kept secret.</p>
+          <div class="mt-4 flex items-center justify-between text-xs text-muted-foreground">
+            <span>January 2026 · 7 min read</span>
+            <a href="#" class="text-primary font-semibold hover:underline">Read →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="group rounded-2xl bg-card overflow-hidden shadow-card-soft card-hover">
+        <div class="h-52 overflow-hidden bg-gradient-soft flex items-center justify-center text-6xl">🛶</div>
+        <div class="p-6">
+          <span class="text-xs font-semibold uppercase tracking-wider text-primary">Experience</span>
+          <h3 class="mt-2 font-serif text-xl font-bold text-foreground">Staying on a Houseboat: A First-Timer's Complete Guide</h3>
+          <p class="mt-2 text-sm text-muted-foreground">What to expect, how to choose the right houseboat, the best locations and insider tips for an unforgettable floating stay.</p>
+          <div class="mt-4 flex items-center justify-between text-xs text-muted-foreground">
+            <span>December 2025 · 5 min read</span>
+            <a href="#" class="text-primary font-semibold hover:underline">Read →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="group rounded-2xl bg-card overflow-hidden shadow-card-soft card-hover">
+        <div class="h-52 overflow-hidden bg-gradient-soft flex items-center justify-center text-6xl">🍽️</div>
+        <div class="p-6">
+          <span class="text-xs font-semibold uppercase tracking-wider text-primary">Food & Culture</span>
+          <h3 class="mt-2 font-serif text-xl font-bold text-foreground">A Foodie's Guide to Kashmiri Cuisine: Wazwan & Beyond</h3>
+          <p class="mt-2 text-sm text-muted-foreground">Rogan Josh, Yakhni, Dum Aloo and the royal Wazwan feast — a deep dive into the rich flavours of Kashmiri food culture.</p>
+          <div class="mt-4 flex items-center justify-between text-xs text-muted-foreground">
+            <span>November 2025 · 6 min read</span>
+            <a href="#" class="text-primary font-semibold hover:underline">Read →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="group rounded-2xl bg-card overflow-hidden shadow-card-soft card-hover">
+        <div class="h-52 overflow-hidden bg-gradient-soft flex items-center justify-center text-6xl">💰</div>
+        <div class="p-6">
+          <span class="text-xs font-semibold uppercase tracking-wider text-primary">Budget Tips</span>
+          <h3 class="mt-2 font-serif text-xl font-bold text-foreground">Kashmir on a Budget: Incredible Trips Under ₹15,000</h3>
+          <p class="mt-2 text-sm text-muted-foreground">Smart choices, off-season deals and the right tour package can make Kashmir surprisingly affordable. Here's how.</p>
+          <div class="mt-4 flex items-center justify-between text-xs text-muted-foreground">
+            <span>October 2025 · 4 min read</span>
+            <a href="#" class="text-primary font-semibold hover:underline">Read →</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="bg-primary py-16 text-primary-foreground">
+  <div class="pk-container text-center">
+    <span class="section-badge text-secondary">Stay Updated</span>
+    <h2 class="mt-3 font-serif text-3xl font-bold md:text-4xl">Get Kashmir Travel Tips in Your Inbox</h2>
+    <p class="mt-4 text-primary-foreground/80 max-w-lg mx-auto">Monthly seasonal guides, exclusive deals and insider tips from our local team.</p>
+    <form class="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onsubmit="subscribeNewsletter(event)">
+      <input type="email" placeholder="your@email.com" class="pk-input flex-1" required style="border-radius:9999px;height:3rem;padding:0 1.25rem">
+      <button type="submit" class="btn-primary" style="height:3rem;padding:0 1.5rem;border-radius:9999px;flex-shrink:0">Subscribe →</button>
+    </form>
+  </div>
+</section>
+
+<!-- POPUPS -->
+<div id="callback-popup" class="popup-overlay">
+  <div class="popup-box" style="max-width:360px">
+    <button class="popup-close" data-popup-close="callback-popup">✕</button>
+    <h3 class="font-serif text-xl font-bold text-foreground">📞 Request Callback</h3>
+    <p class="mt-1 text-sm text-muted-foreground">We'll call within 30 minutes.</p>
+    <form id="callback-form" class="mt-4 space-y-3">
+      <div><label class="pk-label">Name *</label><input name="cb-name" class="pk-input" placeholder="Full name" required></div>
+      <div><label class="pk-label">Mobile *</label><input name="cb-phone" type="tel" class="pk-input" placeholder="+91 99999 99999" required></div>
+      <button type="submit" class="btn-primary w-full justify-center" style="border-radius:0.5rem;height:2.75rem">Request Callback</button>
+    </form>
+  </div>
+</div>
+<div id="exit-popup" class="popup-overlay">
+  <div class="popup-box" style="max-width:400px;text-align:center">
+    <button class="popup-close" data-popup-close="exit-popup">✕</button>
+    <div style="font-size:3rem">🎁</div>
+    <h3 class="mt-3 font-serif text-2xl font-bold" style="color:white">Get ₹1,000 Discount!</h3>
+    <p class="mt-2 text-sm" style="color:rgba(255,255,255,0.8)">Enquire now and save ₹1,000 on your Kashmir trip.</p>
+    <a href="contact.html" class="mt-5 btn-primary w-full justify-center" style="border-radius:0.5rem;height:2.75rem;font-size:1rem">Claim Discount →</a>
+    <button data-popup-close="exit-popup" class="mt-3 text-xs" style="color:rgba(255,255,255,0.5);background:none;border:none;cursor:pointer">No thanks</button>
+  </div>
+</div>
+
+<a href="https://wa.me/919999999999?text=Hi%20Paradise%20Kashmir!" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" class="fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold text-white shadow-elegant transition-smooth hover:scale-105" style="background:hsl(142,70%,40%)">
+  <span class="relative flex h-3 w-3"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-60"></span><span class="relative inline-flex h-3 w-3 rounded-full bg-white"></span></span>
+  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+  <span class="hidden sm:inline">Chat on WhatsApp</span>
+</a>
+<footer class="border-t border-border bg-background py-12">
+  <div class="pk-container"><div class="grid gap-10 md:grid-cols-3"><div><div class="flex items-center gap-2"><svg class="h-6 w-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg><span class="font-serif text-lg font-bold text-foreground">Prebook Holidays</span></div><p class="mt-4 text-sm text-muted-foreground">Handcrafted Kashmir journeys by local experts.</p></div><div><h4 class="font-serif text-base font-bold text-foreground">Quick Links</h4><ul class="mt-4 space-y-2 text-sm text-muted-foreground"><li><a href="index.html" class="hover:text-primary">Home</a></li><li><a href="packages.html" class="hover:text-primary">Packages</a></li><li><a href="contact.html" class="hover:text-primary">Contact</a></li><li><a href="admin/index.html" class="hover:text-primary">Admin</a></li></ul></div><div><h4 class="font-serif text-base font-bold text-foreground">Contact</h4><ul class="mt-4 space-y-2 text-sm text-muted-foreground"><li>📞 <a href="tel:+918377924630" class="hover:text-primary">+91 83779 24630</a></li><li>✉️ <a href="mailto:info@prebookholidays.com" class="hover:text-primary">info@prebookholidays.com</a></li></ul></div></div><div class="mt-10 border-t border-border pt-6 text-center text-sm text-muted-foreground">© 2026 Prebook Holidays Tours. Crafted with ♥ in Srinagar.</div></div>
+</footer>
+<script src="shared.js"></script>
+<script>
+function subscribeNewsletter(e) {
+  e.preventDefault();
+  showToast('✅ You are now subscribed! Thank you.');
+  e.target.reset();
+}
+</script>
+</body>
+</html>

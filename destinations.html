@@ -1,0 +1,312 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destinations | Prebook Holidays Tours & Holidays</title>
+  <meta name="description" content="Explore Kashmir's top destinations — Srinagar, Gulmarg, Pahalgam, Sonmarg and more.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
+  <script>tailwind.config={theme:{extend:{colors:{primary:'hsl(168 60% 22%)','primary-foreground':'hsl(0 0% 98%)',secondary:'hsl(38 96% 54%)','secondary-foreground':'hsl(0 0% 9%)',background:'hsl(0 0% 100%)',foreground:'hsl(222 47% 11%)',card:'hsl(0 0% 100%)',muted:'hsl(210 40% 96%)','muted-foreground':'hsl(215 16% 47%)',border:'hsl(214 32% 91%)'},fontFamily:{serif:['Playfair Display','serif'],sans:['Inter','sans-serif']}}}}</script>
+</head>
+<body class="bg-background">
+
+<!-- NAV -->
+<header class="sticky top-0 z-50 bg-primary shadow-elegant">
+  <nav class="pk-container flex items-center justify-between py-4">
+    <a href="index.html" class="flex items-center gap-2 text-primary-foreground">
+      <svg class="h-7 w-7 text-secondary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+      <span class="font-serif text-xl font-bold tracking-wide">Prebook Holidays</span>
+    </a>
+    <ul class="hidden md:flex items-center gap-7">
+      <li><a href="index.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">Home</a></li>
+      <li><a href="packages.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">Packages</a></li>
+      <li><a href="destinations.html" class="text-sm font-medium text-secondary border-b border-secondary pb-0.5">Destinations</a></li>
+      <li><a href="about.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">About Us</a></li>
+      <li><a href="blog.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">Blog</a></li>
+      <li><a href="contact.html" class="text-sm font-medium text-primary-foreground/90 transition-smooth hover:text-secondary">Contact</a></li>
+    </ul>
+    <div class="flex items-center gap-3">
+      <button data-popup-open="callback-popup" class="hidden md:inline-flex items-center gap-1.5 rounded-full border border-primary-foreground/40 px-4 py-1.5 text-xs font-semibold text-primary-foreground transition-smooth hover:bg-primary-foreground/10">📞 Quick Callback</button>
+      <a href="contact.html" class="btn-primary text-sm px-5 py-2" style="border-radius:0.375rem">Book Now</a>
+      <button id="nav-toggle" class="md:hidden text-primary-foreground p-1"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+  </nav>
+  <div id="mobile-nav"><a href="index.html">Home</a><a href="packages.html">Packages</a><a href="destinations.html">Destinations</a><a href="about.html">About Us</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a></div>
+</header>
+
+<!-- HERO -->
+<section class="bg-primary py-16 text-primary-foreground">
+  <div class="pk-container">
+    <span class="section-badge text-secondary">Explore Kashmir</span>
+    <h1 class="mt-3 font-serif text-4xl font-bold md:text-5xl">Top Destinations</h1>
+    <p class="mt-4 max-w-xl text-primary-foreground/80">Each corner of Kashmir tells a different story — from azure lakes to alpine meadows and royal gardens.</p>
+  </div>
+</section>
+
+<!-- DESTINATIONS GRID -->
+<section class="py-20 bg-gradient-soft">
+  <div class="pk-container">
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+      <!-- Srinagar -->
+      <article class="group rounded-2xl overflow-hidden bg-card shadow-card-soft card-hover">
+        <div class="relative h-64 overflow-hidden">
+          <img src="https://preview--vale-voyage-hub.lovable.app/assets/srinagar-CUCqq7tp.jpg" alt="Srinagar" class="h-full w-full object-cover transition-smooth group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 text-white">
+            <h3 class="font-serif text-2xl font-bold">Srinagar</h3>
+            <p class="text-sm text-white/80">City of Lakes & Gardens</p>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Dal Lake</span>
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Mughal Gardens</span>
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Shikara Rides</span>
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Houseboat</span>
+          </div>
+          <p class="text-sm text-muted-foreground">The heart of Kashmir — with the iconic Dal Lake, Mughal gardens, vibrant bazaars, and traditional wooden houseboats that define a Kashmir holiday.</p>
+          <div class="mt-4 flex items-center justify-between">
+            <div class="text-xs text-muted-foreground">Best time: <strong>Mar – Oct</strong></div>
+            <a href="packages.html" class="btn-primary text-xs px-4 py-2" style="border-radius:0.375rem">See Packages</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Gulmarg -->
+      <article class="group rounded-2xl overflow-hidden bg-card shadow-card-soft card-hover">
+        <div class="relative h-64 overflow-hidden">
+          <img src="https://preview--vale-voyage-hub.lovable.app/assets/gulmarg-Dr3BYDyx.jpg" alt="Gulmarg" class="h-full w-full object-cover transition-smooth group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 text-white">
+            <h3 class="font-serif text-2xl font-bold">Gulmarg</h3>
+            <p class="text-sm text-white/80">Meadow of Flowers</p>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Skiing</span>
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Gondola</span>
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Snow Sports</span>
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Golf</span>
+          </div>
+          <p class="text-sm text-muted-foreground">Home to Asia's highest gondola and some of the best ski slopes. Whether it's winter powder or summer wildflowers, Gulmarg is breathtaking year-round.</p>
+          <div class="mt-4 flex items-center justify-between">
+            <div class="text-xs text-muted-foreground">Best time: <strong>Nov – Mar (ski)</strong></div>
+            <a href="packages.html" class="btn-primary text-xs px-4 py-2" style="border-radius:0.375rem">See Packages</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Pahalgam -->
+      <article class="group rounded-2xl overflow-hidden bg-card shadow-card-soft card-hover">
+        <div class="relative h-64 overflow-hidden">
+          <img src="https://preview--vale-voyage-hub.lovable.app/assets/pahalgam-Cv4DMcdc.jpg" alt="Pahalgam" class="h-full w-full object-cover transition-smooth group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 text-white">
+            <h3 class="font-serif text-2xl font-bold">Pahalgam</h3>
+            <p class="text-sm text-white/80">Valley of Shepherds</p>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Aru Valley</span>
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Betaab Valley</span>
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Trekking</span>
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Horse Riding</span>
+          </div>
+          <p class="text-sm text-muted-foreground">Where rivers meet pine forests and open meadows. Famous for Bollywood shoots, the Amarnath Yatra base camp, and stunning green valleys.</p>
+          <div class="mt-4 flex items-center justify-between">
+            <div class="text-xs text-muted-foreground">Best time: <strong>Apr – Oct</strong></div>
+            <a href="packages.html" class="btn-primary text-xs px-4 py-2" style="border-radius:0.375rem">See Packages</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sonmarg -->
+      <article class="group rounded-2xl overflow-hidden bg-card shadow-card-soft card-hover">
+        <div class="relative h-64 overflow-hidden">
+          <img src="https://preview--vale-voyage-hub.lovable.app/assets/sonmarg-BZ2NmOJH.jpg" alt="Sonmarg" class="h-full w-full object-cover transition-smooth group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 text-white">
+            <h3 class="font-serif text-2xl font-bold">Sonmarg</h3>
+            <p class="text-sm text-white/80">Meadow of Gold</p>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Thajiwas Glacier</span>
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Trekking</span>
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Camping</span>
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Fishing</span>
+          </div>
+          <p class="text-sm text-muted-foreground">A gateway to the Himalayan wilderness — golden meadows, roaring rivers, and the famous Thajiwas Glacier accessible by pony or on foot.</p>
+          <div class="mt-4 flex items-center justify-between">
+            <div class="text-xs text-muted-foreground">Best time: <strong>May – Sep</strong></div>
+            <a href="packages.html" class="btn-primary text-xs px-4 py-2" style="border-radius:0.375rem">See Packages</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Yusmarg -->
+      <article class="group rounded-2xl overflow-hidden bg-card shadow-card-soft card-hover">
+        <div class="relative h-64 overflow-hidden bg-primary">
+          <div class="h-full w-full flex items-center justify-center text-7xl">🌿</div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 text-white">
+            <h3 class="font-serif text-2xl font-bold">Yusmarg</h3>
+            <p class="text-sm text-white/80">Offbeat Meadow Escape</p>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Offbeat</span>
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Meadows</span>
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Nil Nag Lake</span>
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Picnic</span>
+          </div>
+          <p class="text-sm text-muted-foreground">A hidden gem — unspoilt meadows, quiet pine forests and the serene Nil Nag Lake far from tourist crowds. Perfect for those craving peace.</p>
+          <div class="mt-4 flex items-center justify-between">
+            <div class="text-xs text-muted-foreground">Best time: <strong>Apr – Sep</strong></div>
+            <a href="packages.html" class="btn-primary text-xs px-4 py-2" style="border-radius:0.375rem">See Packages</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Doodhpathri -->
+      <article class="group rounded-2xl overflow-hidden bg-card shadow-card-soft card-hover">
+        <div class="relative h-64 overflow-hidden bg-primary">
+          <div class="h-full w-full flex items-center justify-center text-7xl" style="background:linear-gradient(135deg,hsl(168,60%,22%),hsl(168,40%,35%))">🏔️</div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 text-white">
+            <h3 class="font-serif text-2xl font-bold">Doodhpathri</h3>
+            <p class="text-sm text-white/80">Valley of Milk</p>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Offbeat</span>
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Streams</span>
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Wildflowers</span>
+            <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">Trekking</span>
+          </div>
+          <p class="text-sm text-muted-foreground">Named for its milky-white streams, Doodhpathri is a lush meadow paradise at 2700m altitude — one of Kashmir's best-kept secrets.</p>
+          <div class="mt-4 flex items-center justify-between">
+            <div class="text-xs text-muted-foreground">Best time: <strong>May – Sep</strong></div>
+            <a href="packages.html" class="btn-primary text-xs px-4 py-2" style="border-radius:0.375rem">See Packages</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- BEST TIME TO VISIT -->
+<section class="bg-primary py-16 text-primary-foreground">
+  <div class="pk-container">
+    <div class="text-center mb-12">
+      <span class="section-badge text-secondary">Plan Your Visit</span>
+      <h2 class="mt-3 font-serif text-3xl font-bold md:text-4xl">Best Time to Visit Kashmir</h2>
+    </div>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="rounded-2xl border border-primary-foreground/10 bg-primary-foreground/5 p-6 text-center">
+        <div class="text-3xl mb-2">🌸</div>
+        <h3 class="font-serif text-lg font-semibold">Spring (Mar–May)</h3>
+        <p class="mt-2 text-sm text-primary-foreground/75">Tulip gardens, blossoming orchards, mild weather. The most colourful season.</p>
+      </div>
+      <div class="rounded-2xl border border-primary-foreground/10 bg-primary-foreground/5 p-6 text-center">
+        <div class="text-3xl mb-2">☀️</div>
+        <h3 class="font-serif text-lg font-semibold">Summer (Jun–Aug)</h3>
+        <p class="mt-2 text-sm text-primary-foreground/75">Pleasant 20–30°C, all routes open, peak tourist season. Book early!</p>
+      </div>
+      <div class="rounded-2xl border border-primary-foreground/10 bg-primary-foreground/5 p-6 text-center">
+        <div class="text-3xl mb-2">🍂</div>
+        <h3 class="font-serif text-lg font-semibold">Autumn (Sep–Nov)</h3>
+        <p class="mt-2 text-sm text-primary-foreground/75">Golden Chinar leaves, saffron harvest, fewer crowds. A photographer's dream.</p>
+      </div>
+      <div class="rounded-2xl border border-primary-foreground/10 bg-primary-foreground/5 p-6 text-center">
+        <div class="text-3xl mb-2">❄️</div>
+        <h3 class="font-serif text-lg font-semibold">Winter (Dec–Feb)</h3>
+        <p class="mt-2 text-sm text-primary-foreground/75">Skiing in Gulmarg, snow-covered landscapes, cosy houseboat experience.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-16 bg-gradient-soft">
+  <div class="pk-container text-center">
+    <h2 class="font-serif text-3xl font-bold text-foreground">Ready to explore Kashmir?</h2>
+    <p class="mt-4 text-muted-foreground max-w-lg mx-auto">Pick a destination and let us build the perfect itinerary around it.</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-4">
+      <a href="packages.html" class="btn-primary">Browse All Packages</a>
+      <button data-popup-open="callback-popup" class="btn-outline" style="color:var(--primary);border-color:var(--primary);background:transparent">📞 Talk to an Expert</button>
+    </div>
+  </div>
+</section>
+
+<!-- SHARED POPUPS & FOOTER -->
+<div id="callback-popup" class="popup-overlay">
+  <div class="popup-box" style="max-width:360px">
+    <button class="popup-close" data-popup-close="callback-popup">✕</button>
+    <h3 class="font-serif text-xl font-bold text-foreground">📞 Request Callback</h3>
+    <p class="mt-1 text-sm text-muted-foreground">Share your number — we'll call within 30 minutes.</p>
+    <form id="callback-form" class="mt-4 space-y-3">
+      <div><label class="pk-label">Your Name *</label><input name="cb-name" class="pk-input" placeholder="Full name" required></div>
+      <div><label class="pk-label">Mobile Number *</label><input name="cb-phone" type="tel" class="pk-input" placeholder="+91 99999 99999" required></div>
+      <button type="submit" class="btn-primary w-full justify-center" style="border-radius:0.5rem;height:2.75rem">Request Callback</button>
+    </form>
+  </div>
+</div>
+<div id="exit-popup" class="popup-overlay">
+  <div class="popup-box" style="max-width:400px;text-align:center">
+    <button class="popup-close" data-popup-close="exit-popup">✕</button>
+    <div style="font-size:3rem">🎁</div>
+    <h3 class="mt-3 font-serif text-2xl font-bold" style="color:white">Get ₹1,000 Discount!</h3>
+    <p class="mt-2 text-sm" style="color:rgba(255,255,255,0.8)">Enquire now and save ₹1,000 on your Kashmir trip.</p>
+    <a href="contact.html" class="mt-5 btn-primary w-full justify-center" style="border-radius:0.5rem;height:2.75rem;font-size:1rem">Claim Discount →</a>
+    <button data-popup-close="exit-popup" class="mt-3 text-xs" style="color:rgba(255,255,255,0.5);background:none;border:none;cursor:pointer">No thanks</button>
+  </div>
+</div>
+
+<a href="https://wa.me/919999999999?text=Hi%20Paradise%20Kashmir!" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" class="fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold text-white shadow-elegant transition-smooth hover:scale-105" style="background:hsl(142,70%,40%)">
+  <span class="relative flex h-3 w-3"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-60"></span><span class="relative inline-flex h-3 w-3 rounded-full bg-white"></span></span>
+  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+  <span class="hidden sm:inline">Chat on WhatsApp</span>
+</a>
+
+<footer class="border-t border-border bg-background py-12">
+  <div class="pk-container">
+    <div class="grid gap-10 md:grid-cols-3">
+      <div>
+        <div class="flex items-center gap-2"><svg class="h-6 w-6 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg><span class="font-serif text-lg font-bold text-foreground">Prebook Holidays</span></div>
+        <p class="mt-4 text-sm text-muted-foreground">Handcrafted Kashmir journeys by local experts.</p>
+      </div>
+      <div>
+        <h4 class="font-serif text-base font-bold text-foreground">Quick Links</h4>
+        <ul class="mt-4 space-y-2 text-sm text-muted-foreground">
+          <li><a href="index.html" class="hover:text-primary">Home</a></li>
+          <li><a href="packages.html" class="hover:text-primary">Packages</a></li>
+          <li><a href="about.html" class="hover:text-primary">About Us</a></li>
+          <li><a href="contact.html" class="hover:text-primary">Contact</a></li>
+          <li><a href="admin/index.html" class="hover:text-primary">Admin Panel</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-serif text-base font-bold text-foreground">Get in touch</h4>
+        <ul class="mt-4 space-y-3 text-sm text-muted-foreground">
+          <li>📞 <a href="tel:+918377924630" class="hover:text-primary">+91 83779 24630</a></li>
+          <li>✉️ <a href="mailto:info@prebookholidays.com" class="hover:text-primary">info@prebookholidays.com</a></li>
+          <li>📍 New Delhi · Pune · Gwalior</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-10 border-t border-border pt-6 text-center text-sm text-muted-foreground">© 2026 Prebook Holidays Tours. Crafted with ♥ in Srinagar.</div>
+  </div>
+</footer>
+<script src="shared.js"></script>
+</body>
+</html>
