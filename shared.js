@@ -13,7 +13,7 @@ const _SB_H = {
 
 async function _sbGet(table, query) {
   try {
-    const r = await fetch(`${_SB_URL}/${table}?${query||''}`, { headers: _SB_H });
+    const r = await fetch(`${_SB_URL}/${table}?${query||''}`, { headers: _SB_H, cache: 'no-store' });
     if (!r.ok) { console.error(`DB GET error ${r.status}`); return null; }
     return r.json();
   } catch(e) { console.error('DB fetch error', e); return null; }
