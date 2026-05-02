@@ -243,7 +243,6 @@ async function renderIndexPackages() {
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star h-3.5 w-3.5 fill-secondary text-secondary"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
           ${pkg.rating}
         </span>
-        ${pkg.discount_label ? `<span class="absolute bottom-4 left-4 inline-flex items-center justify-center rounded-br-2xl rounded-tl-2xl rounded-tr-md rounded-bl-md bg-gradient-to-r from-rose-500 to-red-500 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-white shadow-lg backdrop-blur-md border border-white/20 transform -translate-y-1 hover:translate-y-0 transition-all">${pkg.discount_label}</span>` : ''}
       </button>
       <div class="flex flex-1 flex-col p-6">
         <div class="text-xs font-semibold uppercase tracking-wider text-primary">${pkg.nights} Nights / ${pkg.days} Days</div>
@@ -264,13 +263,22 @@ async function renderIndexPackages() {
         </div>
         <div class="mt-auto flex items-end justify-between border-t border-border pt-5 mt-5">
           <div>
-            <div class="text-xs text-muted-foreground mb-1">Starting from</div>
+            <div class="text-xs text-muted-foreground mb-1 tracking-wide uppercase">Starting from</div>
             ${pkg.discount_price ? `<div class="font-serif text-sm text-muted-foreground line-through decoration-red-500/50">\u20B9${pkg.price.toLocaleString('en-IN')}</div>` : ''}
-            <div class="font-serif text-3xl font-black tracking-tight text-primary drop-shadow-sm flex items-center gap-2">
-              \u20B9${(pkg.discount_price || pkg.price).toLocaleString('en-IN')}
+            <div class="flex items-center gap-3">
+              <div class="font-serif text-3xl text-primary drop-shadow-sm" style="font-weight: 500; letter-spacing: -0.02em;">
+                \u20B9${(pkg.discount_price || pkg.price).toLocaleString('en-IN')}
+              </div>
+              ${pkg.discount_label ? `
+              <span class="relative inline-flex items-center gap-1 bg-gradient-to-r from-red-600 to-rose-500 text-white px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest shadow-md transform -translate-y-0.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+                ${pkg.discount_label}
+                <span class="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500 border border-white"></span>
+                </span>
+              </span>` : ''}
             </div>
-          </div>
-        </div>
         <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-muted hover:text-accent-foreground h-10 px-4 py-2 mt-5 w-full transition-smooth" type="button" onclick='openPopup("enquiry-popup"); const select = document.getElementById("packageName"); if (select) { const opt = Array.from(select.options).find(o => o.value === "${pkg.name}") || document.createElement("option"); if (!opt.parentNode) { opt.value="${pkg.name}"; opt.textContent="${pkg.name}"; select.appendChild(opt); } select.value="${pkg.name}"; }'>
           View Details
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
