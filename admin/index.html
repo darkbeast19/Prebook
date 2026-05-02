@@ -218,6 +218,7 @@
           <img src="../admin/images/hero_ui.png" alt="Hero Section Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
           
           <div class="space-y-3">
+            <div><label class="pk-label">Hero Image URL</label><input id="home-hero-img" class="pk-input" placeholder="e.g. image.jpg or https://..."></div>
             <div><label class="pk-label">Hero Main Title</label><input id="home-hero-title" class="pk-input" placeholder="Discover Heaven on Earth"></div>
             <div><label class="pk-label">Hero Italic Accent (coloured part)</label><input id="home-hero-accent" class="pk-input" placeholder="on Earth"></div>
             <div><label class="pk-label">Hero Subtitle Paragraph</label><textarea id="home-hero-sub" class="pk-input" rows="2" placeholder="Curated Kashmir tour packages..."></textarea></div>
@@ -245,12 +246,27 @@
           </div>
         </div>
 
+        
+        <div class="rounded-2xl bg-card p-6 shadow-card-soft">
+          <h3 class="font-semibold text-foreground mb-4">🌟 Why Travel With Us</h3>
+          <div class="space-y-3">
+            <div><label class="pk-label">Point 1 Title & Desc</label><input id="home-why1-t" class="pk-input mb-1" placeholder="Title"><input id="home-why1-d" class="pk-input" placeholder="Description"></div>
+            <div><label class="pk-label">Point 2 Title & Desc</label><input id="home-why2-t" class="pk-input mb-1" placeholder="Title"><input id="home-why2-d" class="pk-input" placeholder="Description"></div>
+            <div><label class="pk-label">Point 3 Title & Desc</label><input id="home-why3-t" class="pk-input mb-1" placeholder="Title"><input id="home-why3-d" class="pk-input" placeholder="Description"></div>
+            <div><label class="pk-label">Point 4 Title & Desc</label><input id="home-why4-t" class="pk-input mb-1" placeholder="Title"><input id="home-why4-d" class="pk-input" placeholder="Description"></div>
+          </div>
+        </div>
+
         <div class="rounded-2xl bg-card p-6 shadow-card-soft">
           <h3 class="font-semibold text-foreground mb-4">✨ Experiences Section</h3>
           <img src="../admin/images/packages_ui.png" alt="Experiences Section Preview" class="w-full h-auto rounded-xl border border-border mb-5 opacity-90 object-cover shadow-sm" style="max-height:180px">
           <div class="space-y-3">
             <div><label class="pk-label">Section Label</label><input id="home-exp-label" class="pk-input" placeholder="Unique Experiences"></div>
             <div><label class="pk-label">Section Title</label><input id="home-exp-title" class="pk-input" placeholder="Beyond Sightseeing"></div>
+            <div><label class="pk-label">Experience 1</label><input id="home-exp1" class="pk-input" placeholder="Shikara Rides"></div>
+            <div><label class="pk-label">Experience 2</label><input id="home-exp2" class="pk-input" placeholder="Skiing in Gulmarg"></div>
+            <div><label class="pk-label">Experience 3</label><input id="home-exp3" class="pk-input" placeholder="Apple Orchards"></div>
+            <div><label class="pk-label">Experience 4</label><input id="home-exp4" class="pk-input" placeholder="Local Cuisine"></div>
           </div>
         </div>
 
@@ -260,6 +276,9 @@
           <div class="space-y-3">
             <div><label class="pk-label">Section Label</label><input id="home-rev-label" class="pk-input" placeholder="Traveller Stories"></div>
             <div><label class="pk-label">Section Title</label><input id="home-rev-title" class="pk-input" placeholder="Loved by Wanderers"></div>
+            <div><label class="pk-label">Review 1 Name & Text</label><input id="home-rev1-name" class="pk-input mb-1"><input id="home-rev1-text" class="pk-input"></div>
+            <div><label class="pk-label">Review 2 Name & Text</label><input id="home-rev2-name" class="pk-input mb-1"><input id="home-rev2-text" class="pk-input"></div>
+            <div><label class="pk-label">Review 3 Name & Text</label><input id="home-rev3-name" class="pk-input mb-1"><input id="home-rev3-text" class="pk-input"></div>
           </div>
         </div>
 
@@ -712,6 +731,27 @@
   // Map of pageKey -> array of {field: supabaseKey, el: elementId}
   const PAGE_FIELD_MAP = {
     'home': [
+      
+      {f:'home_hero_img',      el:'home-hero-img'},
+      {f:'home_why1_t',        el:'home-why1-t'},
+      {f:'home_why1_d',        el:'home-why1-d'},
+      {f:'home_why2_t',        el:'home-why2-t'},
+      {f:'home_why2_d',        el:'home-why2-d'},
+      {f:'home_why3_t',        el:'home-why3-t'},
+      {f:'home_why3_d',        el:'home-why3-d'},
+      {f:'home_why4_t',        el:'home-why4-t'},
+      {f:'home_why4_d',        el:'home-why4-d'},
+      {f:'home_exp1',          el:'home-exp1'},
+      {f:'home_exp2',          el:'home-exp2'},
+      {f:'home_exp3',          el:'home-exp3'},
+      {f:'home_exp4',          el:'home-exp4'},
+      {f:'home_rev1_name',     el:'home-rev1-name'},
+      {f:'home_rev1_text',     el:'home-rev1-text'},
+      {f:'home_rev2_name',     el:'home-rev2-name'},
+      {f:'home_rev2_text',     el:'home-rev2-text'},
+      {f:'home_rev3_name',     el:'home-rev3-name'},
+      {f:'home_rev3_text',     el:'home-rev3-text'},
+
       {f:'home_hero_title',    el:'home-hero-title'},
       {f:'home_hero_accent',   el:'home-hero-accent'},
       {f:'home_hero_sub',      el:'home-hero-sub'},

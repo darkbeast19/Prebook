@@ -408,14 +408,35 @@ async function applySettings() {
   if (s.home_office2 && offLis[1]) offLis[1].textContent = s.home_office2;
   if (s.home_office3 && offLis[2]) offLis[2].textContent = s.home_office3;
 
-  // ── DATA-PK ELEMENTS (About / Contact / Packages / Destinations pages) ──
-  ['about_title','about_sub','about_story_title','about_story_p1','about_story_p2',
-   'about_team_title','about_val1_t','about_val1_d','about_val2_t','about_val2_d',
-   'about_val3_t','about_val3_d','contact_title','contact_sub',
-   'pkgpage_title','pkgpage_sub','dest_title','dest_sub'].forEach(key => {
-    const el = document.querySelector('[data-pk="' + key + '"]');
-    if (el && s[key]) el.textContent = s[key];
+  // ── DYNAMIC DATA-PK ELEMENTS ──
+  document.querySelectorAll('[data-pk]').forEach(el => {
+    const key = el.getAttribute('data-pk');
+    if (s[key]) {
+      if (el.tagName === 'IFRAME' || el.tagName === 'IMG') el.src = s[key];
+      else el.textContent = s[key];
+    }
   });
+
+  // ── DESTINATIONS CARDS ──
+  if (window.location.pathname.includes('destinations') && s.dest_cards) {
+    const grid = document.querySelector('.grid.gap-8');
+    if (grid) {
+      grid.innerHTML = s.dest_cards.map(c => `
+        <div class="group relative overflow-hidden rounded-2xl bg-card shadow-card-soft transition-all hover:-translate-y-1 hover:shadow-card-hover">
+          <div class="aspect-[4/3] overflow-hidden">
+            <img src="${c.img}" alt="${c.title}" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
+          </div>
+          <div class="p-6">
+            <h3 class="font-serif text-2xl font-bold text-foreground">${c.title}</h3>
+            <p class="mt-2 text-muted-foreground">${c.desc}</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              ${c.tags ? c.tags.split(',').map(t => `<span class="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">${t.trim()}</span>`).join('') : ''}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
 }
 
 // ---- Init all on DOMContentLoaded -------------------
