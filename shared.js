@@ -243,6 +243,7 @@ async function renderIndexPackages() {
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star h-3.5 w-3.5 fill-secondary text-secondary"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
           ${pkg.rating}
         </span>
+        ${pkg.discount_label ? `<span class="absolute bottom-4 left-4 inline-flex items-center justify-center rounded-br-2xl rounded-tl-2xl rounded-tr-md rounded-bl-md bg-gradient-to-r from-rose-500 to-red-500 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-white shadow-lg backdrop-blur-md border border-white/20 transform -translate-y-1 hover:translate-y-0 transition-all">${pkg.discount_label}</span>` : ''}
       </button>
       <div class="flex flex-1 flex-col p-6">
         <div class="text-xs font-semibold uppercase tracking-wider text-primary">${pkg.nights} Nights / ${pkg.days} Days</div>
@@ -263,11 +264,10 @@ async function renderIndexPackages() {
         </div>
         <div class="mt-auto flex items-end justify-between border-t border-border pt-5 mt-5">
           <div>
-            <div class="text-xs text-muted-foreground">Starting from</div>
+            <div class="text-xs text-muted-foreground mb-1">Starting from</div>
             ${pkg.discount_price ? `<div class="font-serif text-sm text-muted-foreground line-through decoration-red-500/50">\u20B9${pkg.price.toLocaleString('en-IN')}</div>` : ''}
-            <div class="font-serif text-2xl font-bold text-primary flex items-center gap-2">
+            <div class="font-serif text-3xl font-black tracking-tight text-primary drop-shadow-sm flex items-center gap-2">
               \u20B9${(pkg.discount_price || pkg.price).toLocaleString('en-IN')}
-              ${pkg.discount_label ? `<span class="text-[10px] font-sans font-bold bg-red-100 text-red-600 px-2 py-0.5 rounded-full whitespace-nowrap uppercase tracking-wider">${pkg.discount_label}</span>` : ''}
             </div>
           </div>
         </div>
