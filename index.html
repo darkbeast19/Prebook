@@ -300,4 +300,14 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="shared.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof renderIndexPackages === 'function') renderIndexPackages();
+    if (typeof initPopups === 'function') initPopups();
+    if (typeof initEnquiryForms === 'function') initEnquiryForms();
+    if (typeof initCallbackForm === 'function') initCallbackForm();
+    if (typeof initMobileNav === 'function') initMobileNav();
+    if (typeof initExitIntent === 'function') initExitIntent();
+  });
+</script>
 </body></html>
