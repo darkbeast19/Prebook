@@ -161,6 +161,11 @@
             </div>
             <div id="pkg-img-preview" class="mt-2 hidden"><img src="" class="h-20 w-32 object-cover rounded-md border border-border"></div>
           </div>
+          <div><label class="pk-label">Location</label><input id="pkg-location" class="pk-input" placeholder="e.g. Srinagar, Kashmir"></div>
+          <div><label class="pk-label">Google Maps Embed URL</label><input id="pkg-map" class="pk-input" placeholder="<iframe src=...> or URL"></div>
+          <div><label class="pk-label">Inclusions (one per line)</label><textarea id="pkg-inclusions" class="pk-input" rows="3" placeholder="Hotel accommodation&#10;Breakfast"></textarea></div>
+          <div><label class="pk-label">Exclusions (one per line)</label><textarea id="pkg-exclusions" class="pk-input" rows="3" placeholder="Flights&#10;Personal expenses"></textarea></div>
+
           <div class="sm:col-span-2 flex gap-3">
             <button type="button" onclick="savePkg()" class="btn-primary" style="border-radius:0.5rem;padding:0.5rem 1.5rem">💾 Save Package</button>
             <button type="button" onclick="document.getElementById('pkg-form-wrap').classList.add('hidden')" class="px-4 py-2 rounded-lg border border-border text-muted-foreground hover:bg-muted text-sm transition-smooth">Cancel</button>
@@ -618,6 +623,10 @@
       document.getElementById('pkg-rating').value = p.rating;
       document.getElementById('pkg-places').value = p.places;
       document.getElementById('pkg-img').value = p.img || '';
+      document.getElementById('pkg-location').value = p.location || '';
+      document.getElementById('pkg-map').value = p.map_embed || '';
+      document.getElementById('pkg-inclusions').value = p.inclusions || '';
+      document.getElementById('pkg-exclusions').value = p.exclusions || '';
       document.getElementById('pkg-img-file').value = '';
       if(p.img) { preview.classList.remove('hidden'); preview.querySelector('img').src = p.img; }
       else { preview.classList.add('hidden'); }
@@ -656,6 +665,10 @@
       reviews: parseInt(document.getElementById('pkg-reviews').value)||0,
       places: document.getElementById('pkg-places').value,
       img: document.getElementById('pkg-img').value,
+      location: document.getElementById('pkg-location').value,
+      map_embed: document.getElementById('pkg-map').value,
+      inclusions: document.getElementById('pkg-inclusions').value,
+      exclusions: document.getElementById('pkg-exclusions').value,
     };
     await PK.saveSinglePackage(pkg);
     document.getElementById('pkg-form-wrap').classList.add('hidden');

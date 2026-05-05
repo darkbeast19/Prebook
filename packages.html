@@ -99,54 +99,7 @@
   </div>
 </section>
 
-<!-- ===== PACKAGE DETAIL MODAL ===== -->
-<div id="pkg-modal" class="popup-overlay">
-  <div class="popup-box" style="max-width:560px;padding:0;overflow:hidden">
-    <button class="popup-close" style="top:0.75rem;right:0.75rem;background:rgba(0,0,0,0.4);color:white;border-radius:50%;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;z-index:10" data-popup-close="pkg-modal">✕</button>
-    <img id="modal-img" src="" alt="" class="w-full h-52 object-cover">
-    <div class="p-6">
-      <span id="modal-badge" class="rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-secondary-foreground"></span>
-      <h3 id="modal-name" class="mt-3 font-serif text-2xl font-bold text-foreground"></h3>
-      <div id="modal-meta" class="mt-2 text-sm text-muted-foreground"></div>
-      <div id="modal-places" class="mt-3 text-sm text-muted-foreground flex items-start gap-1.5"></div>
-      <div class="mt-4 border-t border-border pt-4 flex items-end justify-between">
-        <div>
-          <div class="text-xs text-muted-foreground">Starting from</div>
-          <div id="modal-price" class="font-serif text-3xl font-bold text-primary"></div>
-          <div class="text-xs text-muted-foreground">per person</div>
-        </div>
-        <div class="flex gap-2">
-          <button id="modal-pdf-btn" class="btn-green text-sm" style="border-radius:0.5rem;padding:0.5rem 1rem">📄 Download PDF</button>
-          <button id="modal-enquire-btn" class="btn-primary text-sm" style="border-radius:0.5rem;padding:0.5rem 1rem">Enquire Now</button>
-        </div>
-      </div>
-      <!-- Dynamic Pricing -->
-      <div id="price-calc" class="mt-4 bg-muted rounded-xl p-4" data-base="">
-        <p class="text-sm font-semibold text-foreground mb-3">💰 Calculate Total Price</p>
-        <input type="hidden" name="base-price">
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="pk-label text-xs">Travellers</label>
-            <input name="people" type="number" min="1" max="30" value="2" class="pk-input text-sm">
-          </div>
-          <div>
-            <label class="pk-label text-xs">Season</label>
-            <select name="season" class="pk-input text-sm" style="height:2.75rem">
-              <option value="normal">Normal</option>
-              <option value="peak">Peak (+25%)</option>
-              <option value="off">Off-Season (-15%)</option>
-            </select>
-          </div>
-        </div>
-        <div class="mt-3 flex items-center justify-between">
-          <span class="text-sm text-muted-foreground">Estimated Total:</span>
-          <span id="calc-output" class="font-serif text-2xl font-bold text-primary">₹0</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
+<!-- ===== PACKAGE DETAIL MODAL REMOVED ===== -->
 <!-- ===== SHARED POPUPS ===== -->
 <div id="enquiry-popup" class="popup-overlay">
   <div class="popup-box">
@@ -256,7 +209,7 @@
       const hasDiscount = p.discount_price && p.discount_price < p.price;
       return `
       <article class="group flex flex-col overflow-hidden rounded-2xl bg-card shadow-card-soft card-hover">
-        <div class="relative h-64 overflow-hidden cursor-pointer" onclick="openPkgModal(${p.id})">
+        <div class="relative h-64 overflow-hidden cursor-pointer" onclick="window.location.href='package-details.html?id=${p.id}'">
           <img src="${p.img}" alt="${p.name}" loading="lazy" class="h-full w-full object-cover transition-smooth group-hover:scale-110">
           <span class="absolute left-4 top-4 rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-secondary-foreground">${p.badge}</span>
           <span class="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-foreground shadow-sm backdrop-blur-sm">⭐ ${p.rating}</span>
@@ -281,7 +234,7 @@
             </div>
           </div>
           <div class="mt-3 flex gap-2">
-            <button onclick="openPkgModal(${p.id})" class="flex-1 btn-primary text-sm justify-center" style="border-radius:0.375rem;padding:0.5rem">View Details</button>
+            <button onclick="window.location.href='package-details.html?id=${p.id}'" class="flex-1 btn-primary text-sm justify-center" style="border-radius:0.375rem;padding:0.5rem">View Details</button>
             <button onclick="downloadPackagePDF(allPackages.find(x=>x.id===${p.id}))" title="Download PDF" class="px-3 py-2 rounded-md border border-border text-muted-foreground transition-smooth hover:border-primary hover:text-primary text-sm">📄</button>
           </div>
         </div>
@@ -317,29 +270,6 @@
     renderPackages(sorted);
   }
 
-  async function openPkgModal(id) {
-    const p = (await PK.getPackages()).find(x=>x.id===id);
-    if (!p) return;
-    const effectivePrice = p.discount_price || p.price;
-    const hasDiscount = p.discount_price && p.discount_price < p.price;
-    document.getElementById('modal-img').src = p.img;
-    document.getElementById('modal-badge').textContent = p.badge;
-    document.getElementById('modal-name').textContent = p.name;
-    document.getElementById('modal-meta').innerHTML = `🌙 ${p.nights} Nights / ${p.days} Days &nbsp;|&nbsp; ⭐ ${p.rating} (${p.reviews} reviews)`;
-    document.getElementById('modal-places').innerHTML = `📍 ${p.places}`;
-    document.getElementById('modal-price').innerHTML = hasDiscount
-      ? `<span style="font-size:1rem;text-decoration:line-through;color:#9ca3af;font-weight:normal">₹${p.price.toLocaleString('en-IN')}</span><br>₹${effectivePrice.toLocaleString('en-IN')} ${p.discount_label ? `<span style="font-size:0.65rem;font-family:Inter,sans-serif;font-weight:700;background:#fee2e2;color:#dc2626;padding:0.15rem 0.5rem;border-radius:9999px;vertical-align:middle">${p.discount_label}</span>` : ''}`
-      : `₹${effectivePrice.toLocaleString('en-IN')}`;
-    document.querySelector('#price-calc [name=base-price]').value = effectivePrice;
-    document.getElementById('modal-pdf-btn').onclick = () => downloadPackagePDF(p);
-    document.getElementById('modal-enquire-btn').onclick = () => {
-      closePopup('pkg-modal');
-      document.getElementById('enquiry-package').value = p.name;
-      openPopup('enquiry-popup');
-    };
-    initPriceCalculator();
-    openPopup('pkg-modal');
-  }
 
   async function init() {
     allPackages = await PK.getPackages();

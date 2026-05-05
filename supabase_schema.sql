@@ -98,3 +98,7 @@ CREATE POLICY "Allow public write on settings"
 -- ================================================================
 ALTER TABLE public.packages ADD COLUMN IF NOT EXISTS discount_price INTEGER;
 ALTER TABLE public.packages ADD COLUMN IF NOT EXISTS discount_label TEXT;
+ALTER TABLE public.packages ADD COLUMN IF NOT EXISTS location TEXT;
+ALTER TABLE public.packages ADD COLUMN IF NOT EXISTS map_embed TEXT;
+ALTER TABLE public.packages ADD COLUMN IF NOT EXISTS inclusions TEXT;
+ALTER TABLE public.packages ADD COLUMN IF NOT EXISTS exclusions TEXT;

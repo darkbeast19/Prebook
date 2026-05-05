@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Package Details | Prebook Holidays</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="theme.css">
+    
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: 'hsl(168 60% 22%)',
+              'primary-foreground': 'hsl(0 0% 98%)',
+              secondary: 'hsl(38 96% 54%)',
+              'secondary-foreground': 'hsl(0 0% 9%)',
+              background: 'hsl(0 0% 100%)',
+              foreground: 'hsl(222 47% 11%)',
+              card: 'hsl(0 0% 100%)',
+              'card-foreground': 'hsl(222 47% 11%)',
+              muted: 'hsl(210 40% 96%)',
+              'muted-foreground': 'hsl(215 16% 47%)',
+              border: 'hsl(214 32% 91%)',
+              input: 'hsl(214 32% 91%)',
+              ring: 'hsl(168 60% 22%)',
+            },
+            fontFamily: {
+              serif: ['Playfair Display', 'serif'],
+              sans: ['Inter', 'sans-serif'],
+            },
+            boxShadow: {
+              'card-soft': '0 2px 20px -4px rgba(0,0,0,0.08), 0 1px 4px -1px rgba(0,0,0,0.04)',
+              'elegant': '0 20px 60px -10px rgba(10,44,37,0.25), 0 4px 16px -4px rgba(0,0,0,0.1)',
+            }
+          }
+        }
+      }
+    </script>
+</head>
+<body class="bg-[#f8f9fa] text-foreground font-sans">
+    
+    <!-- Header -->
+    <header class="bg-primary z-30 sticky top-0 shadow-md">
+        <nav class="pk-container flex items-center justify-between py-4">
+            <a href="index.html" class="flex items-center gap-2 text-primary-foreground">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-7 w-7 text-secondary"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+                <span class="font-serif text-xl font-bold tracking-wide">Prebook Holidays</span>
+            </a>
+            <ul class="hidden items-center gap-7 md:flex">
+                <li><a href="index.html" class="text-sm font-medium text-primary-foreground/90 hover:text-secondary transition-colors">Home</a></li>
+                <li><a href="packages.html" class="text-sm font-medium text-secondary border-b border-secondary pb-0.5">Packages</a></li>
+                <li><a href="destinations.html" class="text-sm font-medium text-primary-foreground/90 hover:text-secondary transition-colors">Destinations</a></li>
+                <li><a href="about.html" class="text-sm font-medium text-primary-foreground/90 hover:text-secondary transition-colors">About</a></li>
+                <li><a href="contact.html" class="text-sm font-medium text-primary-foreground/90 hover:text-secondary transition-colors">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Loading State -->
+    <div id="loading-state" class="min-h-[60vh] flex flex-col items-center justify-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-4 border-muted border-t-primary mb-4"></div>
+        <p class="text-muted-foreground font-medium">Loading package details...</p>
+    </div>
+
+    <!-- Main Content -->
+    <main id="package-content" class="pk-container py-8 hidden">
+        
+        <!-- Breadcrumb & Actions -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <div>
+                <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary mb-2" id="pkg-badge-container">
+                    <span class="bg-secondary text-secondary-foreground px-2 py-1 rounded-sm" id="pkg-badge">Bestseller</span>
+                    <span class="flex items-center gap-1"><svg class="w-4 h-4 fill-secondary text-secondary" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> <span id="pkg-rating">4.9</span> (<span id="pkg-reviews">0</span> Reviews)</span>
+                </div>
+                <h1 class="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground" id="pkg-title">Package Title</h1>
+                <div class="flex items-center gap-2 mt-2 text-sm text-muted-foreground">
+                    <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span id="pkg-places">Srinagar • Sonmarg • Gulmarg • Pahalgam</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied to clipboard!');" class="w-10 h-10 rounded-full border border-border flex items-center justify-center bg-card hover:bg-muted transition-colors text-muted-foreground" title="Share"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg></button>
+                <button onclick="this.classList.toggle('text-red-500'); this.querySelector('svg').classList.toggle('fill-current');" class="w-10 h-10 rounded-full border border-border flex items-center justify-center bg-card hover:bg-muted transition-colors text-muted-foreground" title="Save"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg></button>
+            </div>
+        </div>
+
+        <!-- Photo Gallery -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-8 h-[50vh] min-h-[400px]">
+            <div class="md:col-span-2 h-full rounded-2xl overflow-hidden relative group">
+                <img id="pkg-img-main" src="" alt="Main Image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                <div class="absolute bottom-4 left-4 text-white text-sm font-medium px-3 py-1 bg-black/50 backdrop-blur-md rounded-full" id="pkg-img-main-label">Srinagar</div>
+            </div>
+            <div class="hidden md:flex flex-col gap-3 h-full">
+                <div class="flex-1 rounded-2xl overflow-hidden relative group">
+                    <img id="pkg-img-1" src="https://images.unsplash.com/photo-1626014304574-12948ce1c9c4?q=80&w=600&auto=format&fit=crop" alt="Gallery" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute bottom-3 left-3 text-white text-xs font-medium px-2 py-1 bg-black/50 backdrop-blur-md rounded-full">Gulmarg Skiing</div>
+                </div>
+                <div class="flex-1 rounded-2xl overflow-hidden relative group">
+                    <img id="pkg-img-2" src="https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=600&auto=format&fit=crop" alt="Gallery" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute bottom-3 left-3 text-white text-xs font-medium px-2 py-1 bg-black/50 backdrop-blur-md rounded-full">Sonmarg Meadows</div>
+                </div>
+            </div>
+            <div class="hidden md:flex flex-col gap-3 h-full">
+                <div class="flex-1 rounded-2xl overflow-hidden relative group">
+                    <img id="pkg-img-3" src="https://images.unsplash.com/photo-1615460549969-36fa19521a4f?q=80&w=600&auto=format&fit=crop" alt="Gallery" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute bottom-3 left-3 text-white text-xs font-medium px-2 py-1 bg-black/50 backdrop-blur-md rounded-full">Pahalgam Valley</div>
+                </div>
+                <div class="flex-1 rounded-2xl overflow-hidden relative group">
+                    <img id="pkg-img-4" src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?q=80&w=600&auto=format&fit=crop" alt="Gallery" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black/30 flex items-center justify-center transition-colors group-hover:bg-black/40 cursor-pointer" onclick="document.getElementById('pkg-img-main').scrollIntoView({behavior: 'smooth'})">
+                        <span class="text-white font-medium flex items-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> View all Photos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Layout Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            
+            <!-- Left Content Column -->
+            <div class="lg:col-span-2 space-y-8">
+                
+                <!-- Quick Overview Bar -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-card rounded-2xl p-6 border border-border shadow-sm">
+                    <div class="flex items-start gap-3">
+                        <div class="bg-primary/10 p-2 rounded-lg text-primary"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                        <div>
+                            <div class="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Duration</div>
+                            <div class="text-sm font-medium mt-0.5"><span id="pkg-nights">0</span> Nights / <span id="pkg-days">0</span> Days</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="bg-primary/10 p-2 rounded-lg text-primary"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg></div>
+                        <div>
+                            <div class="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Accommodation</div>
+                            <div class="text-sm font-medium mt-0.5">3 & 4 Star Hotels</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="bg-primary/10 p-2 rounded-lg text-primary"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"></path></svg></div>
+                        <div>
+                            <div class="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Meals</div>
+                            <div class="text-sm font-medium mt-0.5">Breakfast & Dinner</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="bg-primary/10 p-2 rounded-lg text-primary"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg></div>
+                        <div>
+                            <div class="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Transport</div>
+                            <div class="text-sm font-medium mt-0.5">Private Sedan/SUV</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Itinerary -->
+                <div class="mt-8">
+                    <h2 class="font-serif text-2xl font-bold text-foreground mb-6">Detailed Itinerary</h2>
+                    
+                    <div class="space-y-6" id="itinerary-container">
+                        <!-- Itinerary Days generated by JS -->
+                    </div>
+                </div>
+
+                <!-- Inclusions & Exclusions -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 mt-8 border-t border-border">
+                    <div>
+                        <h3 class="font-serif text-xl font-bold flex items-center gap-2 mb-4">
+                            <div class="bg-green-100 p-1 rounded-full"><svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
+                            Inclusions
+                        </h3>
+                        <ul class="space-y-3 text-sm text-muted-foreground" id="pkg-inclusions">
+                            <!-- Injections -->
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-xl font-bold flex items-center gap-2 mb-4">
+                            <div class="bg-red-100 p-1 rounded-full"><svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg></div>
+                            Exclusions
+                        </h3>
+                        <ul class="space-y-3 text-sm text-muted-foreground" id="pkg-exclusions">
+                            <!-- Injections -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar / Sticky Booking Card -->
+            <div class="lg:sticky lg:top-24 space-y-6">
+                <!-- Booking Card -->
+                <div class="bg-card rounded-2xl border border-border shadow-elegant p-6 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-bl-lg" id="pkg-discount-label">15% OFF</div>
+                    
+                    <div class="mb-6">
+                        <div class="flex items-end gap-3 mb-1">
+                            <span class="font-serif text-4xl font-bold text-primary" id="pkg-price">₹0</span>
+                            <span class="text-lg text-muted-foreground line-through mb-1" id="pkg-price-old"></span>
+                        </div>
+                        <div class="text-xs text-muted-foreground">per person on twin sharing</div>
+                    </div>
+
+                    <div class="space-y-4 mb-6">
+                        <div>
+                            <label class="block text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1.5">Select Date</label>
+                            <div class="relative">
+                                <input type="date" class="w-full bg-muted/50 border border-input rounded-lg px-4 py-2.5 text-sm outline-none focus:border-primary transition-colors cursor-pointer">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1.5">Adults</label>
+                                <select class="w-full bg-muted/50 border border-input rounded-lg px-4 py-2.5 text-sm outline-none focus:border-primary transition-colors cursor-pointer">
+                                    <option>2 Adults</option>
+                                    <option>3 Adults</option>
+                                    <option>4 Adults</option>
+                                    <option>5+ Adults</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1.5">Children</label>
+                                <select class="w-full bg-muted/50 border border-input rounded-lg px-4 py-2.5 text-sm outline-none focus:border-primary transition-colors cursor-pointer">
+                                    <option>0 Child</option>
+                                    <option>1 Child</option>
+                                    <option>2 Children</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-lg py-3.5 flex items-center justify-center gap-2 transition-smooth shadow-md hover:shadow-lg hover:-translate-y-0.5" onclick="openEnquiry()">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        Book Securely Now
+                    </button>
+                    <div class="text-center text-xs text-muted-foreground mt-3">
+                        No cancellation charges until 7 days before departure.
+                    </div>
+                </div>
+
+                <!-- Safe Payments Assurance -->
+                <div class="bg-card rounded-xl border border-border p-4 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        <span class="text-sm font-medium">100% Safe Payments</span>
+                    </div>
+                    <div class="flex gap-1 opacity-60 grayscale">
+                        <!-- Dummy icons for payment methods -->
+                        <div class="w-8 h-5 bg-muted rounded"></div>
+                        <div class="w-8 h-5 bg-muted rounded"></div>
+                    </div>
+                </div>
+
+                <!-- Support Card -->
+                <div class="bg-muted/50 rounded-xl border border-border p-5 flex items-start gap-4">
+                    <img src="https://ui-avatars.com/api/?name=Support&background=0D8ABC&color=fff" class="w-10 h-10 rounded-full" alt="Support">
+                    <div>
+                        <h4 class="font-semibold text-sm text-foreground">Need help booking?</h4>
+                        <p class="text-xs text-muted-foreground mt-0.5 mb-2">Our travel specialists are online.</p>
+                        <a href="#" onclick="const pkgTitle=document.getElementById('pkg-title').textContent; window.open(`https://wa.me/919999999999?text=Hi, I need help booking the ${encodeURIComponent(pkgTitle)} package.`); return false;" class="text-sm font-medium text-primary hover:underline">Chat with us</a>
+                    </div>
+                </div>
+
+                <!-- Map Widget -->
+                <div class="rounded-xl overflow-hidden border border-border bg-card h-48 relative group cursor-pointer" onclick="const iframe = document.querySelector('#pkg-map-container iframe'); if(iframe) window.open(iframe.src, '_blank');">
+                    <div id="pkg-map-container" class="w-full h-full bg-muted"></div>
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[2px]">
+                        <span class="bg-white text-black px-4 py-2 rounded-full text-sm font-medium shadow-lg">View Interactive Map</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== SHARED POPUPS ===== -->
+    <div id="enquiry-popup" class="popup-overlay">
+      <div class="popup-box">
+        <button class="popup-close" data-popup-close="enquiry-popup">✕</button>
+        <h3 class="font-serif text-xl font-bold text-foreground">Send Enquiry</h3>
+        <p class="mt-1 text-sm text-muted-foreground" data-pk="pkgpage_no_results">We'll respond within 24 hours.</p>
+        <form class="pk-enquiry-form mt-4 space-y-3">
+          <div><label class="pk-label">Name *</label><input name="name" class="pk-input" placeholder="Your name" required=""></div>
+          <div><label class="pk-label">Phone *</label><input name="phone" type="tel" class="pk-input" placeholder="+91 99999 99999" required=""></div>
+          <div><label class="pk-label">Email</label><input name="email" type="email" class="pk-input" placeholder="you@example.com"></div>
+          <div><label class="pk-label">Package</label><input name="package" id="enquiry-package" class="pk-input" placeholder="Package name"></div>
+          <div class="grid grid-cols-2 gap-3">
+            <div><label class="pk-label">Travellers</label><input name="travellers" type="number" min="1" value="2" class="pk-input"></div>
+            <div><label class="pk-label">Travel Date</label><input name="date" type="date" class="pk-input"></div>
+          </div>
+          <div><label class="pk-label">Message</label><textarea name="message" class="pk-input" rows="3" placeholder="Any special requirements…"></textarea></div>
+          <button type="submit" class="btn-primary w-full justify-center" style="border-radius:0.5rem;height:2.75rem">Send via WhatsApp →</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ===== WHATSAPP FLOAT ===== -->
+    <a href="https://wa.me/919999999999?text=Hi%20Paradise%20Kashmir!%20I'd%20like%20to%20know%20more%20about%20your%20tour%20packages." target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" class="fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold text-white shadow-elegant transition-smooth hover:scale-105" style="background:hsl(142,70%,40%)">
+      <span class="relative flex h-3 w-3"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-60"></span><span class="relative inline-flex h-3 w-3 rounded-full bg-white"></span></span>
+      <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>
+      <span class="hidden sm:inline">Chat on WhatsApp</span>
+    </a>
+
+    <!-- Footer Space -->
+    <footer class="bg-foreground text-muted py-12 mt-12 text-center text-sm">
+        <p>&copy; 2026 Prebook Holidays. All rights reserved.</p>
+    </footer>
+
+    <!-- Shared Logic for DB access -->
+    <script src="shared.js"></script>
+
+    <!-- Page Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            
+            if (!id) {
+                alert('No package selected. Redirecting to packages.');
+                window.location.href = 'packages.html';
+                return;
+            }
+            
+            // Initialize popup scripts from shared.js
+            if(typeof initPopups === 'function') initPopups();
+            if(typeof initEnquiryForms === 'function') initEnquiryForms();
+
+            // Fetch package details
+            try {
+                const packages = await PK.getPackages();
+                const pkg = packages.find(p => p.id == id);
+
+                if (!pkg) {
+                    alert('Package not found.');
+                    window.location.href = 'packages.html';
+                    return;
+                }
+
+                renderPackageDetails(pkg);
+            } catch (err) {
+                console.error("Error loading package", err);
+                alert('Error loading package data.');
+            }
+        });
+
+        function renderPackageDetails(pkg) {
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('package-content').classList.remove('hidden');
+
+            // Header info
+            document.getElementById('pkg-title').textContent = pkg.name;
+            if(pkg.badge) {
+                document.getElementById('pkg-badge').textContent = pkg.badge;
+            } else {
+                document.getElementById('pkg-badge-container').style.display = 'none';
+            }
+            document.getElementById('pkg-rating').textContent = pkg.rating || '4.5';
+            document.getElementById('pkg-reviews').textContent = pkg.reviews || '0';
+            document.getElementById('pkg-places').textContent = pkg.places;
+
+            // Overview stats
+            document.getElementById('pkg-nights').textContent = pkg.nights;
+            document.getElementById('pkg-days').textContent = pkg.days;
+
+            // Price & Discount
+            const displayPrice = pkg.discount_price || pkg.price;
+            document.getElementById('pkg-price').textContent = `₹${displayPrice.toLocaleString('en-IN')}`;
+            if(pkg.discount_price) {
+                document.getElementById('pkg-price-old').textContent = `₹${pkg.price.toLocaleString('en-IN')}`;
+                document.getElementById('pkg-discount-label').textContent = pkg.discount_label || 'OFFER';
+                document.getElementById('pkg-discount-label').style.display = 'block';
+            } else {
+                document.getElementById('pkg-price-old').textContent = '';
+                document.getElementById('pkg-discount-label').style.display = 'none';
+            }
+
+            // Images
+            document.getElementById('pkg-img-main').src = pkg.img;
+            document.getElementById('pkg-img-main-label').textContent = pkg.places.split('•')[0].trim();
+
+            // Inclusions / Exclusions
+            const incContainer = document.getElementById('pkg-inclusions');
+            if(pkg.inclusions) {
+                incContainer.innerHTML = pkg.inclusions.split('\\n').filter(i=>i.trim()).map(i => 
+                    `<li class="flex gap-2.5 items-start"><svg class="w-4 h-4 mt-0.5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span>${i.trim()}</span></li>`
+                ).join('');
+            } else {
+                incContainer.innerHTML = `<li><span class="italic text-muted-foreground">Standard inclusions apply.</span></li>`;
+            }
+
+            const excContainer = document.getElementById('pkg-exclusions');
+            if(pkg.exclusions) {
+                excContainer.innerHTML = pkg.exclusions.split('\\n').filter(i=>i.trim()).map(i => 
+                    `<li class="flex gap-2.5 items-start"><svg class="w-4 h-4 mt-0.5 text-red-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg> <span>${i.trim()}</span></li>`
+                ).join('');
+            } else {
+                excContainer.innerHTML = `<li><span class="italic text-muted-foreground">Personal expenses not included.</span></li>`;
+            }
+
+            // Map Embed
+            const mapContainer = document.getElementById('pkg-map-container');
+            let sidebarEmbedSrc = '';
+            if(pkg.map_embed && pkg.map_embed.trim() !== '') {
+                const match = pkg.map_embed.match(/src=["']([^"']+)["']/);
+                sidebarEmbedSrc = match ? match[1] : pkg.map_embed;
+            } else {
+                const places = pkg.places.split('•').map(p => p.trim());
+                sidebarEmbedSrc = `https://maps.google.com/maps?q=${encodeURIComponent((places[0] || 'Srinagar') + ', Kashmir')}&t=&z=10&ie=UTF8&iwloc=&output=embed`;
+            }
+            
+            if (sidebarEmbedSrc) {
+                mapContainer.innerHTML = `<iframe src="${sidebarEmbedSrc}" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>`;
+            } else {
+                mapContainer.innerHTML = `<div class="w-full h-full flex items-center justify-center bg-muted text-muted-foreground"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg></div>`;
+            }
+
+            // Generate Mock Itinerary based on number of days
+            generateItinerary(pkg);
+        }
+
+        function generateItinerary(pkg) {
+            const container = document.getElementById('itinerary-container');
+            let html = '';
+            const days = pkg.days;
+            const places = pkg.places.split('•').map(p => p.trim());
+            
+            let embedSrc = '';
+            if (pkg.map_embed && pkg.map_embed.trim() !== '') {
+                const match = pkg.map_embed.match(/src=["']([^"']+)["']/);
+                embedSrc = match ? match[1] : pkg.map_embed;
+            } else {
+                // Fallback to dynamically generated map based on the first location
+                embedSrc = `https://maps.google.com/maps?q=${encodeURIComponent((places[0] || 'Srinagar') + ', Kashmir')}&t=&z=10&ie=UTF8&iwloc=&output=embed`;
+            }
+            
+            for(let i=1; i<=days; i++) {
+                // Determine mock title and description
+                let title = "";
+                let desc = "";
+                let place = places[Math.min(i-1, places.length-1)];
+
+                if(i === 1) {
+                    title = `Arrival in ${place} & Local Sightseeing`;
+                    desc = `Upon arrival, meet our representative and transfer to your hotel/houseboat. In the afternoon, enjoy local sightseeing and an evening Shikara ride on Dal Lake.`;
+                } else if(i === days) {
+                    title = `Departure from ${place}`;
+                    desc = `After a hearty breakfast, pack your bags and memories as we drop you off at the airport for your onward journey.`;
+                } else {
+                    title = `Exploration of ${place}`;
+                    desc = `Full day excursion to ${place}. Enjoy the breathtaking views, local activities, and capture beautiful memories. Return to the hotel in the evening for dinner and overnight stay.`;
+                }
+
+                let mapHtml = '';
+                if(i === 1 && embedSrc) {
+                    mapHtml = `<div class="mb-4 rounded-xl overflow-hidden border border-border bg-muted h-48 md:h-64 w-full">
+                                  <iframe src="${embedSrc}" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                               </div>`;
+                }
+
+                html += `
+                    <div class="relative pl-10 md:pl-12 pb-8 border-l-2 border-muted last:border-l-transparent last:pb-0 group cursor-pointer">
+                        <div class="absolute left-[-11px] top-0 w-5 h-5 rounded-full bg-primary flex items-center justify-center text-[10px] font-bold text-white shadow-md ring-4 ring-card transition-transform group-hover:scale-125">${i}</div>
+                        
+                        <div class="bg-card border border-border rounded-xl p-5 shadow-sm transition-smooth group-hover:shadow-md group-hover:border-primary/30">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="font-serif text-lg font-bold text-foreground">Day ${i}: ${title}</h4>
+                                <span class="text-xs font-semibold text-primary bg-primary/10 px-2.5 py-1 rounded-full uppercase tracking-wide">Itinerary</span>
+                            </div>
+                            ${mapHtml}
+                            <p class="text-sm text-muted-foreground leading-relaxed">${desc}</p>
+                            
+                            <div class="mt-4 pt-4 border-t border-border flex items-center gap-4 text-xs font-medium text-muted-foreground">
+                                <div class="flex items-center gap-1.5"><svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg> Hotel Included</div>
+                                <div class="flex items-center gap-1.5"><svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Meals: Breakfast & Dinner</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        }
+
+        function openEnquiry() {
+            const pkgTitle = document.getElementById('pkg-title').textContent || 'Package';
+            document.getElementById('enquiry-package').value = pkgTitle;
+            openPopup('enquiry-popup');
+        }
+    </script>
+</body>
+</html>
