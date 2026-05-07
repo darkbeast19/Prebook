@@ -289,7 +289,7 @@ async function renderIndexPackages() {
                  font-weight:700;font-size:0.85rem;cursor:pointer;letter-spacing:0.01em;
                  box-shadow:0 2px 12px rgba(251,146,60,0.3);transition:transform 0.2s;"
           onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
-          🏷️ Get Best Price
+          ✉️ Enquire Now
         </button>
       </div>
     </article>
@@ -523,7 +523,7 @@ function initGetPricePopup() {
     <div class="popup-box" style="max-width:420px;text-align:center;">
       <button class="popup-close" data-popup-close="get-price-popup" onclick="closePopup('get-price-popup')">✕</button>
       <div style="font-size:2.5rem;margin-bottom:0.5rem;">🏔️</div>
-      <h2 class="font-serif" style="font-size:1.6rem;font-weight:700;color:var(--primary);margin-bottom:0.25rem;">Get Best Price</h2>
+      <h2 class="font-serif" style="font-size:1.6rem;font-weight:700;color:var(--primary);margin-bottom:0.25rem;">Submit Enquiry</h2>
       <p style="color:var(--muted-fg);font-size:0.9rem;margin-bottom:1.5rem;">Share your details — we'll call you within 30 minutes with the best deal!</p>
       <form id="get-price-form" style="display:flex;flex-direction:column;gap:0.9rem;">
         <input name="name" type="text" placeholder="Your Name" required
@@ -535,7 +535,7 @@ function initGetPricePopup() {
         <button type="submit" style="background:linear-gradient(135deg,hsl(38,96%,54%),hsl(25,96%,50%));color:#111;
                 font-weight:700;padding:0.9rem 2rem;border-radius:9999px;border:none;cursor:pointer;
                 font-size:1rem;box-shadow:0 4px 20px rgba(251,146,60,0.4);transition:transform 0.2s;">
-          📲 Get My Best Price
+          ✈️ Send Enquiry
         </button>
       </form>
       <p style="font-size:0.75rem;color:var(--muted-fg);margin-top:1rem;">🔒 No spam. We respect your privacy.</p>
@@ -546,8 +546,8 @@ function initGetPricePopup() {
   document.getElementById('get-price-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.target));
-    await PK.saveEnquiry({ type: 'GetBestPrice', name: data.name, phone: data.phone, date: data.date, email: '', message: 'Get Best Price request' });
-    const msg = `Hi Prebook Holidays! 🙏\nName: ${data.name}\nPhone: ${data.phone}\nDate: ${data.date || 'Flexible'}\nPlease share best price!`;
+    await PK.saveEnquiry({ type: 'QuickEnquiry', name: data.name, phone: data.phone, date: data.date, email: '', message: 'Quick Enquiry request' });
+    const msg = `Hi Prebook Holidays! 🙏\nName: ${data.name}\nPhone: ${data.phone}\nDate: ${data.date || 'Flexible'}\nPlease share best packages!`;
     window.open(`https://wa.me/918377924630?text=${encodeURIComponent(msg)}`, '_blank');
     closePopup('get-price-popup');
     e.target.reset();
