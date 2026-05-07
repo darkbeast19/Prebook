@@ -283,6 +283,14 @@ async function renderIndexPackages() {
           View Details
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
         </button>
+        <button data-get-price="1" onclick="openPopup('get-price-popup')" type="button"
+          style="margin-top:0.5rem;width:100%;padding:0.6rem;border-radius:0.375rem;border:none;
+                 background:linear-gradient(135deg,hsl(38,96%,54%),hsl(25,96%,50%));color:#111;
+                 font-weight:700;font-size:0.85rem;cursor:pointer;letter-spacing:0.01em;
+                 box-shadow:0 2px 12px rgba(251,146,60,0.3);transition:transform 0.2s;"
+          onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+          🏷️ Get Best Price
+        </button>
       </div>
     </article>
   `).join('');
@@ -442,6 +450,215 @@ async function applySettings() {
   }
 }
 
+// ============================================================
+// ---- CRO FEATURES (Conversion Rate Optimization) -----------
+// ============================================================
+
+// 1. Floating WhatsApp Widget (all pages)
+function initWhatsAppWidget() {
+  if (document.getElementById('pk-wa-widget')) return; // already added
+  const WA_NUM = '918377924630';
+  const WA_MSG = encodeURIComponent('Hi Prebook Holidays! I\'d like to know more about your tour packages.');
+  const widget = document.createElement('div');
+  widget.id = 'pk-wa-widget';
+  widget.innerHTML = `
+    <a id="pk-wa-btn" href="https://wa.me/${WA_NUM}?text=${WA_MSG}" target="_blank" rel="noopener noreferrer"
+       aria-label="Chat on WhatsApp"
+       style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:99990;display:flex;align-items:center;gap:0.6rem;
+              background:#25D366;color:white;padding:0.75rem 1.25rem;border-radius:9999px;
+              font-weight:700;font-size:0.9rem;box-shadow:0 4px 24px rgba(37,211,102,0.45);
+              text-decoration:none;transition:transform 0.25s,box-shadow 0.25s;letter-spacing:0.01em;">
+      <svg style="width:22px;height:22px;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.557 4.124 1.527 5.855L0 24l6.334-1.507A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.95 0-3.77-.525-5.332-1.437l-.38-.226-3.942.938.996-3.825-.247-.394A9.808 9.808 0 0 1 2.182 12c0-5.42 4.398-9.818 9.818-9.818 5.42 0 9.818 4.398 9.818 9.818 0 5.42-4.398 9.818-9.818 9.818z"/>
+      </svg>
+      <span class="hide-mobile">Chat on WhatsApp</span>
+    </a>
+    <!-- Pulsing dot -->
+    <span style="position:fixed;bottom:2.95rem;right:1.5rem;z-index:99991;
+                 width:12px;height:12px;background:#ff3b3b;border:2px solid white;
+                 border-radius:50%;animation:pk-pulse 1.5s infinite;pointer-events:none;"></span>
+  `;
+  document.body.appendChild(widget);
+  // hover effect
+  const btn = document.getElementById('pk-wa-btn');
+  btn.addEventListener('mouseenter', () => { btn.style.transform='scale(1.07)'; btn.style.boxShadow='0 8px 32px rgba(37,211,102,0.55)'; });
+  btn.addEventListener('mouseleave', () => { btn.style.transform='scale(1)'; btn.style.boxShadow='0 4px 24px rgba(37,211,102,0.45)'; });
+}
+
+// 2. Sticky "Call Us" top micro-bar (one-tap call)
+function initCallBar() {
+  if (document.getElementById('pk-call-bar')) return;
+  const bar = document.createElement('div');
+  bar.id = 'pk-call-bar';
+  bar.innerHTML = `
+    <div style="background:var(--primary);color:#fff;text-align:center;padding:0.4rem 1rem;
+                font-size:0.78rem;font-weight:600;letter-spacing:0.02em;z-index:9999;
+                display:flex;align-items:center;justify-content:center;gap:1.2rem;flex-wrap:wrap;">
+      <span>📞 
+        <a href="tel:+918377924630" style="color:#fbbf24;text-decoration:none;font-weight:700;">+91 83779-24630</a>
+        &nbsp;|&nbsp;
+        <a href="tel:+919899105056" style="color:#fbbf24;text-decoration:none;font-weight:700;">+91 98991-05056</a>
+      </span>
+      <span style="opacity:0.7;">|</span>
+      <span>✅ 24/7 On-Ground Support &amp; Free Itinerary Planning</span>
+      <a href="https://wa.me/918377924630?text=Hi!%20I%20need%20a%20Kashmir%20tour%20quote."
+         target="_blank" style="background:#25D366;color:white;padding:0.2rem 0.75rem;border-radius:9999px;
+                                 font-size:0.75rem;font-weight:700;text-decoration:none;white-space:nowrap;">
+        Get Free Quote →
+      </a>
+    </div>
+  `;
+  // Insert before the body's first child
+  document.body.insertBefore(bar, document.body.firstChild);
+}
+
+// 3. "Get Best Price" quick popup (3 fields only)
+function initGetPricePopup() {
+  if (document.getElementById('get-price-popup')) return;
+  const popup = document.createElement('div');
+  popup.id = 'get-price-popup';
+  popup.className = 'popup-overlay';
+  popup.innerHTML = `
+    <div class="popup-box" style="max-width:420px;text-align:center;">
+      <button class="popup-close" data-popup-close="get-price-popup" onclick="closePopup('get-price-popup')">✕</button>
+      <div style="font-size:2.5rem;margin-bottom:0.5rem;">🏔️</div>
+      <h2 class="font-serif" style="font-size:1.6rem;font-weight:700;color:var(--primary);margin-bottom:0.25rem;">Get Best Price</h2>
+      <p style="color:var(--muted-fg);font-size:0.9rem;margin-bottom:1.5rem;">Share your details — we'll call you within 30 minutes with the best deal!</p>
+      <form id="get-price-form" style="display:flex;flex-direction:column;gap:0.9rem;">
+        <input name="name" type="text" placeholder="Your Name" required
+               style="width:100%;border:1.5px solid var(--border);border-radius:0.5rem;padding:0.75rem 1rem;font-size:0.95rem;outline:none;box-sizing:border-box;">
+        <input name="phone" type="tel" placeholder="WhatsApp Number" required
+               style="width:100%;border:1.5px solid var(--border);border-radius:0.5rem;padding:0.75rem 1rem;font-size:0.95rem;outline:none;box-sizing:border-box;">
+        <input name="date" type="date" placeholder="Travel Date"
+               style="width:100%;border:1.5px solid var(--border);border-radius:0.5rem;padding:0.75rem 1rem;font-size:0.95rem;outline:none;box-sizing:border-box;color:var(--muted-fg);">
+        <button type="submit" style="background:linear-gradient(135deg,hsl(38,96%,54%),hsl(25,96%,50%));color:#111;
+                font-weight:700;padding:0.9rem 2rem;border-radius:9999px;border:none;cursor:pointer;
+                font-size:1rem;box-shadow:0 4px 20px rgba(251,146,60,0.4);transition:transform 0.2s;">
+          📲 Get My Best Price
+        </button>
+      </form>
+      <p style="font-size:0.75rem;color:var(--muted-fg);margin-top:1rem;">🔒 No spam. We respect your privacy.</p>
+    </div>
+  `;
+  document.body.appendChild(popup);
+
+  document.getElementById('get-price-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(e.target));
+    await PK.saveEnquiry({ type: 'GetBestPrice', name: data.name, phone: data.phone, date: data.date, email: '', message: 'Get Best Price request' });
+    const msg = `Hi Prebook Holidays! 🙏\nName: ${data.name}\nPhone: ${data.phone}\nDate: ${data.date || 'Flexible'}\nPlease share best price!`;
+    window.open(`https://wa.me/918377924630?text=${encodeURIComponent(msg)}`, '_blank');
+    closePopup('get-price-popup');
+    e.target.reset();
+    showToast('✅ Request sent! We\'ll call you shortly.');
+  });
+}
+
+// 4. "Recent Travelers" social proof section (inject on homepage)
+function initRecentTravelers() {
+  if (!window.location.pathname.match(/(index\.html|^\/$|^\/[^.]*$)/)) return;
+  if (document.getElementById('recent-travelers-section')) return;
+  
+  const travelers = [
+    { name: 'Priya & Raj', city: 'Mumbai', pkg: '7 Days Kashmir', ago: '3 days ago', rating: 5, avatar: '👩' },
+    { name: 'Sharma Family', city: 'Delhi', pkg: '5 Days Honeymoon', ago: '1 week ago', rating: 5, avatar: '👨‍👩‍👧' },
+    { name: 'Vikram S.', city: 'Pune', pkg: '4 Days Short Trip', ago: '2 weeks ago', rating: 5, avatar: '🧔' },
+    { name: 'Meena R.', city: 'Bangalore', pkg: '6 Days Group Tour', ago: '3 weeks ago', rating: 5, avatar: '👩‍🦱' },
+  ];
+  
+  const section = document.createElement('section');
+  section.id = 'recent-travelers-section';
+  section.style.cssText = 'background:#f0fdf4;padding:3rem 1.5rem;border-top:1px solid #d1fae5;';
+  section.innerHTML = `
+    <div class="pk-container">
+      <div style="text-align:center;margin-bottom:2rem;">
+        <div style="display:inline-flex;align-items:center;gap:0.5rem;background:#dcfce7;border:1px solid #86efac;
+                    padding:0.35rem 1rem;border-radius:9999px;margin-bottom:0.75rem;">
+          <span style="width:8px;height:8px;background:#22c55e;border-radius:50%;display:inline-block;animation:pk-pulse 1.5s infinite;"></span>
+          <span style="font-size:0.78rem;font-weight:700;color:#15803d;letter-spacing:0.05em;text-transform:uppercase;">Live Updates</span>
+        </div>
+        <h2 class="font-serif" style="font-size:1.8rem;font-weight:700;color:var(--primary);margin:0;">People Currently Traveling With Us</h2>
+        <p style="color:var(--muted-fg);font-size:0.9rem;margin-top:0.5rem;">Join 10,000+ happy travelers who trusted Prebook Holidays</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:2rem;">
+        ${travelers.map(t => `
+        <div style="background:white;border:1px solid #d1fae5;border-radius:1rem;padding:1.25rem;
+                    box-shadow:0 2px 12px rgba(0,0,0,0.06);display:flex;align-items:center;gap:0.85rem;">
+          <div style="font-size:2rem;min-width:2.5rem;">${t.avatar}</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-weight:700;font-size:0.9rem;color:var(--foreground);">${t.name} <span style="font-size:0.75rem;color:var(--muted-fg);font-weight:400;">• ${t.city}</span></div>
+            <div style="font-size:0.78rem;color:var(--primary);font-weight:600;margin-top:0.15rem;">${t.pkg}</div>
+            <div style="display:flex;align-items:center;gap:0.4rem;margin-top:0.25rem;">
+              <span style="color:#fbbf24;font-size:0.7rem;">${'★'.repeat(t.rating)}</span>
+              <span style="font-size:0.7rem;color:#16a34a;">✓ Verified · ${t.ago}</span>
+            </div>
+          </div>
+        </div>`).join('')}
+      </div>
+      <div style="text-align:center;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem;align-items:center;">
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;font-weight:600;color:var(--primary);">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Camponotus_flavomarginatus_ant.jpg/25px-Camponotus_flavomarginatus_ant.jpg" 
+               style="width:20px;height:20px;border-radius:50%;display:none;" alt="">
+          ⭐ 4.9/5 on Google (820+ Reviews)
+        </div>
+        <div style="width:1px;height:20px;background:var(--border);"></div>
+        <div style="font-size:0.85rem;font-weight:600;color:var(--primary);">🏅 TripAdvisor Certificate of Excellence</div>
+        <div style="width:1px;height:20px;background:var(--border);"></div>
+        <div style="font-size:0.85rem;font-weight:600;color:var(--primary);">🛡️ IATA Accredited Agency</div>
+        <div style="width:1px;height:20px;background:var(--border);"></div>
+        <div style="font-size:0.85rem;font-weight:600;color:#15803d;">✅ 24/7 On-Ground Support in Himachal & Kashmir</div>
+      </div>
+    </div>
+  `;
+
+  // Inject after the packages section on homepage
+  const packagesSec = document.getElementById('packages') || document.querySelector('#packages');
+  if (packagesSec && packagesSec.nextSibling) {
+    packagesSec.parentNode.insertBefore(section, packagesSec.nextSibling);
+  } else {
+    const main = document.querySelector('main') || document.body;
+    main.appendChild(section);
+  }
+}
+
+// 5. Add "Get Best Price" buttons to all package cards
+function addGetBestPriceButtons() {
+  // Wire all [data-get-price] elements
+  document.querySelectorAll('[data-get-price]').forEach(btn => {
+    btn.addEventListener('click', () => openPopup('get-price-popup'));
+  });
+}
+
+// 6. Inject keyframe animation for pulse effect
+function injectCROStyles() {
+  if (document.getElementById('pk-cro-styles')) return;
+  const style = document.createElement('style');
+  style.id = 'pk-cro-styles';
+  style.textContent = `
+    @keyframes pk-pulse {
+      0%,100% { box-shadow:0 0 0 0 rgba(34,197,94,0.5); }
+      50%      { box-shadow:0 0 0 8px rgba(34,197,94,0); }
+    }
+    #pk-wa-btn:focus { outline: 3px solid #25D366; outline-offset: 3px; }
+    #pk-call-bar a:hover { text-decoration: underline; }
+    #get-price-popup .popup-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(22,101,52,0.12); }
+    #get-price-popup button[type=submit]:hover { transform: scale(1.04); }
+    .pk-trust-bar { animation: fadeInDown 0.5s ease; }
+    @keyframes fadeInDown { from { opacity:0;transform:translateY(-100%) } to { opacity:1;transform:translateY(0) } }
+  `;
+  document.head.appendChild(style);
+}
+
+function initCRO() {
+  injectCROStyles();
+  initWhatsAppWidget();
+  initCallBar();
+  initGetPricePopup();
+  initRecentTravelers();
+  addGetBestPriceButtons();
+}
+
 // ---- Init all on DOMContentLoaded -------------------
 document.addEventListener('DOMContentLoaded', () => {
   initMobileNav();
@@ -452,4 +669,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initPriceCalculator();
   applySettings();
   renderIndexPackages();
+  initCRO();
 });
