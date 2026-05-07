@@ -154,7 +154,7 @@ function initCallbackForm() {
     const phone = form.querySelector('[name=cb-phone]').value.trim();
     if (!name || !phone) return;
     await PK.saveEnquiry({ type:'Callback', name, phone, email:'', message:'Instant callback request' });
-    const wa = `https://wa.me/919999999999?text=${encodeURIComponent(`Hi! I'm ${name}, please call me back on ${phone}.`)}`;
+    const wa = `https://wa.me/918377924630?text=${encodeURIComponent(`Hi! I'm ${name}, please call me back on ${phone}.`)}`;
     window.open(wa, '_blank');
     closePopup('callback-popup');
     form.reset();
@@ -172,7 +172,7 @@ function initEnquiryForms() {
       data.type = 'Enquiry';
       await PK.saveEnquiry(data);
       const msg = `Hi Prebook Holidays!\nName: ${data.name||''}\nPhone: ${data.phone||''}\nEmail: ${data.email||''}\nPackage: ${data.package||'General'}\nTravellers: ${data.travellers||''}\nDate: ${data.date||''}\nMessage: ${data.message||''}`;
-      window.open(`https://wa.me/919999999999?text=${encodeURIComponent(msg)}`, '_blank');
+      window.open(`https://wa.me/918377924630?text=${encodeURIComponent(msg)}`, '_blank');
       closePopup('enquiry-popup');
       showToast(`\u2705 Enquiry sent! We'll respond within 24 hours.`);
       form.reset();
