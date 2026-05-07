@@ -279,15 +279,22 @@ async function renderIndexPackages() {
                 </span>
               </span>` : ''}
             </div>
+            <!-- 10% Advance Badge -->
+            <div style="display:inline-flex;align-items:center;gap:0.35rem;margin-top:0.45rem;
+                        background:#f0fdf4;border:1.5px solid #86efac;border-radius:9999px;
+                        padding:0.2rem 0.65rem;font-size:0.7rem;font-weight:700;color:#15803d;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Book with only 10% Advance
+            </div>
         <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-muted hover:text-accent-foreground h-10 px-4 py-2 mt-5 w-full transition-smooth" type="button" onclick="window.location.href='package-details.html?id=${pkg.id}'">
           View Details
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right h-4 w-4"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
         </button>
         <button data-get-price="1" onclick="openPopup('get-price-popup')" type="button"
-          style="margin-top:0.5rem;width:100%;padding:0.6rem;border-radius:0.375rem;border:none;
+          style="margin-top:0.5rem;width:100%;padding:0.75rem;border-radius:0.5rem;border:none;
                  background:linear-gradient(135deg,hsl(38,96%,54%),hsl(25,96%,50%));color:#111;
-                 font-weight:700;font-size:0.85rem;cursor:pointer;letter-spacing:0.01em;
-                 box-shadow:0 2px 12px rgba(251,146,60,0.3);transition:transform 0.2s;"
+                 font-weight:700;font-size:0.95rem;cursor:pointer;letter-spacing:0.01em;
+                 min-height:48px;box-shadow:0 2px 12px rgba(251,146,60,0.3);transition:transform 0.2s;"
           onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
           ✉️ Enquire Now
         </button>
@@ -630,7 +637,7 @@ function addGetBestPriceButtons() {
   });
 }
 
-// 6. Inject keyframe animation for pulse effect
+// 6. Inject keyframe animation for pulse effect + mobile styles
 function injectCROStyles() {
   if (document.getElementById('pk-cro-styles')) return;
   const style = document.createElement('style');
@@ -640,13 +647,144 @@ function injectCROStyles() {
       0%,100% { box-shadow:0 0 0 0 rgba(34,197,94,0.5); }
       50%      { box-shadow:0 0 0 8px rgba(34,197,94,0); }
     }
+    @keyframes pk-shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    @keyframes pk-bounce-in {
+      0% { transform:translateY(100%);opacity:0; }
+      70% { transform:translateY(-6px);opacity:1; }
+      100% { transform:translateY(0);opacity:1; }
+    }
     #pk-wa-btn:focus { outline: 3px solid #25D366; outline-offset: 3px; }
     #pk-call-bar a:hover { text-decoration: underline; }
     #get-price-popup .popup-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(22,101,52,0.12); }
     #get-price-popup button[type=submit]:hover { transform: scale(1.04); }
     .pk-trust-bar { animation: fadeInDown 0.5s ease; }
     @keyframes fadeInDown { from { opacity:0;transform:translateY(-100%) } to { opacity:1;transform:translateY(0) } }
+    /* Weekly incentive shimmer */
+    .pk-incentive-shimmer {
+      background: linear-gradient(90deg,hsl(38,96%,54%) 0%,hsl(45,100%,70%) 50%,hsl(38,96%,54%) 100%);
+      background-size: 200% auto;
+      animation: pk-shimmer 2.5s linear infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    /* Mobile sticky enquiry bar */
+    #pk-mobile-cta {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      animation: pk-bounce-in 0.5s ease 1.5s both;
+    }
+    @media (max-width: 768px) {
+      #pk-mobile-cta { display: flex; }
+      /* Ensure WA widget doesn't overlap mobile CTA */
+      #pk-wa-widget { bottom: 4.5rem !important; }
+      #pk-wa-widget a { padding: 0.6rem 0.9rem !important; font-size: 0; }
+      #pk-wa-widget a .hide-mobile { display: none !important; }
+      /* Bigger tap targets on mobile */
+      [data-get-price] { min-height: 52px !important; font-size: 1rem !important; }
+    }
   `;
+  document.head.appendChild(style);
+}
+
+// 7. Weekly incentive offer banner (above packages section)
+function initWeeklyOffer() {
+  if (document.getElementById('pk-weekly-offer')) return;
+  // Only show on homepage
+  if (!window.location.pathname.match(/(index\.html|^\/[^.]*$|\/\s*$)/)) return;
+  
+  const offers = [
+    { icon: '🕯️', text: 'Free Candlelight Dinner for couples booking this week!' },
+    { icon: '🛏️', text: 'Complimentary Room Upgrade on bookings above ₹25,000 this week!' },
+  ];
+  const offer = offers[Math.floor(Math.random() * offers.length)];
+  
+  // Calculate days left in week
+  const today = new Date();
+  const sunday = new Date(today);
+  sunday.setDate(today.getDate() + (7 - today.getDay()));
+  const daysLeft = Math.max(1, Math.ceil((sunday - today) / (1000*60*60*24)));
+  
+  const banner = document.createElement('div');
+  banner.id = 'pk-weekly-offer';
+  banner.style.cssText = 'background:linear-gradient(135deg,hsl(168,60%,18%),hsl(168,60%,26%));color:white;' +
+    'text-align:center;padding:0.85rem 1.5rem;cursor:pointer;position:relative;overflow:hidden;';
+  banner.innerHTML = `
+    <div style="position:absolute;inset:0;background:url('data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\'><circle cx=\'30\' cy=\'30\' r=\'25\' fill=\'none\' stroke=\'rgba(255,255,255,0.04)\' stroke-width=\'1\'/></svg>') repeat;pointer-events:none;"></div>
+    <div style="position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:0.75rem;flex-wrap:wrap;">
+      <span style="font-size:1.4rem;">${offer.icon}</span>
+      <span style="font-weight:700;font-size:0.92rem;">
+        <span class="pk-incentive-shimmer">🎁 THIS WEEK ONLY:</span>
+        <span style="margin-left:0.4rem;">${offer.text}</span>
+      </span>
+      <span style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:9999px;
+                  padding:0.15rem 0.75rem;font-size:0.75rem;font-weight:700;white-space:nowrap;">
+        ⏳ ${daysLeft} day${daysLeft > 1 ? 's' : ''} left
+      </span>
+      <button onclick="openPopup('get-price-popup');" style="background:hsl(38,96%,54%);color:#111;border:none;
+              padding:0.35rem 1.1rem;border-radius:9999px;font-weight:700;font-size:0.8rem;
+              cursor:pointer;white-space:nowrap;">Claim Offer →</button>
+      <button onclick="this.parentElement.parentElement.parentElement.remove()" 
+              style="position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);
+                     background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.1rem;
+                     cursor:pointer;padding:0.25rem;line-height:1;">✕</button>
+    </div>
+  `;
+  banner.addEventListener('click', (e) => {
+    if (e.target.tagName !== 'BUTTON') openPopup('get-price-popup');
+  });
+  
+  const pkgSection = document.getElementById('packages');
+  if (pkgSection) {
+    pkgSection.parentNode.insertBefore(banner, pkgSection);
+  } else {
+    const main = document.querySelector('main') || document.body;
+    main.prepend(banner);
+  }
+}
+
+// 8. Mobile sticky "Enquire Now" bottom bar
+function initMobileCTA() {
+  if (document.getElementById('pk-mobile-cta')) return;
+  const bar = document.createElement('div');
+  bar.id = 'pk-mobile-cta';
+  bar.style.cssText = 'display:none;gap:0;border-top:2px solid rgba(0,0,0,0.1);';
+  bar.innerHTML = `
+    <a href="tel:+918377924630"
+       style="flex:1;display:flex;align-items:center;justify-content:center;gap:0.5rem;
+              background:#1a3c28;color:white;padding:1rem;font-weight:700;font-size:0.9rem;
+              text-decoration:none;min-height:58px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Call Now
+    </a>
+    <button onclick="openPopup('get-price-popup')"
+       style="flex:2;display:flex;align-items:center;justify-content:center;gap:0.5rem;
+              background:linear-gradient(135deg,hsl(38,96%,54%),hsl(25,96%,50%));color:#111;
+              padding:1rem;font-weight:800;font-size:1rem;border:none;cursor:pointer;
+              min-height:58px;letter-spacing:0.01em;">
+      ✉️ Enquire Now — Free!
+    </button>
+    <a href="https://wa.me/918377924630?text=Hi%20Prebook%20Holidays!%20I%20want%20to%20know%20more."
+       target="_blank" rel="noopener"
+       style="flex:1;display:flex;align-items:center;justify-content:center;gap:0.4rem;
+              background:#25D366;color:white;padding:1rem;font-weight:700;font-size:0.82rem;
+              text-decoration:none;min-height:58px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.557 4.124 1.527 5.855L0 24l6.334-1.507A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.95 0-3.77-.525-5.332-1.437l-.38-.226-3.942.938.996-3.825-.247-.394A9.808 9.808 0 0 1 2.182 12c0-5.42 4.398-9.818 9.818-9.818 5.42 0 9.818 4.398 9.818 9.818 0 5.42-4.398 9.818-9.818 9.818z"/></svg>
+      WhatsApp
+    </a>
+  `;
+  document.body.appendChild(bar);
+  
+  // Add bottom padding on mobile so content isn't hidden behind bar
+  const style = document.createElement('style');
+  style.textContent = '@media(max-width:768px){body{padding-bottom:60px;} #pk-wa-widget{bottom:5rem!important;}}';
   document.head.appendChild(style);
 }
 
@@ -657,6 +795,8 @@ function initCRO() {
   initGetPricePopup();
   initRecentTravelers();
   addGetBestPriceButtons();
+  initWeeklyOffer();
+  initMobileCTA();
 }
 
 // ---- Init all on DOMContentLoaded -------------------
