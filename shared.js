@@ -653,7 +653,7 @@ function injectCROStyles() {
 function initCRO() {
   injectCROStyles();
   initWhatsAppWidget();
-  initCallBar();
+  // initCallBar(); // Removed as it shifts the hero image down
   initGetPricePopup();
   initRecentTravelers();
   addGetBestPriceButtons();
