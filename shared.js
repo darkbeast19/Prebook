@@ -422,18 +422,21 @@ async function applySettings() {
     const grid = document.querySelector('.grid.gap-8');
     if (grid) {
       grid.innerHTML = s.dest_cards.map(c => `
-        <div class="group relative overflow-hidden rounded-2xl bg-card shadow-card-soft transition-all hover:-translate-y-1 hover:shadow-card-hover">
-          <div class="aspect-[4/3] overflow-hidden">
-            <img src="${c.img}" alt="${c.title}" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-          </div>
-          <div class="p-6">
-            <h3 class="font-serif text-2xl font-bold text-foreground">${c.title}</h3>
-            <p class="mt-2 text-muted-foreground">${c.desc}</p>
-            <div class="mt-4 flex flex-wrap gap-2">
-              ${c.tags ? c.tags.split(',').map(t => `<span class="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">${t.trim()}</span>`).join('') : ''}
-            </div>
+      <article class="group rounded-2xl overflow-hidden bg-card shadow-card-soft card-hover">
+        <div class="relative h-64 overflow-hidden ${!c.img ? 'bg-primary' : ''}">
+          ${c.img ? `<img src="${c.img}" alt="${c.name}" class="h-full w-full object-cover transition-smooth group-hover:scale-110">` : `<div class="h-full w-full flex items-center justify-center text-7xl">${c.emoji||'🏔️'}</div>`}
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 text-white">
+            <h3 class="font-serif text-2xl font-bold">${c.name || 'Destination'}</h3>
           </div>
         </div>
+        <div class="p-6">
+          <p class="text-sm text-muted-foreground">${c.desc || ''}</p>
+          <div class="mt-4 flex items-center justify-between">
+            <a href="packages.html?state=${encodeURIComponent(c.name || '')}" class="btn-primary text-xs px-4 py-2" style="border-radius:0.375rem; width:100%; text-align:center;">See Packages</a>
+          </div>
+        </div>
+      </article>
       `).join('');
     }
   }

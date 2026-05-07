@@ -154,12 +154,54 @@
           <div><label class="pk-label">Rating</label><input id="pkg-rating" type="number" step="0.1" min="1" max="5" class="pk-input" placeholder="4.9"></div>
           <div class="sm:col-span-2"><label class="pk-label">Places Covered</label><input id="pkg-places" class="pk-input" placeholder="Srinagar · Gulmarg · Pahalgam"></div>
           <div class="sm:col-span-2">
-            <label class="pk-label">Image (Upload OR URL)</label>
+            <label class="pk-label">🖼️ Main Image (Upload OR URL)</label>
+            <p class="text-xs text-muted-foreground mb-2">📐 Recommended: <strong>1200×800px</strong> · Max size: <strong>2MB</strong> · Format: JPG/PNG/WebP · Aspect ratio: <strong>3:2</strong></p>
             <div class="flex gap-2">
               <input type="file" id="pkg-img-file" class="pk-input flex-1" accept="image/*" onchange="handleImageUpload(event)">
               <input id="pkg-img" class="pk-input flex-1" placeholder="Or enter image URL">
             </div>
             <div id="pkg-img-preview" class="mt-2 hidden"><img src="" class="h-20 w-32 object-cover rounded-md border border-border"></div>
+          </div>
+
+          <!-- Gallery Images -->
+          <div class="sm:col-span-2">
+            <label class="pk-label">📸 Gallery Images (4 photos shown inside package detail page)</label>
+            <div class="bg-muted/50 border border-border rounded-xl p-4 mb-3 text-xs text-muted-foreground">
+              <strong class="text-foreground">📐 Image Guidelines:</strong>
+              <ul class="mt-1 space-y-0.5 list-disc list-inside">
+                <li>Recommended size: <strong>800×600px</strong> or larger</li>
+                <li>Max file size: <strong>2MB</strong> per image</li>
+                <li>Formats: <strong>JPG, PNG, WebP</strong></li>
+                <li>Aspect ratio: <strong>4:3</strong> (landscape works best)</li>
+                <li>Leave blank to use default Kashmir placeholder</li>
+              </ul>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="pk-label text-xs">Gallery Photo 1</label>
+                <input type="file" class="pk-input mb-1" accept="image/*" onchange="handleGalleryUpload(event,'pkg-img2')">
+                <input id="pkg-img2" class="pk-input" placeholder="Or paste image URL">
+                <div id="pkg-img2-preview" class="mt-1 hidden"><img src="" class="h-16 w-28 object-cover rounded-md border border-border"></div>
+              </div>
+              <div>
+                <label class="pk-label text-xs">Gallery Photo 2</label>
+                <input type="file" class="pk-input mb-1" accept="image/*" onchange="handleGalleryUpload(event,'pkg-img3')">
+                <input id="pkg-img3" class="pk-input" placeholder="Or paste image URL">
+                <div id="pkg-img3-preview" class="mt-1 hidden"><img src="" class="h-16 w-28 object-cover rounded-md border border-border"></div>
+              </div>
+              <div>
+                <label class="pk-label text-xs">Gallery Photo 3</label>
+                <input type="file" class="pk-input mb-1" accept="image/*" onchange="handleGalleryUpload(event,'pkg-img4')">
+                <input id="pkg-img4" class="pk-input" placeholder="Or paste image URL">
+                <div id="pkg-img4-preview" class="mt-1 hidden"><img src="" class="h-16 w-28 object-cover rounded-md border border-border"></div>
+              </div>
+              <div>
+                <label class="pk-label text-xs">Gallery Photo 4</label>
+                <input type="file" class="pk-input mb-1" accept="image/*" onchange="handleGalleryUpload(event,'pkg-img5')">
+                <input id="pkg-img5" class="pk-input" placeholder="Or paste image URL">
+                <div id="pkg-img5-preview" class="mt-1 hidden"><img src="" class="h-16 w-28 object-cover rounded-md border border-border"></div>
+              </div>
+            </div>
           </div>
           <div><label class="pk-label">Location</label><input id="pkg-location" class="pk-input" placeholder="e.g. Srinagar, Kashmir"></div>
           <div><label class="pk-label">Google Maps Embed URL</label><input id="pkg-map" class="pk-input" placeholder="<iframe src=...> or URL"></div>
@@ -630,6 +672,16 @@
       document.getElementById('pkg-img-file').value = '';
       if(p.img) { preview.classList.remove('hidden'); preview.querySelector('img').src = p.img; }
       else { preview.classList.add('hidden'); }
+      // Gallery images
+      ['img2','img3','img4','img5'].forEach(key => {
+        const inp = document.getElementById('pkg-'+key);
+        const prev = document.getElementById('pkg-'+key+'-preview');
+        if(inp) inp.value = p[key] || '';
+        if(prev) {
+          if(p[key]) { prev.classList.remove('hidden'); prev.querySelector('img').src = p[key]; }
+          else { prev.classList.add('hidden'); }
+        }
+      });
     }
     wrap.scrollIntoView({behavior:'smooth'});
   }
@@ -645,6 +697,20 @@
       const preview = document.getElementById('pkg-img-preview');
       preview.classList.remove('hidden');
       preview.querySelector('img').src = b64;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function handleGalleryUpload(e, targetId) {
+    const file = e.target.files[0];
+    if(!file) return;
+    if(file.size > 2 * 1024 * 1024) { showToast('❌ Image must be under 2MB. Please compress it first.'); e.target.value = ''; return; }
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      const b64 = evt.target.result;
+      document.getElementById(targetId).value = b64;
+      const prev = document.getElementById(targetId + '-preview');
+      if(prev) { prev.classList.remove('hidden'); prev.querySelector('img').src = b64; }
     };
     reader.readAsDataURL(file);
   }
@@ -665,6 +731,10 @@
       reviews: parseInt(document.getElementById('pkg-reviews').value)||0,
       places: document.getElementById('pkg-places').value,
       img: document.getElementById('pkg-img').value,
+      img2: document.getElementById('pkg-img2').value || null,
+      img3: document.getElementById('pkg-img3').value || null,
+      img4: document.getElementById('pkg-img4').value || null,
+      img5: document.getElementById('pkg-img5').value || null,
       location: document.getElementById('pkg-location').value,
       map_embed: document.getElementById('pkg-map').value,
       inclusions: document.getElementById('pkg-inclusions').value,

@@ -273,6 +273,23 @@
 
   async function init() {
     allPackages = await PK.getPackages();
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const state = urlParams.get('state');
+    
+    if (state) {
+      const lowerState = state.toLowerCase();
+      allPackages = allPackages.filter(p => (p.location || '').toLowerCase().includes(lowerState));
+      
+      const titleEl = document.querySelector('[data-pk="pkgpage_title"]');
+      if (titleEl) titleEl.textContent = `Packages in ${state}`;
+      document.title = `Packages in ${state} | Prebook Holidays`;
+      
+      // Also update the breadcrumb / section badge if you like
+      const badgeEl = document.querySelector('.section-badge');
+      if (badgeEl) badgeEl.textContent = state;
+    }
+
     displayedPackages = [...allPackages];
     renderPackages(allPackages);
   }

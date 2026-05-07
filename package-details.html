@@ -99,18 +99,18 @@
             </div>
             <div class="hidden md:flex flex-col gap-3 h-full">
                 <div class="flex-1 rounded-2xl overflow-hidden relative group">
-                    <img id="pkg-img-1" src="https://images.unsplash.com/photo-1626014304574-12948ce1c9c4?q=80&w=600&auto=format&fit=crop" alt="Gallery" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                    <div class="absolute bottom-3 left-3 text-white text-xs font-medium px-2 py-1 bg-black/50 backdrop-blur-md rounded-full">Gulmarg Skiing</div>
+                    <img id="pkg-img-1" src="" alt="Gallery 1" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute bottom-3 left-3 text-white text-xs font-medium px-2 py-1 bg-black/50 backdrop-blur-md rounded-full" id="pkg-img-1-label">Gulmarg</div>
                 </div>
                 <div class="flex-1 rounded-2xl overflow-hidden relative group">
-                    <img id="pkg-img-2" src="https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=600&auto=format&fit=crop" alt="Gallery" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                    <div class="absolute bottom-3 left-3 text-white text-xs font-medium px-2 py-1 bg-black/50 backdrop-blur-md rounded-full">Sonmarg Meadows</div>
+                    <img id="pkg-img-2" src="" alt="Gallery 2" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute bottom-3 left-3 text-white text-xs font-medium px-2 py-1 bg-black/50 backdrop-blur-md rounded-full" id="pkg-img-2-label">Sonmarg</div>
                 </div>
             </div>
             <div class="hidden md:flex flex-col gap-3 h-full">
                 <div class="flex-1 rounded-2xl overflow-hidden relative group">
-                    <img id="pkg-img-3" src="https://images.unsplash.com/photo-1615460549969-36fa19521a4f?q=80&w=600&auto=format&fit=crop" alt="Gallery" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                    <div class="absolute bottom-3 left-3 text-white text-xs font-medium px-2 py-1 bg-black/50 backdrop-blur-md rounded-full">Pahalgam Valley</div>
+                    <img id="pkg-img-3" src="" alt="Gallery 3" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute bottom-3 left-3 text-white text-xs font-medium px-2 py-1 bg-black/50 backdrop-blur-md rounded-full" id="pkg-img-3-label">Pahalgam</div>
                 </div>
                 <div class="flex-1 rounded-2xl overflow-hidden relative group">
                     <img id="pkg-img-4" src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?q=80&w=600&auto=format&fit=crop" alt="Gallery" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
@@ -410,13 +410,27 @@
             }
 
             // Images
+            const places = pkg.places.split('•').map(p => p.trim());
+            const fallbackImgs = [
+                'https://images.unsplash.com/photo-1626014304574-12948ce1c9c4?q=80&w=600&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=600&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1615460549969-36fa19521a4f?q=80&w=600&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1571536802807-30451e3955d8?q=80&w=600&auto=format&fit=crop'
+            ];
             document.getElementById('pkg-img-main').src = pkg.img;
-            document.getElementById('pkg-img-main-label').textContent = pkg.places.split('•')[0].trim();
+            document.getElementById('pkg-img-main-label').textContent = places[0] || '';
+            const galleryFields = ['img2','img3','img4','img5'];
+            galleryFields.forEach((field, idx) => {
+                const el = document.getElementById('pkg-img-' + (idx+1));
+                const lbl = document.getElementById('pkg-img-' + (idx+1) + '-label');
+                if(el) el.src = pkg[field] || fallbackImgs[idx];
+                if(lbl) lbl.textContent = places[idx+1] || places[places.length-1] || '';
+            });
 
             // Inclusions / Exclusions
             const incContainer = document.getElementById('pkg-inclusions');
             if(pkg.inclusions) {
-                incContainer.innerHTML = pkg.inclusions.split('\\n').filter(i=>i.trim()).map(i => 
+                incContainer.innerHTML = pkg.inclusions.split('\n').filter(i=>i.trim()).map(i => 
                     `<li class="flex gap-2.5 items-start"><svg class="w-4 h-4 mt-0.5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span>${i.trim()}</span></li>`
                 ).join('');
             } else {
@@ -425,8 +439,8 @@
 
             const excContainer = document.getElementById('pkg-exclusions');
             if(pkg.exclusions) {
-                excContainer.innerHTML = pkg.exclusions.split('\\n').filter(i=>i.trim()).map(i => 
-                    `<li class="flex gap-2.5 items-start"><svg class="w-4 h-4 mt-0.5 text-red-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg> <span>${i.trim()}</span></li>`
+                excContainer.innerHTML = pkg.exclusions.split('\n').filter(i=>i.trim()).map(i => 
+                    `<li class="flex gap-2.5 items-start"><svg class="w-4 h-4 mt-0.5 text-red-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg> <span>${i.trim()}</span></li>`
                 ).join('');
             } else {
                 excContainer.innerHTML = `<li><span class="italic text-muted-foreground">Personal expenses not included.</span></li>`;
