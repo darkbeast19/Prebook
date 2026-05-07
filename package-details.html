@@ -434,7 +434,7 @@
                     `<li class="flex gap-3 items-start"><svg class="w-4 h-4 mt-0.5 text-[#22c55e] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span class="text-sm font-medium text-muted-foreground">${i.trim()}</span></li>`
                 ).join('');
             } else {
-                incContainer.innerHTML = `<li><span class="italic text-muted-foreground">Standard inclusions apply.</span></li>`;
+                incContainer.innerHTML = `<li class="flex gap-3 items-start"><svg class="w-4 h-4 mt-0.5 text-[#22c55e] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span class="italic text-sm font-medium text-muted-foreground">Standard inclusions apply.</span></li>`;
             }
 
             const excContainer = document.getElementById('pkg-exclusions');
@@ -443,7 +443,7 @@
                     `<li class="flex gap-3 items-start"><svg class="w-4 h-4 mt-0.5 text-[#ef4444] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg> <span class="text-sm font-medium text-muted-foreground">${i.trim()}</span></li>`
                 ).join('');
             } else {
-                excContainer.innerHTML = `<li><span class="italic text-muted-foreground">Personal expenses not included.</span></li>`;
+                excContainer.innerHTML = `<li class="flex gap-3 items-start"><svg class="w-4 h-4 mt-0.5 text-[#ef4444] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg> <span class="italic text-sm font-medium text-muted-foreground">Personal expenses not included.</span></li>`;
             }
 
             // Map Embed
